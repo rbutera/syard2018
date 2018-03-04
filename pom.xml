@@ -14,7 +14,7 @@
         <runSuite>**/ModelTest.class</runSuite>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <skipAfter>0</skipAfter>
-        <werror>true</werror>
+        <werror>false</werror>
     </properties>
 
     <repositories>
