@@ -59,6 +59,14 @@ public class ScotlandYardModel implements ScotlandYardGame {
 			if (set.contains(configuration.location))
 				throw new IllegalArgumentException("Duplicate location");
 			set.add(configuration.location);
+
+			//Check if players have duplicated colours
+			Set<Colour> set2 = new HashSet<>();
+			for (PlayerConfiguration configuration2 : configurations) {
+				if (set2.contains(configuration2.colour))
+					throw new IllegalArgumentException("Duplicate colour");
+				set2.add(configuration2.colour);
+			}
 		}
 	}
 	//End of Constructor
