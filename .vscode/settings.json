@@ -6,5 +6,9 @@
         "cmd": "mvn clean test"
       }
     ]
-  }
+  },
+  "java.configuration.updateBuildConfiguration": "interactive",
+  "cSpell.words": [
+    "configuration"
+  ]
 }

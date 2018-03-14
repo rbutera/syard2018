@@ -8,8 +8,7 @@ import static java.util.Collections.unmodifiableList;
 import static java.util.Collections.unmodifiableSet;
 import static java.util.Objects.requireNonNull;
 import static uk.ac.bris.cs.scotlandyard.model.Colour.BLACK;
-import static uk.ac.bris.cs.scotlandyard.model.Ticket.DOUBLE;
-import static uk.ac.bris.cs.scotlandyard.model.Ticket.SECRET;
+import static uk.ac.bris.cs.scotlandyard.model.Ticket.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -18,9 +17,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
+
+import javax.security.auth.callback.ConfirmationCallback;
+
+import org.omg.IOP.TAG_RMI_CUSTOM_MAX_STREAM_FORMAT;
+
 import uk.ac.bris.cs.gamekit.graph.Edge;
 import uk.ac.bris.cs.gamekit.graph.Graph;
 import uk.ac.bris.cs.gamekit.graph.ImmutableGraph;
+import uk.ac.bris.cs.gamekit.graph.UndirectedGraph;
 
 // TODO implement all methods and pass all tests
 public class ScotlandYardModel implements ScotlandYardGame {
@@ -28,49 +33,74 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	private Graph<Integer, Transport> graph;
 
 	//Constructor
-	public ScotlandYardModel(List<Boolean> rounds, Graph<Integer, Transport> graph,
-			PlayerConfiguration mrX, PlayerConfiguration firstDetective,
-			PlayerConfiguration... restOfTheDetectives) {
-			
-			if (rounds.isEmpty()) {
-				throw new IllegalArgumentException("Empty rounds");
-				}
-			if (graph.isEmpty()) {
-				throw new IllegalArgumentException("Empty graph");
-				}
-			this.rounds = requireNonNull(rounds);
-			this.graph = requireNonNull(graph);
+	public ScotlandYardModel(List<Boolean> rounds, Graph<Integer, Transport> graph, PlayerConfiguration mrX,
+			PlayerConfiguration firstDetective, PlayerConfiguration... restOfTheDetectives) {
+		this.rounds = requireNonNull(rounds);
+		this.graph = requireNonNull(graph);
 
-			if (mrX.colour != BLACK) { // or mr.colour.isDetective()
-				throw new IllegalArgumentException("MrX should be Black");
-				}
-			
-			//Check for consistency as we cannot have players with the same colour and/or location or players that are null
-			//Tests testNullMrXThrow, testAnyNullDetectiveShouldThrow, testNullDetectiveShouldThrow
-			ArrayList<PlayerConfiguration> configurations = new ArrayList<>();
-			for (PlayerConfiguration configuration : restOfTheDetectives)
+		if (rounds.isEmpty()) {
+			throw new IllegalArgumentException("Empty rounds");
+		}
+
+		if (graph.isEmpty()) {
+			throw new IllegalArgumentException("Empty graph");
+		}
+
+		if (mrX.colour != BLACK) { // or mr.colour.isDetective()
+			throw new IllegalArgumentException("MrX should be Black");
+		}
+
+		// Loop over all detectives in temporary list to validate
+		ArrayList<PlayerConfiguration> configurations = new ArrayList<>(); // tempory list for validation
+
+		// add configurations to temporary list
+		for (PlayerConfiguration configuration : restOfTheDetectives) {
 			configurations.add(requireNonNull(configuration));
-			configurations.add(0, firstDetective);
-			configurations.add(0, mrX);
+		}
+		configurations.add(0, firstDetective);
+		configurations.add(0, mrX);
 
-			//Check if players have duplicated locations
-			Set<Integer> set = new HashSet<>();
-			for (PlayerConfiguration configuration : configurations) {
-			if (set.contains(configuration.location))
+		// Check if players have duplicated locations
+		Set<Integer> locations = new HashSet<>();
+		for (PlayerConfiguration configuration : configurations) {
+			if (locations.contains(configuration.location)) {
 				throw new IllegalArgumentException("Duplicate location");
-			set.add(configuration.location);
+			}
+			locations.add(configuration.location);
+		}
 
-			//Check if players have duplicated colours
-			Set<Colour> set2 = new HashSet<>();
-			for (PlayerConfiguration configuration2 : configurations) {
-				if (set2.contains(configuration2.colour))
-					throw new IllegalArgumentException("Duplicate colour");
-				set2.add(configuration2.colour);
+		//Check if players have duplicated colours
+		Set<Colour> colours = new HashSet<>();
+		for (PlayerConfiguration configuration2 : configurations) {
+			if (colours.contains(configuration2.colour)) {
+				throw new IllegalArgumentException("Duplicate colour");
+			}
+			colours.add(configuration2.colour);
+		}
+
+		// Check valid tickets
+		for (PlayerConfiguration configuration : configurations) {
+			if (configuration.colour.isDetective()) {
+				if (configuration.tickets.get(BUS) == null) {
+					throw new IllegalArgumentException("Detective is missing BUS tickets");
 				}
-			} //End of duplication check
 
-			
+				if (configuration.tickets.get(TAXI) == null) {
+					throw new IllegalArgumentException("Detective is missing TAXI tickets");
+				}
 
+				if (configuration.tickets.get(UNDERGROUND) == null) {
+					throw new IllegalArgumentException("Detective is missing UNDERGROUND tickets");
+				}
+				if (requireNonNull(configuration.tickets.get(SECRET)) != 0) {
+					throw new IllegalArgumentException("Detective should not have secret tickets");
+				}
+				if (requireNonNull(configuration.tickets.get(DOUBLE)) != 0) {
+					throw new IllegalArgumentException("Detective should not have secret tickets");
+				}
+			}
+
+		}
 	}
 	//End of Constructor
 
