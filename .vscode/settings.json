@@ -1,0 +1,10 @@
+{
+  "saveAndRun": {
+    "commands": [
+      {
+        "match": "\\.java$",
+        "cmd": "mvn clean test"
+      }
+    ]
+  }
+}

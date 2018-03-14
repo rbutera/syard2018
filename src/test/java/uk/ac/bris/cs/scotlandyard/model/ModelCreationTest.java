@@ -44,102 +44,91 @@ import static uk.ac.bris.cs.scotlandyard.model.Colour.YELLOW;
  * correct exception type is enough to proof the given model is designed to spec
  */
 
-public class  ModelCreationTest extends ParameterisedModelTestBase {
+public class ModelCreationTest extends ParameterisedModelTestBase {
 
 	private TestHarness harness;
-	@Before public void initialise() { harness = new TestHarness(); }
-	@After public void tearDown() { harness.forceReleaseShutdownLock(); }
+
+	@Before
+	public void initialise() {
+		harness = new TestHarness();
+	}
+
+	@After
+	public void tearDown() {
+		harness.forceReleaseShutdownLock();
+	}
 
 	@Test
 	public void testNullMrXShouldThrow() {
-		assertThatThrownBy(() -> createGame(null, doNothingPlayer(RED, 1)))
-				.isInstanceOf(NullPointerException.class);
+		assertThatThrownBy(() -> createGame(null, doNothingPlayer(RED, 1))).isInstanceOf(NullPointerException.class);
 	}
 
 	@Test
 	public void testNullDetectiveShouldThrow() {
-		assertThatThrownBy(() -> createGame(doNothingPlayer(BLACK, 1), null))
-				.isInstanceOf(NullPointerException.class);
+		assertThatThrownBy(() -> createGame(doNothingPlayer(BLACK, 1), null)).isInstanceOf(NullPointerException.class);
 	}
 
 	@Test
 	public void testAnyNullDetectiveShouldThrow() {
-		assertThatThrownBy(() -> createGame(
-				doNothingPlayer(BLACK, 1),
-				doNothingPlayer(BLUE, 2),
-				(PlayerConfiguration) null)).isInstanceOf(NullPointerException.class);
+		assertThatThrownBy(
+				() -> createGame(doNothingPlayer(BLACK, 1), doNothingPlayer(BLUE, 2), (PlayerConfiguration) null))
+						.isInstanceOf(NullPointerException.class);
 	}
 
 	@Test
 	public void testNoMrXShouldThrow() {
-		assertThatThrownBy(() -> createGame(
-				doNothingPlayer(BLUE, 1),
-				doNothingPlayer(RED, 2))).isInstanceOf(IllegalArgumentException.class);
+		assertThatThrownBy(() -> createGame(doNothingPlayer(BLUE, 1), doNothingPlayer(RED, 2)))
+				.isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	public void testMoreThanOneMrXShouldThrow() {
-		assertThatThrownBy(() -> createGame(
-				doNothingPlayer(BLACK, 1),
-				doNothingPlayer(BLACK, 2))).isInstanceOf(IllegalArgumentException.class);
+		assertThatThrownBy(() -> createGame(doNothingPlayer(BLACK, 1), doNothingPlayer(BLACK, 2)))
+				.isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	public void testSwappedMrXShouldThrow() {
-		assertThatThrownBy(() -> createGame(
-				doNothingPlayer(BLUE, 1),
-				doNothingPlayer(BLACK, 2))).isInstanceOf(IllegalArgumentException.class);
+		assertThatThrownBy(() -> createGame(doNothingPlayer(BLUE, 1), doNothingPlayer(BLACK, 2)))
+				.isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	public void testDuplicateDetectivesShouldThrow() {
-		assertThatThrownBy(() -> createGame(
-				doNothingPlayer(BLACK, 1),
-				doNothingPlayer(BLUE, 2),
-				doNothingPlayer(BLUE, 2))).isInstanceOf(IllegalArgumentException.class);
+		assertThatThrownBy(() -> createGame(doNothingPlayer(BLACK, 1), doNothingPlayer(BLUE, 2), doNothingPlayer(BLUE, 2)))
+				.isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	public void testLocationOverlapBetweenMrXAndDetectiveShouldThrow() {
-		assertThatThrownBy(() -> createGame(
-				doNothingPlayer(BLACK, 1),
-				doNothingPlayer(BLUE, 1))).isInstanceOf(IllegalArgumentException.class);
+		assertThatThrownBy(() -> createGame(doNothingPlayer(BLACK, 1), doNothingPlayer(BLUE, 1)))
+				.isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	public void testLocationOverlapBetweenDetectivesShouldThrow() {
-		assertThatThrownBy(() -> createGame(
-				doNothingPlayer(BLACK, 1),
-				doNothingPlayer(BLUE, 2),
-				doNothingPlayer(BLUE, 2))).isInstanceOf(IllegalArgumentException.class);
+		assertThatThrownBy(() -> createGame(doNothingPlayer(BLACK, 1), doNothingPlayer(BLUE, 2), doNothingPlayer(BLUE, 2)))
+				.isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	public void testDetectiveHaveSecretTicketShouldThrow() {
-		PlayerConfiguration blue = new Builder(BLUE).using(dummyPlayer())
-				.with(makeTickets(1, 1, 1, 0, 1))
-				.at(2).build();
-		assertThatThrownBy(() -> createGame(doNothingMrX(), blue))
-				.isInstanceOf(IllegalArgumentException.class);
+		PlayerConfiguration blue = new Builder(BLUE).using(dummyPlayer()).with(makeTickets(1, 1, 1, 0, 1)).at(2).build();
+		assertThatThrownBy(() -> createGame(doNothingMrX(), blue)).isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	public void testDetectiveHaveDoubleTicketShouldThrow() {
-		PlayerConfiguration blue = new Builder(BLUE).using(dummyPlayer())
-				.with(makeTickets(1, 1, 0, 1, 1))
-				.at(2).build();
-		assertThatThrownBy(() -> createGame(doNothingMrX(), blue))
-				.isInstanceOf(IllegalArgumentException.class);
+		PlayerConfiguration blue = new Builder(BLUE).using(dummyPlayer()).with(makeTickets(1, 1, 0, 1, 1)).at(2).build();
+		assertThatThrownBy(() -> createGame(doNothingMrX(), blue)).isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	public void testDetectiveMissingAnyTicketsShouldThrow() {
 		Map<Ticket, Integer> tickets = new HashMap<>();
 		tickets.put(Ticket.TAXI, 1);
-		PlayerConfiguration blue = new Builder(BLUE).using(dummyPlayer())
-				.with(tickets).at(2).build();
-		assertThatThrownBy(() -> createGame(doNothingMrX(), blue))
-				.isInstanceOf(IllegalArgumentException.class);
+		PlayerConfiguration blue = new Builder(BLUE).using(dummyPlayer()).with(tickets).at(2).build();
+		assertThatThrownBy(() -> createGame(doNothingMrX(), blue)).isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
@@ -147,103 +136,69 @@ public class  ModelCreationTest extends ParameterisedModelTestBase {
 		Map<Ticket, Integer> tickets = new HashMap<>();
 		tickets.put(Ticket.SECRET, 1);
 		tickets.put(Ticket.DOUBLE, 1);
-		PlayerConfiguration black = new Builder(BLACK).using(dummyPlayer())
-				.with(tickets).at(2).build();
-		assertThatThrownBy(() -> createGame(black, doNothingBlue()))
-				.isInstanceOf(IllegalArgumentException.class);
+		PlayerConfiguration black = new Builder(BLACK).using(dummyPlayer()).with(tickets).at(2).build();
+		assertThatThrownBy(() -> createGame(black, doNothingBlue())).isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	public void testEmptyRoundsShouldThrow() {
-		assertThatThrownBy(() -> createGame(
-				emptyList(),
-				defaultGraph(),
-				doNothingPlayer(BLACK, 1),
-				doNothingPlayer(BLUE, 1))).isInstanceOf(IllegalArgumentException.class);
+		assertThatThrownBy(
+				() -> createGame(emptyList(), defaultGraph(), doNothingPlayer(BLACK, 1), doNothingPlayer(BLUE, 1)))
+						.isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	public void testNullRoundsShouldThrow() {
-		assertThatThrownBy(() -> createGame(
-				null,
-				defaultGraph(),
-				doNothingPlayer(BLACK, 1),
-				doNothingPlayer(BLUE, 1))).isInstanceOf(NullPointerException.class);
+		assertThatThrownBy(() -> createGame(null, defaultGraph(), doNothingPlayer(BLACK, 1), doNothingPlayer(BLUE, 1)))
+				.isInstanceOf(NullPointerException.class);
 	}
 
 	@Test
 	public void testEmptyMapShouldThrow() {
-		assertThatThrownBy(() -> createGame(
-				emptyList(),
-				new UndirectedGraph<>(),
-				doNothingPlayer(BLACK, 1),
-				doNothingPlayer(BLUE, 1))).isInstanceOf(IllegalArgumentException.class);
+		assertThatThrownBy(
+				() -> createGame(emptyList(), new UndirectedGraph<>(), doNothingPlayer(BLACK, 1), doNothingPlayer(BLUE, 1)))
+						.isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	public void testNullMapShouldThrow() {
-		assertThatThrownBy(() -> createGame(
-				rounds(true),
-				(Graph<Integer, Transport>) null,
-				doNothingPlayer(BLACK, 1),
+		assertThatThrownBy(() -> createGame(rounds(true), (Graph<Integer, Transport>) null, doNothingPlayer(BLACK, 1),
 				doNothingPlayer(BLUE, 1))).isInstanceOf(NullPointerException.class);
 	}
 
 	@Test
 	public void testTwoPlayerDoesNotThrow() {
-		createGame(
-				doNothingMrX(),
-				doNothingBlue());
+		createGame(doNothingMrX(), doNothingBlue());
 	}
 
 	@Test
 	public void testSixPlayerDoesNotThrow() {
-		createGame(
-				doNothingMrX(),
-				doNothingRed(),
-				doNothingGreen(),
-				doNothingBlue(),
-				doNothingWhite(),
-				doNothingYellow());
+		createGame(doNothingMrX(), doNothingRed(), doNothingGreen(), doNothingBlue(), doNothingWhite(), doNothingYellow());
 	}
 
 	@Test
 	public void testGetRoundsMatchesSupplied() {
-		ScotlandYardGame game = createGame(
-				asList(true, false, true, true),
-				defaultGraph(),
-				doNothingMrX(),
+		ScotlandYardGame game = createGame(asList(true, false, true, true), defaultGraph(), doNothingMrX(),
 				doNothingBlue());
 		assertThat(game.getRounds()).containsExactly(true, false, true, true);
 	}
 
 	@Test
 	public void testGetRoundsIsImmutable() {
-		ScotlandYardGame game = createGame(
-				new ArrayList<>(asList(true, false)),
-				defaultGraph(),
-				doNothingMrX(),
+		ScotlandYardGame game = createGame(new ArrayList<>(asList(true, false)), defaultGraph(), doNothingMrX(),
 				doNothingBlue());
-		assertThatThrownBy(() -> game.getRounds().add(true))
-				.isInstanceOf(UnsupportedOperationException.class);
+		assertThatThrownBy(() -> game.getRounds().add(true)).isInstanceOf(UnsupportedOperationException.class);
 	}
 
 	@Test
 	public void testGetGraphMatchesSupplied() {
-		ScotlandYardGame game = createGame(
-				asList(true, false),
-				defaultGraph(),
-				doNothingMrX(),
-				doNothingBlue());
+		ScotlandYardGame game = createGame(asList(true, false), defaultGraph(), doNothingMrX(), doNothingBlue());
 		assertThat(game.getGraph()).isEqualTo(defaultGraph());
 	}
 
 	@Test
 	public void testGetGraphIsImmutable() {
-		ScotlandYardGame game = createGame(
-				asList(true, false),
-				new UndirectedGraph<>(defaultGraph()),
-				doNothingMrX(),
+		ScotlandYardGame game = createGame(asList(true, false), new UndirectedGraph<>(defaultGraph()), doNothingMrX(),
 				doNothingBlue());
 		assertThatThrownBy(() -> game.getGraph().addNode(new Node<>(500)))
 				.isInstanceOf(UnsupportedOperationException.class);
@@ -251,13 +206,8 @@ public class  ModelCreationTest extends ParameterisedModelTestBase {
 
 	@Test
 	public void testGetPlayersMatchesSupplied() {
-		ScotlandYardGame game = createGame(
-				asList(true, false, true, false),
-				defaultGraph(),
-				doNothingMrX(),
-				doNothingRed(),
-				doNothingGreen(),
-				doNothingBlue());
+		ScotlandYardGame game = createGame(asList(true, false, true, false), defaultGraph(), doNothingMrX(), doNothingRed(),
+				doNothingGreen(), doNothingBlue());
 		assertThat(game.getPlayers()).containsExactly(BLACK, RED, GREEN, BLUE);
 	}
 
@@ -285,8 +235,7 @@ public class  ModelCreationTest extends ParameterisedModelTestBase {
 
 	@Test
 	public void testGetRoundIsNOT_STARTEDInitially() {
-		assertThat(createValidSixPlayerGame().getCurrentRound()).isEqualTo(ScotlandYardGame
-				.NOT_STARTED);
+		assertThat(createValidSixPlayerGame().getCurrentRound()).isEqualTo(ScotlandYardGame.NOT_STARTED);
 	}
 
 	@Test
@@ -296,26 +245,15 @@ public class  ModelCreationTest extends ParameterisedModelTestBase {
 
 	@Test
 	public void testGetPlayersStartsWithBlack() {
-		ScotlandYardGame game = createGame(
-				asList(true, false, true, false),
-				defaultGraph(),
-				doNothingMrX(),
-				doNothingRed(),
-				doNothingGreen(),
-				doNothingBlue());
+		ScotlandYardGame game = createGame(asList(true, false, true, false), defaultGraph(), doNothingMrX(), doNothingRed(),
+				doNothingGreen(), doNothingBlue());
 		assertThat(game.getPlayers()).startsWith(BLACK);
 	}
 
 	@Test
 	public void testGetDetectiveLocationMatchesSupplied() {
-		ScotlandYardGame game = createGame(
-				asList(false, false, false),
-				defaultGraph(),
-				doNothingPlayer(BLACK, 35),
-				doNothingPlayer(RED, 26),
-				doNothingPlayer(BLUE, 50),
-				doNothingPlayer(GREEN, 94),
-				doNothingPlayer(WHITE, 155),
+		ScotlandYardGame game = createGame(asList(false, false, false), defaultGraph(), doNothingPlayer(BLACK, 35),
+				doNothingPlayer(RED, 26), doNothingPlayer(BLUE, 50), doNothingPlayer(GREEN, 94), doNothingPlayer(WHITE, 155),
 				doNothingPlayer(YELLOW, 174));
 		assertThat(game.getPlayerLocation(RED)).hasValue(26);
 		assertThat(game.getPlayerLocation(BLUE)).hasValue(50);
@@ -324,23 +262,16 @@ public class  ModelCreationTest extends ParameterisedModelTestBase {
 		assertThat(game.getPlayerLocation(YELLOW)).hasValue(174);
 	}
 
-
 	@Test
 	public void testGetPlayerLocationConcealsMrXLocationInitially() {
-		ScotlandYardGame game = createGame(
-				asList(false, false, false),
-				defaultGraph(),
-				doNothingPlayer(BLACK, 35),
+		ScotlandYardGame game = createGame(asList(false, false, false), defaultGraph(), doNothingPlayer(BLACK, 35),
 				doNothingPlayer(RED, 26));
 		assertThat(game.getPlayerLocation(BLACK)).hasValue(0);
 	}
 
 	@Test
 	public void testGetPlayerLocationForNonExistentPlayerIsEmpty() {
-		ScotlandYardGame game = createGame(
-				asList(false, false, false),
-				defaultGraph(),
-				doNothingPlayer(BLACK, 35),
+		ScotlandYardGame game = createGame(asList(false, false, false), defaultGraph(), doNothingPlayer(BLACK, 35),
 				doNothingPlayer(RED, 26));
 		assertThat(game.getPlayerLocation(BLACK)).isNotEmpty();
 		assertThat(game.getPlayerLocation(RED)).isNotEmpty();
@@ -352,11 +283,9 @@ public class  ModelCreationTest extends ParameterisedModelTestBase {
 
 	@Test
 	public void testGetPlayerTicketsMatchesSupplied() {
-		PlayerConfiguration mrX = new Builder(BLACK).using(dummyPlayer())
-				.with(makeTickets(1, 2, 3, 4, 5)).at(1).build();
+		PlayerConfiguration mrX = new Builder(BLACK).using(dummyPlayer()).with(makeTickets(1, 2, 3, 4, 5)).at(1).build();
 
-		PlayerConfiguration blue = new Builder(BLUE).using(dummyPlayer())
-				.with(makeTickets(5, 4, 3, 0, 0)).at(2).build();
+		PlayerConfiguration blue = new Builder(BLUE).using(dummyPlayer()).with(makeTickets(5, 4, 3, 0, 0)).at(2).build();
 		ScotlandYardGame game = createGame(mrX, blue);
 		assertTicketCount(game, BLACK, 1, 2, 3, 4, 5);
 		assertTicketCount(game, BLUE, 5, 4, 3, 0, 0);
@@ -364,11 +293,9 @@ public class  ModelCreationTest extends ParameterisedModelTestBase {
 
 	@Test
 	public void testGetPlayerTicketsForNonExistentPlayerIsEmpty() {
-		PlayerConfiguration mrX = new Builder(BLACK).using(dummyPlayer())
-				.with(makeTickets(1, 2, 3, 4, 5)).at(1).build();
+		PlayerConfiguration mrX = new Builder(BLACK).using(dummyPlayer()).with(makeTickets(1, 2, 3, 4, 5)).at(1).build();
 
-		PlayerConfiguration blue = new Builder(BLUE).using(dummyPlayer())
-				.with(makeTickets(5, 4, 3, 0, 0)).at(2).build();
+		PlayerConfiguration blue = new Builder(BLUE).using(dummyPlayer()).with(makeTickets(5, 4, 3, 0, 0)).at(2).build();
 		ScotlandYardGame game = createGame(mrX, blue);
 
 		// notice that when the player(colour) exists, getPlayerTickets() returns ticket count
@@ -382,6 +309,5 @@ public class  ModelCreationTest extends ParameterisedModelTestBase {
 		assertTicketsForAllTicketTypeSuchThat(game, WHITE, o -> assertThat(o).isEmpty());
 
 	}
-
 
 }

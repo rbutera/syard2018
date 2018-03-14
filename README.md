@@ -5,7 +5,12 @@ Java project for University of Bristol's Computer Science undergraduate programm
 
 ## Running Tests
 
-## Compilatiom
+`mvn -Dtest=ModelCreationTest test`
+`mvn -Dtest=ModelCreationTest#testNullMapShouldThrow* test`
+
+## Compilation
+
+`mvn clean compile exec:java`
 
 ## Links
 
