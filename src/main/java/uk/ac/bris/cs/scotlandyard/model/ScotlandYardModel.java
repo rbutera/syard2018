@@ -66,8 +66,11 @@ public class ScotlandYardModel implements ScotlandYardGame {
 				if (set2.contains(configuration2.colour))
 					throw new IllegalArgumentException("Duplicate colour");
 				set2.add(configuration2.colour);
-			}
-		}
+				}
+			} //End of duplication check
+
+			
+
 	}
 	//End of Constructor
 

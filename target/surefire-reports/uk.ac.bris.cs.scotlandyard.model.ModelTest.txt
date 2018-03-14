@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: uk.ac.bris.cs.scotlandyard.model.ModelTest
 -------------------------------------------------------------------------------
-Tests run: 124, Failures: 13, Errors: 94, Skipped: 0, Time elapsed: 0.671 s <<< FAILURE! - in uk.ac.bris.cs.scotlandyard.model.ModelTest
-testMrXMissingAnyTicketsShouldThrow[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.179 s  <<< FAILURE!
+Tests run: 124, Failures: 13, Errors: 94, Skipped: 0, Time elapsed: 0.93 s <<< FAILURE! - in uk.ac.bris.cs.scotlandyard.model.ModelTest
+testMrXMissingAnyTicketsShouldThrow[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.214 s  <<< FAILURE!
 java.lang.AssertionError: 
 
 Expecting code to raise a throwable.
@@ -51,7 +51,7 @@ Expecting code to raise a throwable.
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testDetectiveMissingAnyTicketsShouldThrow[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.002 s  <<< FAILURE!
+testDetectiveMissingAnyTicketsShouldThrow[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.003 s  <<< FAILURE!
 java.lang.AssertionError: 
 
 Expecting code to raise a throwable.
@@ -100,9 +100,9 @@ Expecting code to raise a throwable.
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testGetGraphMatchesSupplied[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.002 s  <<< ERROR!
+testGetGraphMatchesSupplied[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getGraph(ScotlandYardModel.java:149)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getGraph(ScotlandYardModel.java:152)
 	at uk.ac.bris.cs.scotlandyard.model.ModelCreationTest.testGetGraphMatchesSupplied(ModelCreationTest.java:238)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -148,7 +148,7 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testDetectiveHaveDoubleTicketShouldThrow[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.002 s  <<< FAILURE!
+testDetectiveHaveDoubleTicketShouldThrow[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.003 s  <<< FAILURE!
 java.lang.AssertionError: 
 
 Expecting code to raise a throwable.
@@ -197,9 +197,9 @@ Expecting code to raise a throwable.
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testWinningPlayerIsEmptyInitially[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0 s  <<< ERROR!
+testWinningPlayerIsEmptyInitially[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getWinningPlayers(ScotlandYardModel.java:107)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getWinningPlayers(ScotlandYardModel.java:110)
 	at uk.ac.bris.cs.scotlandyard.model.ModelCreationTest.testWinningPlayerIsEmptyInitially(ModelCreationTest.java:277)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -245,9 +245,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testGetPlayerTicketsMatchesSupplied[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.027 s  <<< ERROR!
+testGetPlayerTicketsMatchesSupplied[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.039 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getPlayerTickets(ScotlandYardModel.java:119)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getPlayerTickets(ScotlandYardModel.java:122)
 	at uk.ac.bris.cs.scotlandyard.auxiliary.TestGames.lambda$assertTicketCount$0(TestGames.java:148)
 	at com.google.common.collect.RegularImmutableMap.forEach(RegularImmutableMap.java:154)
 	at uk.ac.bris.cs.scotlandyard.auxiliary.TestGames.assertTicketCount(TestGames.java:147)
@@ -296,7 +296,7 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testGetPlayersIsImmutable[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.022 s  <<< FAILURE!
+testGetPlayersIsImmutable[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.026 s  <<< FAILURE!
 java.lang.AssertionError: 
 
 Expecting:
@@ -305,7 +305,7 @@ to be an instance of:
   <java.lang.UnsupportedOperationException>
 but was:
   <"java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getPlayers(ScotlandYardModel.java:101)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getPlayers(ScotlandYardModel.java:104)
 	at uk.ac.bris.cs.scotlandyard.model.ModelCreationTest.lambda$testGetPlayersIsImmutable$19(ModelCreationTest.java:266)
 	at org.assertj.core.api.ThrowableAssert.catchThrowable(ThrowableAssert.java:62)
 	at org.assertj.core.api.AssertionsForClassTypes.catchThrowable(AssertionsForClassTypes.java:779)
@@ -401,9 +401,9 @@ but was:
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testGetPlayersMatchesSupplied[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.001 s  <<< ERROR!
+testGetPlayersMatchesSupplied[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.002 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getPlayers(ScotlandYardModel.java:101)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getPlayers(ScotlandYardModel.java:104)
 	at uk.ac.bris.cs.scotlandyard.model.ModelCreationTest.testGetPlayersMatchesSupplied(ModelCreationTest.java:261)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -449,9 +449,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testGetPlayerIsMrXInitially[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.001 s  <<< ERROR!
+testGetPlayerIsMrXInitially[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.002 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getCurrentPlayer(ScotlandYardModel.java:131)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getCurrentPlayer(ScotlandYardModel.java:134)
 	at uk.ac.bris.cs.scotlandyard.model.ModelCreationTest.testGetPlayerIsMrXInitially(ModelCreationTest.java:294)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -497,7 +497,7 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testWinningPlayerIsImmutable[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.004 s  <<< FAILURE!
+testWinningPlayerIsImmutable[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.006 s  <<< FAILURE!
 java.lang.AssertionError: 
 
 Expecting:
@@ -506,7 +506,7 @@ to be an instance of:
   <java.lang.UnsupportedOperationException>
 but was:
   <"java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getWinningPlayers(ScotlandYardModel.java:107)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getWinningPlayers(ScotlandYardModel.java:110)
 	at uk.ac.bris.cs.scotlandyard.model.ModelCreationTest.lambda$testWinningPlayerIsImmutable$20(ModelCreationTest.java:282)
 	at org.assertj.core.api.ThrowableAssert.catchThrowable(ThrowableAssert.java:62)
 	at org.assertj.core.api.AssertionsForClassTypes.catchThrowable(AssertionsForClassTypes.java:779)
@@ -602,9 +602,9 @@ but was:
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testGetPlayerTicketsForNonExistentPlayerIsEmpty[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.001 s  <<< ERROR!
+testGetPlayerTicketsForNonExistentPlayerIsEmpty[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.004 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getPlayerTickets(ScotlandYardModel.java:119)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getPlayerTickets(ScotlandYardModel.java:122)
 	at uk.ac.bris.cs.scotlandyard.auxiliary.TestGames.assertTicketsForAllTicketTypeSuchThat(TestGames.java:157)
 	at uk.ac.bris.cs.scotlandyard.model.ModelCreationTest.testGetPlayerTicketsForNonExistentPlayerIsEmpty(ModelCreationTest.java:376)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
@@ -651,9 +651,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testGameIsNotOverInitially[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.001 s  <<< ERROR!
+testGameIsNotOverInitially[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.002 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.isGameOver(ScotlandYardModel.java:125)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.isGameOver(ScotlandYardModel.java:128)
 	at uk.ac.bris.cs.scotlandyard.model.ModelCreationTest.testGameIsNotOverInitially(ModelCreationTest.java:272)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -699,9 +699,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testGetRoundsMatchesSupplied[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.001 s  <<< ERROR!
+testGetRoundsMatchesSupplied[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.004 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getRounds(ScotlandYardModel.java:143)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getRounds(ScotlandYardModel.java:146)
 	at uk.ac.bris.cs.scotlandyard.model.ModelCreationTest.testGetRoundsMatchesSupplied(ModelCreationTest.java:217)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -749,7 +749,7 @@ java.lang.RuntimeException: Implement me
 
 testGetPlayerLocationForNonExistentPlayerIsEmpty[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getPlayerLocation(ScotlandYardModel.java:113)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getPlayerLocation(ScotlandYardModel.java:116)
 	at uk.ac.bris.cs.scotlandyard.model.ModelCreationTest.testGetPlayerLocationForNonExistentPlayerIsEmpty(ModelCreationTest.java:345)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -795,7 +795,7 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testGetGraphIsImmutable[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.006 s  <<< FAILURE!
+testGetGraphIsImmutable[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.01 s  <<< FAILURE!
 java.lang.AssertionError: 
 
 Expecting:
@@ -804,7 +804,7 @@ to be an instance of:
   <java.lang.UnsupportedOperationException>
 but was:
   <"java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getGraph(ScotlandYardModel.java:149)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getGraph(ScotlandYardModel.java:152)
 	at uk.ac.bris.cs.scotlandyard.model.ModelCreationTest.lambda$testGetGraphIsImmutable$18(ModelCreationTest.java:248)
 	at org.assertj.core.api.ThrowableAssert.catchThrowable(ThrowableAssert.java:62)
 	at org.assertj.core.api.AssertionsForClassTypes.catchThrowable(AssertionsForClassTypes.java:779)
@@ -900,7 +900,7 @@ but was:
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testDetectiveHaveSecretTicketShouldThrow[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.001 s  <<< FAILURE!
+testDetectiveHaveSecretTicketShouldThrow[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.004 s  <<< FAILURE!
 java.lang.AssertionError: 
 
 Expecting code to raise a throwable.
@@ -949,9 +949,9 @@ Expecting code to raise a throwable.
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testGetRoundIsNOT_STARTEDInitially[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.002 s  <<< ERROR!
+testGetRoundIsNOT_STARTEDInitially[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getCurrentRound(ScotlandYardModel.java:137)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getCurrentRound(ScotlandYardModel.java:140)
 	at uk.ac.bris.cs.scotlandyard.model.ModelCreationTest.testGetRoundIsNOT_STARTEDInitially(ModelCreationTest.java:288)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -999,7 +999,7 @@ java.lang.RuntimeException: Implement me
 
 testGetPlayersStartsWithBlack[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getPlayers(ScotlandYardModel.java:101)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getPlayers(ScotlandYardModel.java:104)
 	at uk.ac.bris.cs.scotlandyard.model.ModelCreationTest.testGetPlayersStartsWithBlack(ModelCreationTest.java:306)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -1045,9 +1045,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testGetDetectiveLocationMatchesSupplied[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.001 s  <<< ERROR!
+testGetDetectiveLocationMatchesSupplied[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.002 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getPlayerLocation(ScotlandYardModel.java:113)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getPlayerLocation(ScotlandYardModel.java:116)
 	at uk.ac.bris.cs.scotlandyard.model.ModelCreationTest.testGetDetectiveLocationMatchesSupplied(ModelCreationTest.java:320)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -1093,9 +1093,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testGetPlayerLocationConcealsMrXLocationInitially[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.001 s  <<< ERROR!
+testGetPlayerLocationConcealsMrXLocationInitially[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.002 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getPlayerLocation(ScotlandYardModel.java:113)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getPlayerLocation(ScotlandYardModel.java:116)
 	at uk.ac.bris.cs.scotlandyard.model.ModelCreationTest.testGetPlayerLocationConcealsMrXLocationInitially(ModelCreationTest.java:335)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -1141,7 +1141,7 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testGetRoundsIsImmutable[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.004 s  <<< FAILURE!
+testGetRoundsIsImmutable[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.006 s  <<< FAILURE!
 java.lang.AssertionError: 
 
 Expecting:
@@ -1150,7 +1150,7 @@ to be an instance of:
   <java.lang.UnsupportedOperationException>
 but was:
   <"java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getRounds(ScotlandYardModel.java:143)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getRounds(ScotlandYardModel.java:146)
 	at uk.ac.bris.cs.scotlandyard.model.ModelCreationTest.lambda$testGetRoundsIsImmutable$17(ModelCreationTest.java:227)
 	at org.assertj.core.api.ThrowableAssert.catchThrowable(ThrowableAssert.java:62)
 	at org.assertj.core.api.AssertionsForClassTypes.catchThrowable(AssertionsForClassTypes.java:779)
@@ -1246,9 +1246,9 @@ but was:
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testGameOverIfMrXCaptured[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest)  Time elapsed: 0.025 s  <<< ERROR!
+testGameOverIfMrXCaptured[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest)  Time elapsed: 0.044 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -1298,9 +1298,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testGameOverBeforeAnyRoundWithTerminatingConfiguration[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest)  Time elapsed: 0 s  <<< ERROR!
+testGameOverBeforeAnyRoundWithTerminatingConfiguration[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.isGameOver(ScotlandYardModel.java:125)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.isGameOver(ScotlandYardModel.java:128)
 	at uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest.testGameOverBeforeAnyRoundWithTerminatingConfiguration(ModelGameOverTest.java:200)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -1346,9 +1346,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testGameOverAfterAllRoundsUsed[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest)  Time elapsed: 0.001 s  <<< ERROR!
+testGameOverAfterAllRoundsUsed[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest)  Time elapsed: 0.002 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -1398,9 +1398,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testStartRoundShouldThrowIfGameAlreadyOver[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest)  Time elapsed: 0.001 s  <<< ERROR!
+testStartRoundShouldThrowIfGameAlreadyOver[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest)  Time elapsed: 0.003 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.isGameOver(ScotlandYardModel.java:125)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.isGameOver(ScotlandYardModel.java:128)
 	at uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest.testStartRoundShouldThrowIfGameAlreadyOver(ModelGameOverTest.java:38)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -1448,7 +1448,7 @@ java.lang.RuntimeException: Implement me
 
 testGameOverIfMrXStuck[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -1498,9 +1498,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testGameOverIfAllDetectivesStuck[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest)  Time elapsed: 0 s  <<< ERROR!
+testGameOverIfAllDetectivesStuck[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest)  Time elapsed: 0.003 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -1550,9 +1550,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testGameNotOverIfMrXCorneredButCanStillEscape[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest)  Time elapsed: 0.002 s  <<< ERROR!
+testGameNotOverIfMrXCorneredButCanStillEscape[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest)  Time elapsed: 0.005 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -1602,9 +1602,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testGameNotOverWhenThereIsStillRoundsLeft[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest)  Time elapsed: 0.001 s  <<< ERROR!
+testGameNotOverWhenThereIsStillRoundsLeft[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest)  Time elapsed: 0.002 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -1655,9 +1655,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testWinningPlayerIsEmptyBeforeGameOver[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest)  Time elapsed: 0.001 s  <<< ERROR!
+testWinningPlayerIsEmptyBeforeGameOver[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest)  Time elapsed: 0.002 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -1709,7 +1709,7 @@ java.lang.RuntimeException: Implement me
 
 testGameNotOverBeforeAnyRoundWithNonTerminatingConfiguration[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.isGameOver(ScotlandYardModel.java:125)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.isGameOver(ScotlandYardModel.java:128)
 	at uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest.testGameNotOverBeforeAnyRoundWithNonTerminatingConfiguration(ModelGameOverTest.java:190)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -1755,9 +1755,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testDetectiveWinsIfMrXCornered[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest)  Time elapsed: 0.001 s  <<< ERROR!
+testDetectiveWinsIfMrXCornered[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest)  Time elapsed: 0.003 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -1809,7 +1809,7 @@ java.lang.RuntimeException: Implement me
 
 testGameNotOverIfMrXWasFreedBeforeNextRotation[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -1859,9 +1859,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testGameWhereMrXWasNeverCaught[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSixPlayerPlayOutTestComplex)  Time elapsed: 0.041 s  <<< ERROR!
+testGameWhereMrXWasNeverCaught[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSixPlayerPlayOutTestComplex)  Time elapsed: 0.052 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:77)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:80)
 	at uk.ac.bris.cs.scotlandyard.model.ModelSixPlayerPlayOutTestComplex.testGameWhereMrXWasNeverCaught(ModelSixPlayerPlayOutTestComplex.java:2707)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -1907,9 +1907,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testGameWhereMrXPickedConsecutiveDoubleMoves[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSixPlayerPlayOutTestComplex)  Time elapsed: 0 s  <<< ERROR!
+testGameWhereMrXPickedConsecutiveDoubleMoves[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSixPlayerPlayOutTestComplex)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:77)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:80)
 	at uk.ac.bris.cs.scotlandyard.model.ModelSixPlayerPlayOutTestComplex.testGameWhereMrXPickedConsecutiveDoubleMoves(ModelSixPlayerPlayOutTestComplex.java:82)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -1957,7 +1957,7 @@ java.lang.RuntimeException: Implement me
 
 testGameWhereSomeoneRanOutOfTickets[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSixPlayerPlayOutTestComplex)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:77)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:80)
 	at uk.ac.bris.cs.scotlandyard.model.ModelSixPlayerPlayOutTestComplex.testGameWhereSomeoneRanOutOfTickets(ModelSixPlayerPlayOutTestComplex.java:1676)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -2003,9 +2003,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testGameWhereMrXPickedConsecutiveDoubleMovesAtTimes[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSixPlayerPlayOutTestComplex)  Time elapsed: 0.001 s  <<< ERROR!
+testGameWhereMrXPickedConsecutiveDoubleMovesAtTimes[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSixPlayerPlayOutTestComplex)  Time elapsed: 0 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:77)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:80)
 	at uk.ac.bris.cs.scotlandyard.model.ModelSixPlayerPlayOutTestComplex.testGameWhereMrXPickedConsecutiveDoubleMovesAtTimes(ModelSixPlayerPlayOutTestComplex.java:673)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -2053,7 +2053,7 @@ java.lang.RuntimeException: Implement me
 
 testGameWhereMrXNeverPickedADoubleMove[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSixPlayerPlayOutTestSimple)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:77)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:80)
 	at uk.ac.bris.cs.scotlandyard.model.ModelSixPlayerPlayOutTestSimple.testGameWhereMrXNeverPickedADoubleMove(ModelSixPlayerPlayOutTestSimple.java:639)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -2101,7 +2101,7 @@ java.lang.RuntimeException: Implement me
 
 testGameWhereMrXCapturedAtLastMoveBeforeNextRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSixPlayerPlayOutTestSimple)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:77)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:80)
 	at uk.ac.bris.cs.scotlandyard.model.ModelSixPlayerPlayOutTestSimple.testGameWhereMrXCapturedAtLastMoveBeforeNextRound(ModelSixPlayerPlayOutTestSimple.java:79)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -2149,7 +2149,7 @@ java.lang.RuntimeException: Implement me
 
 testGameWhereSomePlayersAreNeverInvolved[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSixPlayerPlayOutTestSimple)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:77)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:80)
 	at uk.ac.bris.cs.scotlandyard.model.ModelSixPlayerPlayOutTestSimple.testGameWhereSomePlayersAreNeverInvolved(ModelSixPlayerPlayOutTestSimple.java:408)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -2197,7 +2197,7 @@ java.lang.RuntimeException: Implement me
 
 testGameWhereMrXNeverPickedADoubleMove[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelTwoPlayerPlayOutTestSimple)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:77)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:80)
 	at uk.ac.bris.cs.scotlandyard.model.ModelTwoPlayerPlayOutTestSimple.testGameWhereMrXNeverPickedADoubleMove(ModelTwoPlayerPlayOutTestSimple.java:63)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -2245,7 +2245,7 @@ java.lang.RuntimeException: Implement me
 
 testGetCurrentPlayerCorrectForAllRounds[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelRoundTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:77)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:80)
 	at uk.ac.bris.cs.scotlandyard.model.ModelRoundTest.testGetCurrentPlayerCorrectForAllRounds(ModelRoundTest.java:95)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -2293,7 +2293,7 @@ java.lang.RuntimeException: Implement me
 
 testCallbackPositionMatchPlayerLocationDuringRevealRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelRoundTest)  Time elapsed: 0.002 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -2343,9 +2343,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testCallbackPositionMatchPlayerLocationDuringHiddenRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelRoundTest)  Time elapsed: 0.001 s  <<< ERROR!
+testCallbackPositionMatchPlayerLocationDuringHiddenRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelRoundTest)  Time elapsed: 0.002 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -2395,9 +2395,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testRoundIncrementsAfterAllPlayersHavePlayed[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelRoundTest)  Time elapsed: 0.004 s  <<< ERROR!
+testRoundIncrementsAfterAllPlayersHavePlayed[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelRoundTest)  Time elapsed: 0.003 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -2450,7 +2450,7 @@ java.lang.RuntimeException: Implement me
 
 testRoundRotationNotifiesAllPlayer[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelRoundTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -2502,7 +2502,7 @@ java.lang.RuntimeException: Implement me
 
 testCallbackIsNotNull[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelRoundTest)  Time elapsed: 0.002 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -2554,7 +2554,7 @@ java.lang.RuntimeException: Implement me
 
 testRoundIncrementsCorrectlyForDoubleMove[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelRoundTest)  Time elapsed: 0 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:77)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:80)
 	at uk.ac.bris.cs.scotlandyard.model.ModelRoundTest.testRoundIncrementsCorrectlyForDoubleMove(ModelRoundTest.java:139)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -2600,9 +2600,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testPlayerNotified[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelRoundTest)  Time elapsed: 0.001 s  <<< ERROR!
+testPlayerNotified[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelRoundTest)  Time elapsed: 0.002 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -2652,14 +2652,14 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testCallbackWithNullWillThrow[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelRoundTest)  Time elapsed: 0.015 s  <<< FAILURE!
+testCallbackWithNullWillThrow[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelRoundTest)  Time elapsed: 0.018 s  <<< FAILURE!
 java.lang.AssertionError: 
 Error at ModelRoundTest.testCallbackWithNullWillThrow(ModelRoundTest.java:198):
 
 Wrong exception thrown: NullPointerException expected but found:
 java.lang.RuntimeException: Implement me
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -2756,7 +2756,7 @@ java.lang.RuntimeException: Implement me
 
 testRoundWaitsForPlayerWhoDoesNotRespond[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelRoundTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -2806,9 +2806,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testInitialPositionMatchFirstRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelRoundTest)  Time elapsed: 0.001 s  <<< ERROR!
+testInitialPositionMatchFirstRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelRoundTest)  Time elapsed: 0.002 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -2860,7 +2860,7 @@ java.lang.RuntimeException: Implement me
 
 testMrXIsTheFirstToPlay[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelRoundTest)  Time elapsed: 0 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -2917,7 +2917,7 @@ Error at ModelRoundTest.testCallbackWithIllegalMoveNotInGivenMovesWillThrow(Mode
 Wrong exception thrown: IllegalArgumentException expected but found:
 java.lang.RuntimeException: Implement me
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -3012,9 +3012,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testMrXLocationCorrectWithOneRevealRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest)  Time elapsed: 0.002 s  <<< ERROR!
+testMrXLocationCorrectWithOneRevealRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest)  Time elapsed: 0.003 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getPlayerLocation(ScotlandYardModel.java:113)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getPlayerLocation(ScotlandYardModel.java:116)
 	at uk.ac.bris.cs.scotlandyard.harness.Requirement.lambda$playerIsAt$10(Requirement.java:131)
 	at uk.ac.bris.cs.scotlandyard.harness.Requirement.lambda$fromAssertion$6(Requirement.java:107)
 	at uk.ac.bris.cs.scotlandyard.harness.Requirement$1.check(Requirement.java:45)
@@ -3071,7 +3071,7 @@ java.lang.RuntimeException: Implement me
 
 testMrXLocationCorrectWithOneHiddenRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getPlayerLocation(ScotlandYardModel.java:113)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getPlayerLocation(ScotlandYardModel.java:116)
 	at uk.ac.bris.cs.scotlandyard.harness.Requirement.lambda$playerIsAt$10(Requirement.java:131)
 	at uk.ac.bris.cs.scotlandyard.harness.Requirement.lambda$fromAssertion$6(Requirement.java:107)
 	at uk.ac.bris.cs.scotlandyard.harness.Requirement$1.check(Requirement.java:45)
@@ -3128,7 +3128,7 @@ java.lang.RuntimeException: Implement me
 
 testDetectiveLocationAlwaysCorrect[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest)  Time elapsed: 0.002 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getPlayerLocation(ScotlandYardModel.java:113)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getPlayerLocation(ScotlandYardModel.java:116)
 	at uk.ac.bris.cs.scotlandyard.harness.Requirement.lambda$playerIsAt$10(Requirement.java:131)
 	at uk.ac.bris.cs.scotlandyard.harness.Requirement.lambda$fromAssertion$6(Requirement.java:107)
 	at uk.ac.bris.cs.scotlandyard.harness.Requirement$1.check(Requirement.java:45)
@@ -3184,9 +3184,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testMrXLocationCorrectOnRevealRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest)  Time elapsed: 0.001 s  <<< ERROR!
+testMrXLocationCorrectOnRevealRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest)  Time elapsed: 0.002 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getPlayerLocation(ScotlandYardModel.java:113)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getPlayerLocation(ScotlandYardModel.java:116)
 	at uk.ac.bris.cs.scotlandyard.harness.Requirement.lambda$playerIsAt$10(Requirement.java:131)
 	at uk.ac.bris.cs.scotlandyard.harness.Requirement.lambda$fromAssertion$6(Requirement.java:107)
 	at uk.ac.bris.cs.scotlandyard.harness.Requirement$1.check(Requirement.java:45)
@@ -3242,9 +3242,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testDetectiveTicketsGivenToMrXOnlyAfterUse[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest)  Time elapsed: 0.003 s  <<< ERROR!
+testDetectiveTicketsGivenToMrXOnlyAfterUse[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest)  Time elapsed: 0.004 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -3294,9 +3294,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testMrXMovesToDestinationAfterDoubleMove[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest)  Time elapsed: 0.001 s  <<< ERROR!
+testMrXMovesToDestinationAfterDoubleMove[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest)  Time elapsed: 0.002 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -3348,7 +3348,7 @@ java.lang.RuntimeException: Implement me
 
 testMrXCorrectTicketDecrementsAfterDoubleMove[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -3400,7 +3400,7 @@ java.lang.RuntimeException: Implement me
 
 testMrXCorrectTicketDecrementsByOneAfterTicketMove[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -3452,7 +3452,7 @@ java.lang.RuntimeException: Implement me
 
 testDetectiveTicketCountHoldsAfterPassMove[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest)  Time elapsed: 0.002 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -3504,7 +3504,7 @@ java.lang.RuntimeException: Implement me
 
 testDetectivePassMoveDoesNotAffectMrX[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -3554,9 +3554,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testMrXMovesToDestinationAfterTicketMove[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest)  Time elapsed: 0.002 s  <<< ERROR!
+testMrXMovesToDestinationAfterTicketMove[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -3606,9 +3606,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testMrXLocationIsHisLastRevealLocationOnHiddenRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest)  Time elapsed: 0.002 s  <<< ERROR!
+testMrXLocationIsHisLastRevealLocationOnHiddenRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest)  Time elapsed: 0.003 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getPlayerLocation(ScotlandYardModel.java:113)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getPlayerLocation(ScotlandYardModel.java:116)
 	at uk.ac.bris.cs.scotlandyard.harness.Requirement.lambda$playerIsAt$10(Requirement.java:131)
 	at uk.ac.bris.cs.scotlandyard.harness.Requirement.lambda$fromAssertion$6(Requirement.java:107)
 	at uk.ac.bris.cs.scotlandyard.harness.Requirement$1.check(Requirement.java:45)
@@ -3666,9 +3666,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testDetectiveLocationHoldsAfterPassMove[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest)  Time elapsed: 0.001 s  <<< ERROR!
+testDetectiveLocationHoldsAfterPassMove[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest)  Time elapsed: 0.002 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -3718,9 +3718,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testDetectiveCorrectTicketDecrementsByOneAfterTicketMove[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest)  Time elapsed: 0.001 s  <<< ERROR!
+testDetectiveCorrectTicketDecrementsByOneAfterTicketMove[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest)  Time elapsed: 0.002 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -3770,9 +3770,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testDetectiveMovesToDestinationAfterTicketMove[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest)  Time elapsed: 0.002 s  <<< ERROR!
+testDetectiveMovesToDestinationAfterTicketMove[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -3822,9 +3822,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testMrXAt104ShouldProduce60ValidMoves[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0.004 s  <<< ERROR!
+testMrXAt104ShouldProduce60ValidMoves[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0.005 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -3876,7 +3876,7 @@ java.lang.RuntimeException: Implement me
 
 testDetectiveMovesOmittedIfNotEnoughTickets[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -3926,9 +3926,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testMrXNoTicketMovesIfNoTicketMoveTickets[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0.001 s  <<< ERROR!
+testMrXNoTicketMovesIfNoTicketMoveTickets[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0.002 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -3980,7 +3980,7 @@ java.lang.RuntimeException: Implement me
 
 testDetectiveMoveNotOmittedIfDestinationOccupiedByMrX[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -4030,9 +4030,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testDetectiveAt128MovesShouldProduce13ValidMoves[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0 s  <<< ERROR!
+testDetectiveAt128MovesShouldProduce13ValidMoves[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -4084,7 +4084,7 @@ java.lang.RuntimeException: Implement me
 
 testMrXMovesOmittedIfDestinationOccupiedByDetectives[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -4136,7 +4136,7 @@ java.lang.RuntimeException: Implement me
 
 testMrXMustHaveEnoughTicketsForDoubleMove[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -4188,7 +4188,7 @@ java.lang.RuntimeException: Implement me
 
 testMrXOnlySecretMovesIfOnlySecretMoveTicketsLeft[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -4238,9 +4238,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testDetectiveMoveOmittedIfLocationOccupiedByOtherDetective[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0 s  <<< ERROR!
+testDetectiveMoveOmittedIfLocationOccupiedByOtherDetective[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -4292,7 +4292,7 @@ java.lang.RuntimeException: Implement me
 
 testMrXNoDoubleMovesIfNotEnoughRoundLeft[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -4344,7 +4344,7 @@ java.lang.RuntimeException: Implement me
 
 testMrXNoDoubleMovesIfNoDoubleMoveTickets[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -4396,7 +4396,7 @@ java.lang.RuntimeException: Implement me
 
 testMrXDoubleMoveIntermediateMovesOmittedIfDestinationOccupiedByDetectives[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -4448,7 +4448,7 @@ java.lang.RuntimeException: Implement me
 
 testMrXNoSecretMovesIfNoSecretMoveTickets[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -4500,7 +4500,7 @@ java.lang.RuntimeException: Implement me
 
 testDetectiveWithNoValidMovesShouldProducePassMove[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:89)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.startRotate(ScotlandYardModel.java:92)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.lambda$runInteractions$1(TestHarness.java:230)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:243)
 	at uk.ac.bris.cs.scotlandyard.harness.TestHarness$TestAssert.runInteractions(TestHarness.java:232)
@@ -4550,9 +4550,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testDoubleMoveShouldNotifyRoundStartTwoTimesInOrder[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.001 s  <<< ERROR!
+testDoubleMoveShouldNotifyRoundStartTwoTimesInOrder[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.002 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:77)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:80)
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testDoubleMoveShouldNotifyRoundStartTwoTimesInOrder(ModelSpectatorTest.java:132)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -4598,9 +4598,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testAllPlayersPlayedWithOneDoubleMoveShouldNotifyRotationCompletedOnce[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0 s  <<< ERROR!
+testAllPlayersPlayedWithOneDoubleMoveShouldNotifyRotationCompletedOnce[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:77)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:80)
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testAllPlayersPlayedWithOneDoubleMoveShouldNotifyRotationCompletedOnce(ModelSpectatorTest.java:345)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -4646,9 +4646,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testDoubleMoveShouldNotifyMoveMadeThreeTimesInOrder[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0 s  <<< ERROR!
+testDoubleMoveShouldNotifyMoveMadeThreeTimesInOrder[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.003 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:77)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:80)
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testDoubleMoveShouldNotifyMoveMadeThreeTimesInOrder(ModelSpectatorTest.java:156)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -4694,9 +4694,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testDoubleMoveShouldNotifyWithCorrectTicketAndLastDestinationDuringHiddenRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.001 s  <<< ERROR!
+testDoubleMoveShouldNotifyWithCorrectTicketAndLastDestinationDuringHiddenRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:77)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:80)
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testDoubleMoveShouldNotifyWithCorrectTicketAndLastDestinationDuringHiddenRound(ModelSpectatorTest.java:175)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -4751,7 +4751,7 @@ to be an instance of:
   <java.lang.IllegalArgumentException>
 but was:
   <"java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.unregisterSpectator(ScotlandYardModel.java:83)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.unregisterSpectator(ScotlandYardModel.java:86)
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.lambda$testUnregisterIllegalSpectatorShouldThrow$4(ModelSpectatorTest.java:122)
 	at org.assertj.core.api.ThrowableAssert.catchThrowable(ThrowableAssert.java:62)
 	at org.assertj.core.api.AssertionsForClassTypes.catchThrowable(AssertionsForClassTypes.java:779)
@@ -4847,9 +4847,9 @@ but was:
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testAllPlayersPlayedShouldNotifyRotationCompletedOnce[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0 s  <<< ERROR!
+testAllPlayersPlayedShouldNotifyRotationCompletedOnce[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:77)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:80)
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testAllPlayersPlayedShouldNotifyRotationCompletedOnce(ModelSpectatorTest.java:309)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -4895,9 +4895,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testDoubleMoveShouldNotifyWithCorrectTicketAndDestinationWhenGoingFromRevealToHiddenRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.001 s  <<< ERROR!
+testDoubleMoveShouldNotifyWithCorrectTicketAndDestinationWhenGoingFromRevealToHiddenRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:77)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:80)
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testDoubleMoveShouldNotifyWithCorrectTicketAndDestinationWhenGoingFromRevealToHiddenRound(ModelSpectatorTest.java:214)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -4945,7 +4945,7 @@ java.lang.RuntimeException: Implement me
 
 testDetectiveTicketMoveShouldNotifyWithCorrectTicketAndDestinationDuringRevealRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:77)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:80)
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testDetectiveTicketMoveShouldNotifyWithCorrectTicketAndDestinationDuringRevealRound(ModelSpectatorTest.java:271)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -4991,9 +4991,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testDetectiveTicketMoveShouldNotifyWithCorrectTicketAndDestinationDuringHiddenRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0 s  <<< ERROR!
+testDetectiveTicketMoveShouldNotifyWithCorrectTicketAndDestinationDuringHiddenRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:77)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:80)
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testDetectiveTicketMoveShouldNotifyWithCorrectTicketAndDestinationDuringHiddenRound(ModelSpectatorTest.java:252)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -5041,7 +5041,7 @@ java.lang.RuntimeException: Implement me
 
 testFinalMoveShouldNotifyMoveAndThenNotifyGameOver[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:77)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:80)
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testFinalMoveShouldNotifyMoveAndThenNotifyGameOver(ModelSpectatorTest.java:403)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -5089,7 +5089,7 @@ java.lang.RuntimeException: Implement me
 
 testRegisterAndUnregisterSpectator[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:77)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:80)
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testRegisterAndUnregisterSpectator(ModelSpectatorTest.java:88)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -5135,9 +5135,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testRegisterSameSpectatorTwiceShouldThrow[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0 s  <<< ERROR!
+testRegisterSameSpectatorTwiceShouldThrow[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:77)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:80)
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testRegisterSameSpectatorTwiceShouldThrow(ModelSpectatorTest.java:113)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -5185,7 +5185,7 @@ java.lang.RuntimeException: Implement me
 
 testPassMoveShouldNotifyOnce[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:77)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:80)
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testPassMoveShouldNotifyOnce(ModelSpectatorTest.java:290)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -5231,7 +5231,7 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testRegisterNullSpectatorShouldThrow[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.002 s  <<< FAILURE!
+testRegisterNullSpectatorShouldThrow[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.003 s  <<< FAILURE!
 java.lang.AssertionError: 
 
 Expecting:
@@ -5240,7 +5240,7 @@ to be an instance of:
   <java.lang.NullPointerException>
 but was:
   <"java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:77)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:80)
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.lambda$testRegisterNullSpectatorShouldThrow$0(ModelSpectatorTest.java:62)
 	at org.assertj.core.api.ThrowableAssert.catchThrowable(ThrowableAssert.java:62)
 	at org.assertj.core.api.AssertionsForClassTypes.catchThrowable(AssertionsForClassTypes.java:779)
@@ -5338,7 +5338,7 @@ but was:
 
 testMrXCaptureShouldNotifyMoveAndThenNotifyGameOver[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:77)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:80)
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testMrXCaptureShouldNotifyMoveAndThenNotifyGameOver(ModelSpectatorTest.java:387)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -5386,7 +5386,7 @@ java.lang.RuntimeException: Implement me
 
 testGetSpectatorIsImmutable[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getSpectators(ScotlandYardModel.java:95)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getSpectators(ScotlandYardModel.java:98)
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testGetSpectatorIsImmutable(ModelSpectatorTest.java:79)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -5432,9 +5432,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testStartRotateShouldNotifyRoundStartedOnce[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0 s  <<< ERROR!
+testStartRotateShouldNotifyRoundStartedOnce[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:77)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:80)
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testStartRotateShouldNotifyRoundStartedOnce(ModelSpectatorTest.java:360)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -5482,7 +5482,7 @@ java.lang.RuntimeException: Implement me
 
 testNotifyRotationCompleteAfterRotationIsReallyComplete[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:77)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:80)
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testNotifyRotationCompleteAfterRotationIsReallyComplete(ModelSpectatorTest.java:324)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -5530,7 +5530,7 @@ java.lang.RuntimeException: Implement me
 
 testGameOverShouldNotifyGameOverOnce[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:77)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:80)
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testGameOverShouldNotifyGameOverOnce(ModelSpectatorTest.java:373)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -5576,7 +5576,7 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testUnregisterNullSpectatorShouldThrow[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.003 s  <<< FAILURE!
+testUnregisterNullSpectatorShouldThrow[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.002 s  <<< FAILURE!
 java.lang.AssertionError: 
 
 Expecting:
@@ -5585,7 +5585,7 @@ to be an instance of:
   <java.lang.NullPointerException>
 but was:
   <"java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.unregisterSpectator(ScotlandYardModel.java:83)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.unregisterSpectator(ScotlandYardModel.java:86)
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.lambda$testUnregisterNullSpectatorShouldThrow$1(ModelSpectatorTest.java:68)
 	at org.assertj.core.api.ThrowableAssert.catchThrowable(ThrowableAssert.java:62)
 	at org.assertj.core.api.AssertionsForClassTypes.catchThrowable(AssertionsForClassTypes.java:779)
@@ -5681,9 +5681,9 @@ but was:
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testDoubleMoveShouldNotifyWithCorrectTicketAndDestinationDuringRevealRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0 s  <<< ERROR!
+testDoubleMoveShouldNotifyWithCorrectTicketAndDestinationDuringRevealRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:77)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:80)
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testDoubleMoveShouldNotifyWithCorrectTicketAndDestinationDuringRevealRound(ModelSpectatorTest.java:194)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -5729,9 +5729,9 @@ java.lang.RuntimeException: Implement me
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-testRegisterAndUnregisterMoreThanOneSpectator[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.001 s  <<< ERROR!
+testRegisterAndUnregisterMoreThanOneSpectator[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:77)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:80)
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testRegisterAndUnregisterMoreThanOneSpectator(ModelSpectatorTest.java:99)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -5779,7 +5779,7 @@ java.lang.RuntimeException: Implement me
 
 testDoubleMoveShouldNotifyWithCorrectTicketAndDestinationWhenGoingFromHiddenToRevealRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:77)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.registerSpectator(ScotlandYardModel.java:80)
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testDoubleMoveShouldNotifyWithCorrectTicketAndDestinationWhenGoingFromHiddenToRevealRound(ModelSpectatorTest.java:233)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -5827,7 +5827,7 @@ java.lang.RuntimeException: Implement me
 
 testNoSpectatorsByDefault[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getSpectators(ScotlandYardModel.java:95)
+	at uk.ac.bris.cs.scotlandyard.model.ScotlandYardModel.getSpectators(ScotlandYardModel.java:98)
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testNoSpectatorsByDefault(ModelSpectatorTest.java:74)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
