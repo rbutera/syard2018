@@ -1,7 +1,7 @@
 -------------------------------------------------------------------------------
 Test set: uk.ac.bris.cs.scotlandyard.model.ModelTest
 -------------------------------------------------------------------------------
-Tests run: 124, Failures: 9, Errors: 94, Skipped: 0, Time elapsed: 0.765 s <<< FAILURE! - in uk.ac.bris.cs.scotlandyard.model.ModelTest
+Tests run: 124, Failures: 9, Errors: 94, Skipped: 0, Time elapsed: 0.737 s <<< FAILURE! - in uk.ac.bris.cs.scotlandyard.model.ModelTest
 testGetGraphMatchesSupplied[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.009 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelCreationTest.testGetGraphMatchesSupplied(ModelCreationTest.java:196)
@@ -10,11 +10,11 @@ testWinningPlayerIsEmptyInitially[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelCreationTest.testWinningPlayerIsEmptyInitially(ModelCreationTest.java:227)
 
-testGetPlayerTicketsMatchesSupplied[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.023 s  <<< ERROR!
+testGetPlayerTicketsMatchesSupplied[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.02 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelCreationTest.testGetPlayerTicketsMatchesSupplied(ModelCreationTest.java:290)
 
-testGetPlayersIsImmutable[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.026 s  <<< FAILURE!
+testGetPlayersIsImmutable[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.025 s  <<< FAILURE!
 java.lang.AssertionError: 
 
 Expecting:
@@ -84,7 +84,7 @@ testGetPlayerIsMrXInitially[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelCreationTest.testGetPlayerIsMrXInitially(ModelCreationTest.java:243)
 
-testWinningPlayerIsImmutable[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.005 s  <<< FAILURE!
+testWinningPlayerIsImmutable[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.004 s  <<< FAILURE!
 java.lang.AssertionError: 
 
 Expecting:
@@ -146,7 +146,7 @@ but was:
 ">
 	at uk.ac.bris.cs.scotlandyard.model.ModelCreationTest.testWinningPlayerIsImmutable(ModelCreationTest.java:233)
 
-testGetPlayerTicketsForNonExistentPlayerIsEmpty[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.001 s  <<< ERROR!
+testGetPlayerTicketsForNonExistentPlayerIsEmpty[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.002 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelCreationTest.testGetPlayerTicketsForNonExistentPlayerIsEmpty(ModelCreationTest.java:303)
 
@@ -154,15 +154,15 @@ testGameIsNotOverInitially[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.M
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelCreationTest.testGameIsNotOverInitially(ModelCreationTest.java:222)
 
-testGetRoundsMatchesSupplied[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0 s  <<< ERROR!
+testGetRoundsMatchesSupplied[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelCreationTest.testGetRoundsMatchesSupplied(ModelCreationTest.java:183)
 
-testGetPlayerLocationForNonExistentPlayerIsEmpty[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.002 s  <<< ERROR!
+testGetPlayerLocationForNonExistentPlayerIsEmpty[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelCreationTest.testGetPlayerLocationForNonExistentPlayerIsEmpty(ModelCreationTest.java:276)
 
-testGetGraphIsImmutable[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.012 s  <<< FAILURE!
+testGetGraphIsImmutable[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.007 s  <<< FAILURE!
 java.lang.AssertionError: 
 
 Expecting:
@@ -224,15 +224,15 @@ but was:
 ">
 	at uk.ac.bris.cs.scotlandyard.model.ModelCreationTest.testGetGraphIsImmutable(ModelCreationTest.java:204)
 
-testGetRoundIsNOT_STARTEDInitially[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.002 s  <<< ERROR!
+testGetRoundIsNOT_STARTEDInitially[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelCreationTest.testGetRoundIsNOT_STARTEDInitially(ModelCreationTest.java:238)
 
-testGetPlayersStartsWithBlack[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.001 s  <<< ERROR!
+testGetPlayersStartsWithBlack[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelCreationTest.testGetPlayersStartsWithBlack(ModelCreationTest.java:250)
 
-testGetDetectiveLocationMatchesSupplied[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0.001 s  <<< ERROR!
+testGetDetectiveLocationMatchesSupplied[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelCreationTest)  Time elapsed: 0 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelCreationTest.testGetDetectiveLocationMatchesSupplied(ModelCreationTest.java:258)
 
@@ -302,15 +302,15 @@ but was:
 ">
 	at uk.ac.bris.cs.scotlandyard.model.ModelCreationTest.testGetRoundsIsImmutable(ModelCreationTest.java:190)
 
-testGameOverIfMrXCaptured[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest)  Time elapsed: 0.024 s  <<< ERROR!
+testGameOverIfMrXCaptured[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest)  Time elapsed: 0.031 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest.testGameOverIfMrXCaptured(ModelGameOverTest.java:141)
 
-testGameOverBeforeAnyRoundWithTerminatingConfiguration[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest)  Time elapsed: 0.008 s  <<< ERROR!
+testGameOverBeforeAnyRoundWithTerminatingConfiguration[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest)  Time elapsed: 0.009 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest.testGameOverBeforeAnyRoundWithTerminatingConfiguration(ModelGameOverTest.java:200)
 
-testGameOverAfterAllRoundsUsed[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest)  Time elapsed: 0.002 s  <<< ERROR!
+testGameOverAfterAllRoundsUsed[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest.testGameOverAfterAllRoundsUsed(ModelGameOverTest.java:73)
 
@@ -322,7 +322,7 @@ testGameOverIfMrXStuck[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.Model
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest.testGameOverIfMrXStuck(ModelGameOverTest.java:109)
 
-testGameOverIfAllDetectivesStuck[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest)  Time elapsed: 0.001 s  <<< ERROR!
+testGameOverIfAllDetectivesStuck[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest)  Time elapsed: 0 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest.testGameOverIfAllDetectivesStuck(ModelGameOverTest.java:91)
 
@@ -350,11 +350,11 @@ testGameNotOverIfMrXWasFreedBeforeNextRotation[ScotlandYardModel](uk.ac.bris.cs.
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelGameOverTest.testGameNotOverIfMrXWasFreedBeforeNextRotation(ModelGameOverTest.java:128)
 
-testGameWhereMrXWasNeverCaught[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSixPlayerPlayOutTestComplex)  Time elapsed: 0.029 s  <<< ERROR!
+testGameWhereMrXWasNeverCaught[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSixPlayerPlayOutTestComplex)  Time elapsed: 0.03 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelSixPlayerPlayOutTestComplex.testGameWhereMrXWasNeverCaught(ModelSixPlayerPlayOutTestComplex.java:2707)
 
-testGameWhereMrXPickedConsecutiveDoubleMoves[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSixPlayerPlayOutTestComplex)  Time elapsed: 0.001 s  <<< ERROR!
+testGameWhereMrXPickedConsecutiveDoubleMoves[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSixPlayerPlayOutTestComplex)  Time elapsed: 0 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelSixPlayerPlayOutTestComplex.testGameWhereMrXPickedConsecutiveDoubleMoves(ModelSixPlayerPlayOutTestComplex.java:82)
 
@@ -362,7 +362,7 @@ testGameWhereSomeoneRanOutOfTickets[ScotlandYardModel](uk.ac.bris.cs.scotlandyar
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelSixPlayerPlayOutTestComplex.testGameWhereSomeoneRanOutOfTickets(ModelSixPlayerPlayOutTestComplex.java:1676)
 
-testGameWhereMrXPickedConsecutiveDoubleMovesAtTimes[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSixPlayerPlayOutTestComplex)  Time elapsed: 0.001 s  <<< ERROR!
+testGameWhereMrXPickedConsecutiveDoubleMovesAtTimes[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSixPlayerPlayOutTestComplex)  Time elapsed: 0 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelSixPlayerPlayOutTestComplex.testGameWhereMrXPickedConsecutiveDoubleMovesAtTimes(ModelSixPlayerPlayOutTestComplex.java:673)
 
@@ -378,7 +378,7 @@ testGameWhereSomePlayersAreNeverInvolved[ScotlandYardModel](uk.ac.bris.cs.scotla
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelSixPlayerPlayOutTestSimple.testGameWhereSomePlayersAreNeverInvolved(ModelSixPlayerPlayOutTestSimple.java:408)
 
-testGameWhereMrXNeverPickedADoubleMove[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelTwoPlayerPlayOutTestSimple)  Time elapsed: 0 s  <<< ERROR!
+testGameWhereMrXNeverPickedADoubleMove[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelTwoPlayerPlayOutTestSimple)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelTwoPlayerPlayOutTestSimple.testGameWhereMrXNeverPickedADoubleMove(ModelTwoPlayerPlayOutTestSimple.java:63)
 
@@ -386,15 +386,15 @@ testGetCurrentPlayerCorrectForAllRounds[ScotlandYardModel](uk.ac.bris.cs.scotlan
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelRoundTest.testGetCurrentPlayerCorrectForAllRounds(ModelRoundTest.java:95)
 
-testCallbackPositionMatchPlayerLocationDuringRevealRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelRoundTest)  Time elapsed: 0.002 s  <<< ERROR!
+testCallbackPositionMatchPlayerLocationDuringRevealRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelRoundTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelRoundTest.testCallbackPositionMatchPlayerLocationDuringRevealRound(ModelRoundTest.java:73)
 
-testCallbackPositionMatchPlayerLocationDuringHiddenRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelRoundTest)  Time elapsed: 0.001 s  <<< ERROR!
+testCallbackPositionMatchPlayerLocationDuringHiddenRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelRoundTest)  Time elapsed: 0 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelRoundTest.testCallbackPositionMatchPlayerLocationDuringHiddenRound(ModelRoundTest.java:86)
 
-testRoundIncrementsAfterAllPlayersHavePlayed[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelRoundTest)  Time elapsed: 0.002 s  <<< ERROR!
+testRoundIncrementsAfterAllPlayersHavePlayed[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelRoundTest)  Time elapsed: 0.005 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelRoundTest.testRoundIncrementsAfterAllPlayersHavePlayed(ModelRoundTest.java:130)
 
@@ -402,7 +402,7 @@ testRoundRotationNotifiesAllPlayer[ScotlandYardModel](uk.ac.bris.cs.scotlandyard
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelRoundTest.testRoundRotationNotifiesAllPlayer(ModelRoundTest.java:187)
 
-testCallbackIsNotNull[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelRoundTest)  Time elapsed: 0.002 s  <<< ERROR!
+testCallbackIsNotNull[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelRoundTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelRoundTest.testCallbackIsNotNull(ModelRoundTest.java:48)
 
@@ -414,7 +414,7 @@ testPlayerNotified[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelRoun
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelRoundTest.testPlayerNotified(ModelRoundTest.java:40)
 
-testCallbackWithNullWillThrow[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelRoundTest)  Time elapsed: 0.008 s  <<< FAILURE!
+testCallbackWithNullWillThrow[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelRoundTest)  Time elapsed: 0.006 s  <<< FAILURE!
 java.lang.AssertionError: 
 Error at ModelRoundTest.testCallbackWithNullWillThrow(ModelRoundTest.java:198):
 
@@ -473,7 +473,7 @@ java.lang.RuntimeException: Implement me
 
 	at uk.ac.bris.cs.scotlandyard.model.ModelRoundTest.testCallbackWithNullWillThrow(ModelRoundTest.java:198)
 
-testRoundWaitsForPlayerWhoDoesNotRespond[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelRoundTest)  Time elapsed: 0 s  <<< ERROR!
+testRoundWaitsForPlayerWhoDoesNotRespond[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelRoundTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelRoundTest.testRoundWaitsForPlayerWhoDoesNotRespond(ModelRoundTest.java:171)
 
@@ -481,11 +481,11 @@ testInitialPositionMatchFirstRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelRoundTest.testInitialPositionMatchFirstRound(ModelRoundTest.java:60)
 
-testMrXIsTheFirstToPlay[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelRoundTest)  Time elapsed: 0.001 s  <<< ERROR!
+testMrXIsTheFirstToPlay[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelRoundTest)  Time elapsed: 0 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelRoundTest.testMrXIsTheFirstToPlay(ModelRoundTest.java:158)
 
-testCallbackWithIllegalMoveNotInGivenMovesWillThrow[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelRoundTest)  Time elapsed: 0.001 s  <<< FAILURE!
+testCallbackWithIllegalMoveNotInGivenMovesWillThrow[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelRoundTest)  Time elapsed: 0.002 s  <<< FAILURE!
 java.lang.AssertionError: 
 Error at ModelRoundTest.testCallbackWithIllegalMoveNotInGivenMovesWillThrow(ModelRoundTest.java:212):
 
@@ -544,7 +544,7 @@ java.lang.RuntimeException: Implement me
 
 	at uk.ac.bris.cs.scotlandyard.model.ModelRoundTest.testCallbackWithIllegalMoveNotInGivenMovesWillThrow(ModelRoundTest.java:212)
 
-testMrXLocationCorrectWithOneRevealRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest)  Time elapsed: 0.004 s  <<< ERROR!
+testMrXLocationCorrectWithOneRevealRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest)  Time elapsed: 0.002 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest.testMrXLocationCorrectWithOneRevealRound(ModelPlayerTest.java:294)
 
@@ -576,7 +576,7 @@ testMrXCorrectTicketDecrementsByOneAfterTicketMove[ScotlandYardModel](uk.ac.bris
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest.testMrXCorrectTicketDecrementsByOneAfterTicketMove(ModelPlayerTest.java:129)
 
-testDetectiveTicketCountHoldsAfterPassMove[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest)  Time elapsed: 0.001 s  <<< ERROR!
+testDetectiveTicketCountHoldsAfterPassMove[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest)  Time elapsed: 0.002 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest.testDetectiveTicketCountHoldsAfterPassMove(ModelPlayerTest.java:194)
 
@@ -584,7 +584,7 @@ testDetectivePassMoveDoesNotAffectMrX[ScotlandYardModel](uk.ac.bris.cs.scotlandy
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest.testDetectivePassMoveDoesNotAffectMrX(ModelPlayerTest.java:49)
 
-testMrXMovesToDestinationAfterTicketMove[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest)  Time elapsed: 0 s  <<< ERROR!
+testMrXMovesToDestinationAfterTicketMove[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest.testMrXMovesToDestinationAfterTicketMove(ModelPlayerTest.java:115)
 
@@ -592,11 +592,11 @@ testMrXLocationIsHisLastRevealLocationOnHiddenRound[ScotlandYardModel](uk.ac.bri
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest.testMrXLocationIsHisLastRevealLocationOnHiddenRound(ModelPlayerTest.java:275)
 
-testDetectiveLocationHoldsAfterPassMove[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest)  Time elapsed: 0.001 s  <<< ERROR!
+testDetectiveLocationHoldsAfterPassMove[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest)  Time elapsed: 0 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest.testDetectiveLocationHoldsAfterPassMove(ModelPlayerTest.java:178)
 
-testDetectiveCorrectTicketDecrementsByOneAfterTicketMove[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest)  Time elapsed: 0.001 s  <<< ERROR!
+testDetectiveCorrectTicketDecrementsByOneAfterTicketMove[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest)  Time elapsed: 0.002 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest.testDetectiveCorrectTicketDecrementsByOneAfterTicketMove(ModelPlayerTest.java:161)
 
@@ -604,61 +604,61 @@ testDetectiveMovesToDestinationAfterTicketMove[ScotlandYardModel](uk.ac.bris.cs.
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelPlayerTest.testDetectiveMovesToDestinationAfterTicketMove(ModelPlayerTest.java:144)
 
-testMrXAt104ShouldProduce60ValidMoves[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0.004 s  <<< ERROR!
+testMrXAt104ShouldProduce60ValidMoves[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0.003 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest.testMrXAt104ShouldProduce60ValidMoves(ModelValidMoveTest.java:354)
+	at uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest.testMrXAt104ShouldProduce60ValidMoves(ModelValidMoveTest.java:252)
 
-testDetectiveMovesOmittedIfNotEnoughTickets[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0.001 s  <<< ERROR!
+testDetectiveMovesOmittedIfNotEnoughTickets[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest.testDetectiveMovesOmittedIfNotEnoughTickets(ModelValidMoveTest.java:74)
+	at uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest.testDetectiveMovesOmittedIfNotEnoughTickets(ModelValidMoveTest.java:66)
 
 testMrXNoTicketMovesIfNoTicketMoveTickets[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest.testMrXNoTicketMovesIfNoTicketMoveTickets(ModelValidMoveTest.java:267)
+	at uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest.testMrXNoTicketMovesIfNoTicketMoveTickets(ModelValidMoveTest.java:207)
 
 testDetectiveMoveNotOmittedIfDestinationOccupiedByMrX[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest.testDetectiveMoveNotOmittedIfDestinationOccupiedByMrX(ModelValidMoveTest.java:121)
+	at uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest.testDetectiveMoveNotOmittedIfDestinationOccupiedByMrX(ModelValidMoveTest.java:105)
 
-testDetectiveAt128MovesShouldProduce13ValidMoves[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0.001 s  <<< ERROR!
+testDetectiveAt128MovesShouldProduce13ValidMoves[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest.testDetectiveAt128MovesShouldProduce13ValidMoves(ModelValidMoveTest.java:55)
+	at uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest.testDetectiveAt128MovesShouldProduce13ValidMoves(ModelValidMoveTest.java:53)
 
 testMrXMovesOmittedIfDestinationOccupiedByDetectives[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest.testMrXMovesOmittedIfDestinationOccupiedByDetectives(ModelValidMoveTest.java:174)
+	at uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest.testMrXMovesOmittedIfDestinationOccupiedByDetectives(ModelValidMoveTest.java:139)
 
 testMrXMustHaveEnoughTicketsForDoubleMove[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest.testMrXMustHaveEnoughTicketsForDoubleMove(ModelValidMoveTest.java:196)
+	at uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest.testMrXMustHaveEnoughTicketsForDoubleMove(ModelValidMoveTest.java:154)
 
-testMrXOnlySecretMovesIfOnlySecretMoveTicketsLeft[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0 s  <<< ERROR!
+testMrXOnlySecretMovesIfOnlySecretMoveTicketsLeft[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest.testMrXOnlySecretMovesIfOnlySecretMoveTicketsLeft(ModelValidMoveTest.java:281)
+	at uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest.testMrXOnlySecretMovesIfOnlySecretMoveTicketsLeft(ModelValidMoveTest.java:220)
 
 testDetectiveMoveOmittedIfLocationOccupiedByOtherDetective[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest.testDetectiveMoveOmittedIfLocationOccupiedByOtherDetective(ModelValidMoveTest.java:106)
+	at uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest.testDetectiveMoveOmittedIfLocationOccupiedByOtherDetective(ModelValidMoveTest.java:93)
 
-testMrXNoDoubleMovesIfNotEnoughRoundLeft[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0 s  <<< ERROR!
+testMrXNoDoubleMovesIfNotEnoughRoundLeft[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest.testMrXNoDoubleMovesIfNotEnoughRoundLeft(ModelValidMoveTest.java:253)
+	at uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest.testMrXNoDoubleMovesIfNotEnoughRoundLeft(ModelValidMoveTest.java:194)
 
 testMrXNoDoubleMovesIfNoDoubleMoveTickets[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest.testMrXNoDoubleMovesIfNoDoubleMoveTickets(ModelValidMoveTest.java:237)
+	at uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest.testMrXNoDoubleMovesIfNoDoubleMoveTickets(ModelValidMoveTest.java:182)
 
 testMrXDoubleMoveIntermediateMovesOmittedIfDestinationOccupiedByDetectives[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest.testMrXDoubleMoveIntermediateMovesOmittedIfDestinationOccupiedByDetectives(ModelValidMoveTest.java:161)
+	at uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest.testMrXDoubleMoveIntermediateMovesOmittedIfDestinationOccupiedByDetectives(ModelValidMoveTest.java:127)
 
 testMrXNoSecretMovesIfNoSecretMoveTickets[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest.testMrXNoSecretMovesIfNoSecretMoveTickets(ModelValidMoveTest.java:222)
+	at uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest.testMrXNoSecretMovesIfNoSecretMoveTickets(ModelValidMoveTest.java:170)
 
-testDetectiveWithNoValidMovesShouldProducePassMove[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0.002 s  <<< ERROR!
+testDetectiveWithNoValidMovesShouldProducePassMove[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
-	at uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest.testDetectiveWithNoValidMovesShouldProducePassMove(ModelValidMoveTest.java:88)
+	at uk.ac.bris.cs.scotlandyard.model.ModelValidMoveTest.testDetectiveWithNoValidMovesShouldProducePassMove(ModelValidMoveTest.java:78)
 
 testDoubleMoveShouldNotifyRoundStartTwoTimesInOrder[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
@@ -672,7 +672,7 @@ testDoubleMoveShouldNotifyMoveMadeThreeTimesInOrder[ScotlandYardModel](uk.ac.bri
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testDoubleMoveShouldNotifyMoveMadeThreeTimesInOrder(ModelSpectatorTest.java:154)
 
-testDoubleMoveShouldNotifyWithCorrectTicketAndLastDestinationDuringHiddenRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0 s  <<< ERROR!
+testDoubleMoveShouldNotifyWithCorrectTicketAndLastDestinationDuringHiddenRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testDoubleMoveShouldNotifyWithCorrectTicketAndLastDestinationDuringHiddenRound(ModelSpectatorTest.java:169)
 
@@ -742,7 +742,7 @@ testAllPlayersPlayedShouldNotifyRotationCompletedOnce[ScotlandYardModel](uk.ac.b
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testAllPlayersPlayedShouldNotifyRotationCompletedOnce(ModelSpectatorTest.java:284)
 
-testDoubleMoveShouldNotifyWithCorrectTicketAndDestinationWhenGoingFromRevealToHiddenRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.001 s  <<< ERROR!
+testDoubleMoveShouldNotifyWithCorrectTicketAndDestinationWhenGoingFromRevealToHiddenRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testDoubleMoveShouldNotifyWithCorrectTicketAndDestinationWhenGoingFromRevealToHiddenRound(ModelSpectatorTest.java:201)
 
@@ -750,7 +750,7 @@ testDetectiveTicketMoveShouldNotifyWithCorrectTicketAndDestinationDuringRevealRo
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testDetectiveTicketMoveShouldNotifyWithCorrectTicketAndDestinationDuringRevealRound(ModelSpectatorTest.java:252)
 
-testDetectiveTicketMoveShouldNotifyWithCorrectTicketAndDestinationDuringHiddenRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0 s  <<< ERROR!
+testDetectiveTicketMoveShouldNotifyWithCorrectTicketAndDestinationDuringHiddenRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testDetectiveTicketMoveShouldNotifyWithCorrectTicketAndDestinationDuringHiddenRound(ModelSpectatorTest.java:237)
 
@@ -758,7 +758,7 @@ testFinalMoveShouldNotifyMoveAndThenNotifyGameOver[ScotlandYardModel](uk.ac.bris
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testFinalMoveShouldNotifyMoveAndThenNotifyGameOver(ModelSpectatorTest.java:365)
 
-testRegisterAndUnregisterSpectator[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0 s  <<< ERROR!
+testRegisterAndUnregisterSpectator[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testRegisterAndUnregisterSpectator(ModelSpectatorTest.java:93)
 
@@ -770,7 +770,7 @@ testPassMoveShouldNotifyOnce[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testPassMoveShouldNotifyOnce(ModelSpectatorTest.java:268)
 
-testRegisterNullSpectatorShouldThrow[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.003 s  <<< FAILURE!
+testRegisterNullSpectatorShouldThrow[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.005 s  <<< FAILURE!
 java.lang.AssertionError: 
 
 Expecting:
@@ -848,11 +848,11 @@ testNotifyRotationCompleteAfterRotationIsReallyComplete[ScotlandYardModel](uk.ac
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testNotifyRotationCompleteAfterRotationIsReallyComplete(ModelSpectatorTest.java:298)
 
-testGameOverShouldNotifyGameOverOnce[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.001 s  <<< ERROR!
+testGameOverShouldNotifyGameOverOnce[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testGameOverShouldNotifyGameOverOnce(ModelSpectatorTest.java:340)
 
-testUnregisterNullSpectatorShouldThrow[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.002 s  <<< FAILURE!
+testUnregisterNullSpectatorShouldThrow[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.003 s  <<< FAILURE!
 java.lang.AssertionError: 
 
 Expecting:
@@ -914,19 +914,19 @@ but was:
 ">
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testUnregisterNullSpectatorShouldThrow(ModelSpectatorTest.java:74)
 
-testDoubleMoveShouldNotifyWithCorrectTicketAndDestinationDuringRevealRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.001 s  <<< ERROR!
+testDoubleMoveShouldNotifyWithCorrectTicketAndDestinationDuringRevealRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testDoubleMoveShouldNotifyWithCorrectTicketAndDestinationDuringRevealRound(ModelSpectatorTest.java:185)
 
-testRegisterAndUnregisterMoreThanOneSpectator[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.002 s  <<< ERROR!
+testRegisterAndUnregisterMoreThanOneSpectator[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testRegisterAndUnregisterMoreThanOneSpectator(ModelSpectatorTest.java:104)
 
-testDoubleMoveShouldNotifyWithCorrectTicketAndDestinationWhenGoingFromHiddenToRevealRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0 s  <<< ERROR!
+testDoubleMoveShouldNotifyWithCorrectTicketAndDestinationWhenGoingFromHiddenToRevealRound[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testDoubleMoveShouldNotifyWithCorrectTicketAndDestinationWhenGoingFromHiddenToRevealRound(ModelSpectatorTest.java:219)
 
-testNoSpectatorsByDefault[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0.001 s  <<< ERROR!
+testNoSpectatorsByDefault[ScotlandYardModel](uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest)  Time elapsed: 0 s  <<< ERROR!
 java.lang.RuntimeException: Implement me
 	at uk.ac.bris.cs.scotlandyard.model.ModelSpectatorTest.testNoSpectatorsByDefault(ModelSpectatorTest.java:79)
 
