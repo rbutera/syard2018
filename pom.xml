@@ -1,31 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project 
+    xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>cw-model</artifactId>
     <groupId>uk.ac.bris.cs</groupId>
     <version>0.0.1-SNAPSHOT</version>
-
     <packaging>jar</packaging>
-
     <properties>
         <runSuite>**/ModelTest.class</runSuite>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <skipAfter>0</skipAfter>
         <werror>true</werror>
     </properties>
-
     <repositories>
         <repository>
             <id>jcenter</id>
             <url>https://jcenter.bintray.com/</url>
         </repository>
     </repositories>
-
     <dependencies>
-
         <!--dependencies for UI-->
         <dependency>
             <groupId>net.kurobako.gesturefx</groupId>
@@ -72,7 +66,6 @@
             <artifactId>fugue</artifactId>
             <version>4.5.1</version>
         </dependency>
-
         <!--dependencies for testing-->
         <dependency>
             <groupId>junit</groupId>
@@ -105,7 +98,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
@@ -125,7 +117,6 @@
                     </compilerArgs>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -134,11 +125,10 @@
                     <includes>
                         <include>${runSuite}</include>
                     </includes>
-                    <trimStackTrace>false</trimStackTrace>
+                    <trimStackTrace>true</trimStackTrace>
                     <skipAfterFailureCount>${skipAfter}</skipAfterFailureCount>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
@@ -147,7 +137,6 @@
                     <mainClass>uk.ac.bris.cs.scotlandyard.Main</mainClass>
                 </configuration>
             </plugin>
-
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
                 <version>3.0.0</version>
@@ -197,7 +186,6 @@
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
@@ -226,9 +214,7 @@
                             <include>src/main/plantuml/*.puml</include>
                         </includes>
                     </sourceFiles>
-                    <outputDirectory>
-                        ${project.build.directory}/plantuml
-                    </outputDirectory>
+                    <outputDirectory>                        ${project.build.directory}/plantuml                    </outputDirectory>
                     <format>svg</format>
                 </configuration>
                 <dependencies>
@@ -257,14 +243,10 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>
-                                ${project.build.directory}/site/images
-                            </outputDirectory>
+                            <outputDirectory>                                ${project.build.directory}/site/images                            </outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>
-                                        ${project.build.directory}/plantuml/src/main/plantuml/
-                                    </directory>
+                                    <directory>                                        ${project.build.directory}/plantuml/src/main/plantuml/                                    </directory>
                                     <filtering>true</filtering>
                                 </resource>
                             </resources>
@@ -285,15 +267,9 @@
                             <pluginExecutions>
                                 <pluginExecution>
                                     <pluginExecutionFilter>
-                                        <groupId>
-                                            com.github.jeluard
-                                        </groupId>
-                                        <artifactId>
-                                            plantuml-maven-plugin
-                                        </artifactId>
-                                        <versionRange>
-                                            [1.2,)
-                                        </versionRange>
+                                        <groupId>                                            com.github.jeluard                                        </groupId>
+                                        <artifactId>                                            plantuml-maven-plugin                                        </artifactId>
+                                        <versionRange>                                            [1.2,)                                        </versionRange>
                                         <goals>
                                             <goal>generate</goal>
                                         </goals>

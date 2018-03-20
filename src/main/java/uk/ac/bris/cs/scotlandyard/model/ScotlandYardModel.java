@@ -80,18 +80,19 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 		// Check valid tickets
 		for (PlayerConfiguration configuration : configurations) {
+			if (configuration.tickets.get(BUS) == null) {
+				throw new IllegalArgumentException("Detective is missing BUS tickets");
+			}
+
+			if (configuration.tickets.get(TAXI) == null) {
+				throw new IllegalArgumentException("Detective is missing TAXI tickets");
+			}
+
+			if (configuration.tickets.get(UNDERGROUND) == null) {
+				throw new IllegalArgumentException("Detective is missing UNDERGROUND tickets");
+			}
+
 			if (configuration.colour.isDetective()) {
-				if (configuration.tickets.get(BUS) == null) {
-					throw new IllegalArgumentException("Detective is missing BUS tickets");
-				}
-
-				if (configuration.tickets.get(TAXI) == null) {
-					throw new IllegalArgumentException("Detective is missing TAXI tickets");
-				}
-
-				if (configuration.tickets.get(UNDERGROUND) == null) {
-					throw new IllegalArgumentException("Detective is missing UNDERGROUND tickets");
-				}
 				if (requireNonNull(configuration.tickets.get(SECRET)) != 0) {
 					throw new IllegalArgumentException("Detective should not have secret tickets");
 				}
