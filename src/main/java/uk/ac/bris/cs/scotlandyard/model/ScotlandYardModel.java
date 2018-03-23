@@ -159,24 +159,21 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	@Override
 	public boolean isGameOver() {
 		// TODO
-		throw new RuntimeException("Implement me");
+		return false;
 	}
 
 	@Override
 	public Colour getCurrentPlayer() {
-		// TODO
 		return (BLACK);
 	}
 
 	@Override
 	public int getCurrentRound() {
-		// TODO
-		throw new RuntimeException("Implement me");
+		return mCurrentRound;
 	}
 
 	@Override
 	public List<Boolean> getRounds() {
-		// TODO
 		return Collections.unmodifiableList(mRounds);
 	}
 
