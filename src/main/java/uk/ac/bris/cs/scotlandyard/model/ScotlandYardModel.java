@@ -30,18 +30,19 @@ import uk.ac.bris.cs.gamekit.graph.UndirectedGraph;
 
 // TODO implement all methods and pass all tests
 public class ScotlandYardModel implements ScotlandYardGame {
-	private List<Boolean> rounds;
-	private Graph<Integer, Transport> graph;
-	private ArrayList<ScotlandYardPlayer> players;
+	private List<Boolean> mRounds;
+	private Graph<Integer, Transport> mGraph;
+	private ArrayList<ScotlandYardPlayer> mPlayers;
+	private int mCurrentRound = NOT_STARTED;
 
 	//Constructor
 	public ScotlandYardModel(List<Boolean> rounds, Graph<Integer, Transport> graph, PlayerConfiguration mrX,
 			PlayerConfiguration firstDetective, PlayerConfiguration... restOfTheDetectives) {
-		this.rounds = requireNonNull(rounds);
-		this.graph = requireNonNull(graph);
+		this.mRounds = requireNonNull(rounds);
+		this.mGraph = requireNonNull(graph);
 
-		if (rounds.isEmpty()) {
-			throw new IllegalArgumentException("Empty rounds");
+		if (mRounds.isEmpty()) {
+			throw new IllegalArgumentException("Empty mRounds");
 		}
 
 		if (graph.isEmpty()) {
@@ -55,33 +56,33 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		// Loop over all detectives in temporary list to validate
 		ArrayList<PlayerConfiguration> configurations = new ArrayList<>(); // tempory list for validation
 
+		configurations.add(mrX);
+		configurations.add(firstDetective);
+		// Create List of ScotlandYardPlayers (mutable)
+
 		// add configurations to temporary list
 		for (PlayerConfiguration configuration : restOfTheDetectives) {
 			configurations.add(requireNonNull(configuration));
 		}
-		configurations.add(0, firstDetective);
-		configurations.add(0, mrX);
 
-		// Check if players have duplicated locations
+		// start processing all configurations
+		// data stores for processed data
 		Set<Integer> locations = new HashSet<>();
+		this.mPlayers = new ArrayList<>();
+		Set<Colour> colours = new HashSet<>();
+
 		for (PlayerConfiguration configuration : configurations) {
+			// Check if players have duplicated locations
 			if (locations.contains(configuration.location)) {
 				throw new IllegalArgumentException("Duplicate location");
 			}
 			locations.add(configuration.location);
-		}
-
-		//Check if players have duplicated colours
-		Set<Colour> colours = new HashSet<>();
-		for (PlayerConfiguration configuration2 : configurations) {
-			if (colours.contains(configuration2.colour)) {
+			if (colours.contains(configuration.colour)) {
 				throw new IllegalArgumentException("Duplicate colour");
 			}
-			colours.add(configuration2.colour);
-		}
+			colours.add(configuration.colour);
 
-		// Check valid tickets
-		for (PlayerConfiguration configuration : configurations) {
+			// ticket check
 			if (configuration.tickets.get(BUS) == null) {
 				throw new IllegalArgumentException("Detective is missing BUS tickets");
 			}
@@ -101,14 +102,6 @@ public class ScotlandYardModel implements ScotlandYardGame {
 				if (requireNonNull(configuration.tickets.get(DOUBLE)) != 0) {
 					throw new IllegalArgumentException("Detective should not have secret tickets");
 				}
-			}
-			// finished validating configurations
-			// Create List of ScotlandYardPlayers (mutable)
-			this.players = new ArrayList<>();
-			for (PlayerConfiguration validated : configurations) {
-				ScotlandYardPlayer player = new ScotlandYardPlayer(validated.player, validated.colour, validated.location,
-						validated.tickets);
-				players.add(player);
 			}
 		}
 	}
@@ -171,7 +164,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	@Override
 	public Colour getCurrentPlayer() {
 		// TODO
-		throw new RuntimeException("Implement me");
+		return (BLACK);
 	}
 
 	@Override
@@ -183,7 +176,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	@Override
 	public List<Boolean> getRounds() {
 		// TODO
-		throw new RuntimeException("Implement me");
+		return Collections.unmodifiableList(mRounds);
 	}
 
 	@Override
