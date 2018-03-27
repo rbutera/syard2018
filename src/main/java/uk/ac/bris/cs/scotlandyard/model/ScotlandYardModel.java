@@ -34,7 +34,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	private List<Boolean> mRounds;
 	private Graph<Integer, Transport> mGraph;
 	private ArrayList<ScotlandYardPlayer> mPlayers;
-	private Set<Colour> mColours;
+	private List<Colour> mColourList;
 	private int mCurrentRound = NOT_STARTED;
 
 	//Constructor
@@ -107,7 +107,8 @@ public class ScotlandYardModel implements ScotlandYardGame {
 			}
 		}
 
-		this.mColours = colours;
+		this.mColourList = new ArrayList<Colour>();
+		this.mColourList.addAll(colours);
 	}
 	//End of Constructor
 
@@ -137,8 +138,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 	@Override
 	public List<Colour> getPlayers() {
-		// TODO
-		throw new RuntimeException("Implement me");
+		return this.mColourList;
 	}
 
 	@Override
