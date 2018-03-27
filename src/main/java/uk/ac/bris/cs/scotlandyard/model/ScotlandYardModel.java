@@ -4,8 +4,8 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.emptySet;
 import static java.util.Collections.singletonList;
 import static java.util.Collections.unmodifiableCollection;
-import static java.util.Collections.unmodifiableList;
 import static java.util.Collections.unmodifiableSet;
+import static java.util.Collections.unmodifiableList;
 import static java.util.Objects.requireNonNull;
 import static uk.ac.bris.cs.scotlandyard.model.Colour.BLACK;
 import static uk.ac.bris.cs.scotlandyard.model.Ticket.*;
@@ -33,9 +33,7 @@ import uk.ac.bris.cs.gamekit.graph.UndirectedGraph;
 public class ScotlandYardModel implements ScotlandYardGame {
 	private List<Boolean> mRounds;
 	private Graph<Integer, Transport> mGraph;
-	private ArrayList<ScotlandYardPlayer> mPlayers;
-	private Set<Colour> mColours;
-	private List<Colour> mColourList;
+	private ArrayList<ScotlandYardPlayer> mPlayers = new ArrayList<ScotlandYardPlayer>();
 	private int mCurrentRound = NOT_STARTED;
 
 	//Constructor
@@ -106,11 +104,12 @@ public class ScotlandYardModel implements ScotlandYardGame {
 					throw new IllegalArgumentException("Detective should not have secret tickets");
 				}
 			}
+
+			ScotlandYardPlayer player = new ScotlandYardPlayer(configuration.player, configuration.colour,
+					configuration.location, configuration.tickets);
+			this.mPlayers.add(player);
 		}
 
-		this.mColours = colours;
-		this.mColourList = new ArrayList<Colour>();
-		this.mColourList.addAll(this.mColours);
 	}
 	//End of Constructor
 
@@ -140,7 +139,11 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 	@Override
 	public List<Colour> getPlayers() {
-		return Collections.unmodifiableList(this.mColourList);
+		ArrayList<Colour> result = new ArrayList<>();
+		for (ScotlandYardPlayer player : this.mPlayers) {
+			result.add(player.colour());
+		}
+		return Collections.unmodifiableList(result);
 	}
 
 	@Override
