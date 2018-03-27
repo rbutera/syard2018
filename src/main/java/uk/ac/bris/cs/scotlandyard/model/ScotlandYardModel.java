@@ -34,6 +34,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	private List<Boolean> mRounds;
 	private Graph<Integer, Transport> mGraph;
 	private ArrayList<ScotlandYardPlayer> mPlayers;
+	private Set<Colour> mColours;
 	private int mCurrentRound = NOT_STARTED;
 
 	//Constructor
@@ -105,6 +106,8 @@ public class ScotlandYardModel implements ScotlandYardGame {
 				}
 			}
 		}
+
+		this.mColours = colours;
 	}
 	//End of Constructor
 
