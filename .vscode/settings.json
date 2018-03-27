@@ -3,7 +3,7 @@
     "commands": [
       {
         "match": "\\.java$",
-        "cmd": "./mvnw clean test"
+        "cmd": "./mvnw -Dtest=ModelCreationTest clean test"
       }
     ]
   },
