@@ -132,8 +132,9 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 	@Override
 	public void startRotate() {
-		// TODO
-		throw new RuntimeException("Implement me");
+		if (this.isGameOver()) {
+			throw new IllegalStateException("startRotate called but the game is already over!");
+		}
 	}
 
 	@Override
