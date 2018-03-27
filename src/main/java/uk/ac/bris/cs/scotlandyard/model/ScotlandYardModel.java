@@ -118,6 +118,30 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		return this.mMrXLastLocation;
 	}
 
+	/**
+	 * Returns the colour of the next player to play this round
+	 */
+	private Colour nextPlayer(Colour current) {
+		List<Colour> players = getPlayers();
+		Colour result = BLACK; // initialise as black just incase
+		int currentIndex = -1;
+
+		for (Colour player : players) {
+			if (player == current) {
+				currentIndex = players.indexOf(player);
+				if (currentIndex < players.size() - 1) {
+					result = players.get(currentIndex + 1);
+				}
+			}
+		}
+
+		if (currentIndex < 0) {
+			throw new RuntimeException("nextPlayer unable to generate index for Colour " + current);
+		}
+
+		return result;
+	}
+
 	@Override
 	public void registerSpectator(Spectator spectator) {
 		// TODO
@@ -135,6 +159,12 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		if (this.isGameOver()) {
 			throw new IllegalStateException("startRotate called but the game is already over!");
 		}
+
+		// obtain current player
+		// notify player to move via Player.makeMove
+		// TODO: use empty list OR a list containing a single PassMove
+		// TODO: replace fake list with generated valid mves
+
 	}
 
 	@Override
