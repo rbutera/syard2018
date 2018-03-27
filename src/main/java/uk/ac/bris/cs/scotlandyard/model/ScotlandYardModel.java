@@ -166,8 +166,18 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 	@Override
 	public Optional<Integer> getPlayerLocation(Colour colour) {
-		// TODO
-		throw new RuntimeException("Implement me");
+		Optional<Integer> requestedLocation = Optional.empty();
+		boolean playerFound = false;
+
+		// look for the player
+		for (ScotlandYardPlayer player : this.mPlayers) {
+			if (player.colour() == colour) {
+				playerFound = true;
+				requestedLocation = Optional.of(player.location());
+			}
+		}
+
+		return requestedLocation;
 	}
 
 	@Override
