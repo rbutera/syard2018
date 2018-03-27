@@ -35,6 +35,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	private Graph<Integer, Transport> mGraph;
 	private ArrayList<ScotlandYardPlayer> mPlayers = new ArrayList<ScotlandYardPlayer>();
 	private int mCurrentRound = NOT_STARTED;
+	private int mMrXLastLocation = 0;
 
 	//Constructor
 	public ScotlandYardModel(List<Boolean> rounds, Graph<Integer, Transport> graph, PlayerConfiguration mrX,
@@ -111,7 +112,11 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		}
 
 	}
+
 	//End of Constructor
+	public Integer getMrXLocation() {
+		return this.mMrXLastLocation;
+	}
 
 	@Override
 	public void registerSpectator(Spectator spectator) {
@@ -173,7 +178,11 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		for (ScotlandYardPlayer player : this.mPlayers) {
 			if (player.colour() == colour) {
 				playerFound = true;
-				requestedLocation = Optional.of(player.location());
+				if (colour != BLACK) {
+					requestedLocation = Optional.of(player.location());
+				} else {
+					requestedLocation = Optional.of(this.getMrXLocation());
+				}
 			}
 		}
 
