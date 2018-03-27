@@ -148,8 +148,20 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 	@Override
 	public Set<Colour> getWinningPlayers() {
-		// TODO
-		throw new RuntimeException("Implement me");
+		HashSet<Colour> winners = new HashSet<Colour>();
+		Integer mrXlocation = 0;
+
+		for (ScotlandYardPlayer player : this.mPlayers) {
+			if (player.colour() == BLACK) {
+				mrXlocation = player.location();
+			} else {
+				if (player.location() == mrXlocation) {
+					winners.add(player.colour());
+				}
+			}
+		}
+
+		return Collections.unmodifiableSet(winners);
 	}
 
 	@Override
