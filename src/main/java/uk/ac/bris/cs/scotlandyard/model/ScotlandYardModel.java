@@ -36,6 +36,9 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	private ArrayList<ScotlandYardPlayer> mPlayers = new ArrayList<ScotlandYardPlayer>();
 	private int mCurrentRound = NOT_STARTED;
 	private int mMrXLastLocation = 0;
+	private int mMovesPlayed = 0; // TODO: increment moves played every time someone makes a move
+	private Colour mCurrentPlayer = BLACK;
+	private Optional<Colour> mLastPlayer = Optional.empty();
 
 	//Constructor
 	public ScotlandYardModel(List<Boolean> rounds, Graph<Integer, Transport> graph, PlayerConfiguration mrX,
@@ -161,6 +164,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		}
 
 		// obtain current player
+
 		// notify player to move via Player.makeMove
 		// TODO: use empty list OR a list containing a single PassMove
 		// TODO: replace fake list with generated valid mves
@@ -240,7 +244,11 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 	@Override
 	public Colour getCurrentPlayer() {
-		return (BLACK);
+		if (this.mLastPlayer.isPresent()) {
+			return nextPlayer(this.mLastPlayer.get());
+		} else {
+			return (BLACK);
+		}
 	}
 
 	@Override
