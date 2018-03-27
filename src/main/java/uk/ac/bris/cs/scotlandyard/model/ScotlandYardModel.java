@@ -4,8 +4,8 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.emptySet;
 import static java.util.Collections.singletonList;
 import static java.util.Collections.unmodifiableCollection;
-import static java.util.Collections.unmodifiableList;
 import static java.util.Collections.unmodifiableSet;
+import static java.util.Collections.unmodifiableList;
 import static java.util.Objects.requireNonNull;
 import static uk.ac.bris.cs.scotlandyard.model.Colour.BLACK;
 import static uk.ac.bris.cs.scotlandyard.model.Ticket.*;
@@ -23,6 +23,7 @@ import javax.security.auth.callback.ConfirmationCallback;
 
 import org.omg.IOP.TAG_RMI_CUSTOM_MAX_STREAM_FORMAT;
 
+import java.util.*; // TODO: figure out what we actually need to import here (to solve errors for ImmutableGraph etc)
 import uk.ac.bris.cs.gamekit.graph.Edge;
 import uk.ac.bris.cs.gamekit.graph.Graph;
 import uk.ac.bris.cs.gamekit.graph.ImmutableGraph;
@@ -30,18 +31,20 @@ import uk.ac.bris.cs.gamekit.graph.UndirectedGraph;
 
 // TODO implement all methods and pass all tests
 public class ScotlandYardModel implements ScotlandYardGame {
-	private List<Boolean> rounds;
-	private Graph<Integer, Transport> graph;
-	private ArrayList<ScotlandYardPlayer> players;
+	private List<Boolean> mRounds;
+	private Graph<Integer, Transport> mGraph;
+	private ArrayList<ScotlandYardPlayer> mPlayers = new ArrayList<ScotlandYardPlayer>();
+	private int mCurrentRound = NOT_STARTED;
+	private int mMrXLastLocation = 0;
 
 	//Constructor
 	public ScotlandYardModel(List<Boolean> rounds, Graph<Integer, Transport> graph, PlayerConfiguration mrX,
 			PlayerConfiguration firstDetective, PlayerConfiguration... restOfTheDetectives) {
-		this.rounds = requireNonNull(rounds);
-		this.graph = requireNonNull(graph);
+		this.mRounds = requireNonNull(rounds);
+		this.mGraph = requireNonNull(graph);
 
-		if (rounds.isEmpty()) {
-			throw new IllegalArgumentException("Empty rounds");
+		if (mRounds.isEmpty()) {
+			throw new IllegalArgumentException("Empty mRounds");
 		}
 
 		if (graph.isEmpty()) {
@@ -55,33 +58,33 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		// Loop over all detectives in temporary list to validate
 		ArrayList<PlayerConfiguration> configurations = new ArrayList<>(); // tempory list for validation
 
+		configurations.add(mrX);
+		configurations.add(firstDetective);
+		// Create List of ScotlandYardPlayers (mutable)
+
 		// add configurations to temporary list
 		for (PlayerConfiguration configuration : restOfTheDetectives) {
 			configurations.add(requireNonNull(configuration));
 		}
-		configurations.add(0, firstDetective);
-		configurations.add(0, mrX);
 
-		// Check if players have duplicated locations
+		// start processing all configurations
+		// data stores for processed data
 		Set<Integer> locations = new HashSet<>();
+		this.mPlayers = new ArrayList<>();
+		Set<Colour> colours = new HashSet<>();
+
 		for (PlayerConfiguration configuration : configurations) {
+			// Check if players have duplicated locations
 			if (locations.contains(configuration.location)) {
 				throw new IllegalArgumentException("Duplicate location");
 			}
 			locations.add(configuration.location);
-		}
-
-		//Check if players have duplicated colours
-		Set<Colour> colours = new HashSet<>();
-		for (PlayerConfiguration configuration2 : configurations) {
-			if (colours.contains(configuration2.colour)) {
+			if (colours.contains(configuration.colour)) {
 				throw new IllegalArgumentException("Duplicate colour");
 			}
-			colours.add(configuration2.colour);
-		}
+			colours.add(configuration.colour);
 
-		// Check valid tickets
-		for (PlayerConfiguration configuration : configurations) {
+			// ticket check
 			if (configuration.tickets.get(BUS) == null) {
 				throw new IllegalArgumentException("Detective is missing BUS tickets");
 			}
@@ -102,17 +105,18 @@ public class ScotlandYardModel implements ScotlandYardGame {
 					throw new IllegalArgumentException("Detective should not have secret tickets");
 				}
 			}
-			// finished validating configurations
-			// Create List of ScotlandYardPlayers (mutable)
-			this.players = new ArrayList<>();
-			for (PlayerConfiguration validated : configurations) {
-				ScotlandYardPlayer player = new ScotlandYardPlayer(validated.player, validated.colour, validated.location,
-						validated.tickets);
-				players.add(player);
-			}
+
+			ScotlandYardPlayer player = new ScotlandYardPlayer(configuration.player, configuration.colour,
+					configuration.location, configuration.tickets);
+			this.mPlayers.add(player);
 		}
+
 	}
+
 	//End of Constructor
+	public Integer getMrXLocation() {
+		return this.mMrXLastLocation;
+	}
 
 	@Override
 	public void registerSpectator(Spectator spectator) {
@@ -140,56 +144,87 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 	@Override
 	public List<Colour> getPlayers() {
-		// TODO
-		throw new RuntimeException("Implement me");
+		ArrayList<Colour> result = new ArrayList<>();
+		for (ScotlandYardPlayer player : this.mPlayers) {
+			result.add(player.colour());
+		}
+		return Collections.unmodifiableList(result);
 	}
 
 	@Override
 	public Set<Colour> getWinningPlayers() {
-		// TODO
-		throw new RuntimeException("Implement me");
+		HashSet<Colour> winners = new HashSet<Colour>();
+		Integer mrXlocation = 0;
+
+		for (ScotlandYardPlayer player : this.mPlayers) {
+			if (player.colour() == BLACK) {
+				mrXlocation = player.location();
+			} else {
+				if (player.location() == mrXlocation) {
+					winners.add(player.colour());
+				}
+			}
+		}
+
+		return Collections.unmodifiableSet(winners);
 	}
 
 	@Override
 	public Optional<Integer> getPlayerLocation(Colour colour) {
-		// TODO
-		throw new RuntimeException("Implement me");
+		Optional<Integer> requestedLocation = Optional.empty();
+		boolean playerFound = false;
+
+		// look for the player
+		for (ScotlandYardPlayer player : this.mPlayers) {
+			if (player.colour() == colour) {
+				playerFound = true;
+				if (colour != BLACK) {
+					requestedLocation = Optional.of(player.location());
+				} else {
+					requestedLocation = Optional.of(this.getMrXLocation());
+				}
+			}
+		}
+
+		return requestedLocation;
 	}
 
 	@Override
 	public Optional<Integer> getPlayerTickets(Colour colour, Ticket ticket) {
-		// TODO
-		throw new RuntimeException("Implement me");
+		Optional<Integer> result = Optional.empty();
+		for (ScotlandYardPlayer player : this.mPlayers) {
+			if (player.colour() == colour) {
+				result = Optional.of(player.tickets().get(ticket));
+			}
+		}
+
+		return result;
 	}
 
 	@Override
 	public boolean isGameOver() {
 		// TODO
-		throw new RuntimeException("Implement me");
+		return false;
 	}
 
 	@Override
 	public Colour getCurrentPlayer() {
-		// TODO
-		throw new RuntimeException("Implement me");
+		return (BLACK);
 	}
 
 	@Override
 	public int getCurrentRound() {
-		// TODO
-		throw new RuntimeException("Implement me");
+		return mCurrentRound;
 	}
 
 	@Override
 	public List<Boolean> getRounds() {
-		// TODO
-		throw new RuntimeException("Implement me");
+		return Collections.unmodifiableList(mRounds);
 	}
 
 	@Override
 	public Graph<Integer, Transport> getGraph() {
-		// TODO
-		throw new RuntimeException("Implement me");
+		return new ImmutableGraph<Integer, Transport>(mGraph);
 	}
 
 }

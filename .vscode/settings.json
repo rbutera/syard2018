@@ -3,12 +3,10 @@
     "commands": [
       {
         "match": "\\.java$",
-        "cmd": "mvn clean test"
+        "cmd": "./mvnw -Dtest=ModelCreationTest clean test"
       }
     ]
   },
   "java.configuration.updateBuildConfiguration": "automatic",
-  "cSpell.words": [
-    "configuration"
-  ]
+  "cSpell.words": ["configuration"]
 }
