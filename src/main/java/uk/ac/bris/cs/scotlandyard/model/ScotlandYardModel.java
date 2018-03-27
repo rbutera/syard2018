@@ -34,6 +34,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	private List<Boolean> mRounds;
 	private Graph<Integer, Transport> mGraph;
 	private ArrayList<ScotlandYardPlayer> mPlayers;
+	private Set<Colour> mColours;
 	private List<Colour> mColourList;
 	private int mCurrentRound = NOT_STARTED;
 
@@ -107,8 +108,9 @@ public class ScotlandYardModel implements ScotlandYardGame {
 			}
 		}
 
+		this.mColours = colours;
 		this.mColourList = new ArrayList<Colour>();
-		this.mColourList.addAll(colours);
+		this.mColourList.addAll(this.mColours);
 	}
 	//End of Constructor
 
@@ -138,7 +140,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 	@Override
 	public List<Colour> getPlayers() {
-		return this.mColourList;
+		return Collections.unmodifiableList(this.mColourList);
 	}
 
 	@Override
