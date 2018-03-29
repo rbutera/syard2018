@@ -39,8 +39,8 @@ public class ScotlandYardPlayer {
 			found = true;
 			result = players.get(0);
 		} else {
-			for(ScotlandYardPlayer player: players) {
-				if(player.colour() == colour){
+			for (ScotlandYardPlayer player : players) {
+				if (player.colour() == colour) {
 					if (found) {
 						throw new RuntimeException("multiple instances found with colour " + colour + " !? wtf?");
 					} else {
@@ -51,22 +51,12 @@ public class ScotlandYardPlayer {
 			}
 		}
 
-		if(!found) {
+		if (!found) {
 			return Optional.empty();
 		} else {
 			Optional<ScotlandYardPlayer> output = Optional.of(result);
 			return output;
 		}
-}
-
-	if(!found)
-
-	{
-		return Optional.empty();
-	}else
-	{
-		return Optional.of(result);
-	}
 	}
 
 	/**
