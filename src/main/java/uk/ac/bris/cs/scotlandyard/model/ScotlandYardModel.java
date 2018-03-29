@@ -1,17 +1,6 @@
 package uk.ac.bris.cs.scotlandyard.model;
 
-import static java.util.Arrays.asList;
-import static java.util.Collections.emptySet;
-import static java.util.Collections.singletonList;
-import static java.util.Collections.unmodifiableCollection;
-import static java.util.Collections.unmodifiableSet;
-import static java.util.Collections.unmodifiableList;
 import static java.util.Objects.requireNonNull;
-import static uk.ac.bris.cs.scotlandyard.model.Colour.*;
-import static uk.ac.bris.cs.scotlandyard.model.Ticket.*;
-import static uk.ac.bris.cs.scotlandyard.model.Player.*;
-import static uk.ac.bris.cs.scotlandyard.model.Move.*;
-import static uk.ac.bris.cs.scotlandyard.model;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -28,6 +17,7 @@ import org.omg.IOP.TAG_RMI_CUSTOM_MAX_STREAM_FORMAT;
 import java.util.*; // TODO: figure out what we actually need to import here (to solve errors for ImmutableGraph etc)
 import uk.ac.bris.cs.gamekit.graph.Edge;
 import uk.ac.bris.cs.gamekit.graph.Graph;
+import uk.ac.bris.cs.scotlandyard.model.Colour.BLACK;
 import uk.ac.bris.cs.gamekit.graph.ImmutableGraph;
 import uk.ac.bris.cs.gamekit.graph.UndirectedGraph;
 
@@ -35,7 +25,7 @@ import uk.ac.bris.cs.gamekit.graph.UndirectedGraph;
 public class ScotlandYardModel implements ScotlandYardGame {
 	private List<Boolean> mRounds;
 	private Graph<Integer, Transport> mGraph;
-	private ArrayList<ScotlandYardPlayer> mPlayers = new ArrayList<ScotlandYardPlayer>();
+	private ArrayList<ScotlandYardPlayer> mPlayers = new ArrayList<>();
 	private int mCurrentRound = NOT_STARTED;
 	private int mMrXLastLocation = 0;
 	private int mMovesPlayed = 0; // TODO: increment moves played every time someone makes a move
@@ -52,7 +42,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 			throw new IllegalArgumentException("Empty mRounds");
 		}
 
-		if (graph.isEmpty()) {
+		if (this.mGraph.isEmpty()) {
 			throw new IllegalArgumentException("Empty graph");
 		}
 
@@ -61,7 +51,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		}
 
 		// Loop over all detectives in temporary list to validate
-		ArrayList<PlayerConfiguration> configurations = new ArrayList<>(); // tempory list for validation
+		ArrayList<PlayerConfiguration> configurations = new ArrayList<>(); // temporary list for validation
 
 		configurations.add(mrX);
 		configurations.add(firstDetective);
@@ -116,7 +106,13 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		}
 	}
 
-	public Integer getMrXLocation() {
+	public void accept(Move move) {
+		// TODO: finish this
+		System.out.printLn("You made a move!");
+		return;
+	}
+
+	private Integer getMrXLocation() {
 		return this.mMrXLastLocation;
 	}
 
@@ -171,14 +167,18 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		} else {
 			ScotlandYardPlayer current = currentPlayer.get();
 			// generate list of valid moves
-			HashSet<Move> moves = new HashSet<Move>();
+			HashSet<Move> moves = new HashSet<>();
 
-			Integer location = getPlayerLocation(currentPlayerColour).get();
+			Optional<Integer> location = getPlayerLocation(currentPlayerColour);
 
 			// notify player to move via Player.makeMove
 			// TODO: use empty list OR a list containing a single PassMove
 			// TODO: replace fake list with generated valid moves
-			current.player().makeMove(this, location, moves, this);
+			if (location.isPresent()) {
+				current.player().makeMove(this, location.get(), moves, this);
+			} else {
+				throw new RuntimeException("empty Optional <Integer> (location)");
+			}
 
 			// TODO: figure out the rest of this
 
@@ -205,12 +205,12 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 	@Override
 	public Set<Colour> getWinningPlayers() {
-		HashSet<Colour> winners = new HashSet<Colour>();
-		Integer mrXlocation = 0;
+		HashSet<Colour> winners = new HashSet<>();
+		Integer mrXLocation = 0;
 
 		for (ScotlandYardPlayer player : this.mPlayers) {
 			if (player.colour() == BLACK) {
-				mrXlocation = player.location();
+				mrXLocation = player.location();
 			} else {
 				if (player.location() == mrXlocation) {
 					winners.add(player.colour());
@@ -228,7 +228,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 		// look for the player
 		for (ScotlandYardPlayer player : this.mPlayers) {
-			if (player.colour() == colour) {
+			if (!playerFound && player.colour() == colour) {
 				playerFound = true;
 				if (colour != BLACK) {
 					requestedLocation = Optional.of(player.location());
@@ -280,7 +280,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 	@Override
 	public Graph<Integer, Transport> getGraph() {
-		return new ImmutableGraph<Integer, Transport>(mGraph);
+		return new ImmutableGraph<>(mGraph);
 	}
 
 }

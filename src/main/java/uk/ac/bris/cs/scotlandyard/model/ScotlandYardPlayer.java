@@ -31,7 +31,7 @@ public class ScotlandYardPlayer {
 		this.tickets = new HashMap<>(tickets);
 	}
 
-	static public Optional<ScotlandYardPlayer> getByColour(ArrayList<ScotlandYardPlayer> players, Colour colour) {
+	public Optional<ScotlandYardPlayer> getByColour(ArrayList<ScotlandYardPlayer> players, Colour colour) {
 		boolean found = false;
 		ScotlandYardPlayer result;
 
