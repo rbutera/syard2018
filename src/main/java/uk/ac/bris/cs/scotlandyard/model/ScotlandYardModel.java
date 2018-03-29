@@ -11,7 +11,7 @@ import static uk.ac.bris.cs.scotlandyard.model.Colour.*;
 import static uk.ac.bris.cs.scotlandyard.model.Ticket.*;
 import static uk.ac.bris.cs.scotlandyard.model.Player.*;
 import static uk.ac.bris.cs.scotlandyard.model.Move.*;
-import static uk.ac.bris.cs.scotlandyard.model.*;
+import static uk.ac.bris.cs.scotlandyard.model;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -43,10 +43,8 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	private Optional<Colour> mLastPlayer = Optional.empty();
 
 	//Constructor
-	public(
-	List<Boolean> rounds, Graph<Integer,Transport>graph,
-	PlayerConfiguration mrX, PlayerConfiguration firstDetective,PlayerConfiguration...restOfTheDetectives)
-	{
+	public ScotlandYardModel(List<Boolean> rounds, Graph<Integer, Transport> graph, PlayerConfiguration mrX,
+			PlayerConfiguration firstDetective, PlayerConfiguration... restOfTheDetectives) {
 		this.mRounds = requireNonNull(rounds);
 		this.mGraph = requireNonNull(graph);
 
@@ -166,7 +164,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		}
 
 		Colour currentPlayerColour = this.getCurrentPlayer();
-		Optional<ScotlandYardPlayer> currentPlayer = Player.getByColour(this.mPlayers, currentPlayerColour);
+		Optional<ScotlandYardPlayer> currentPlayer = ScotlandYardPlayer.getByColour(this.mPlayers, currentPlayerColour);
 
 		if (!currentPlayer.isPresent()) {
 			throw new RuntimeException("Could not get current player instance");
@@ -280,8 +278,8 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		return Collections.unmodifiableList(mRounds);
 	}
 
-	public Graph<Integer, Transport> getGraph(){
 	@Override
+	public Graph<Integer, Transport> getGraph() {
 		return new ImmutableGraph<Integer, Transport>(mGraph);
 	}
 
