@@ -7,9 +7,10 @@ import static java.util.Collections.unmodifiableCollection;
 import static java.util.Collections.unmodifiableSet;
 import static java.util.Collections.unmodifiableList;
 import static java.util.Objects.requireNonNull;
-import static uk.ac.bris.cs.scotlandyard.model.Colour.BLACK;
+import static uk.ac.bris.cs.scotlandyard.model.Colour.*;
 import static uk.ac.bris.cs.scotlandyard.model.Ticket.*;
 import static uk.ac.bris.cs.scotlandyard.model.Player.*;
+import static uk.ac.bris.cs.scotlandyard.model.Move.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -63,7 +64,6 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 		configurations.add(mrX);
 		configurations.add(firstDetective);
-		// Create List of ScotlandYardPlayers (mutable)
 
 		// add configurations to temporary list
 		for (PlayerConfiguration configuration : restOfTheDetectives) {
@@ -73,7 +73,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		// start processing all configurations
 		// data stores for processed data
 		Set<Integer> locations = new HashSet<>();
-		this.mPlayers = new ArrayList<>();
+		this.mPlayers = new ArrayList<>(); //List of ScotlandYardPlayers (mutable)
 		Set<Colour> colours = new HashSet<>();
 
 		for (PlayerConfiguration configuration : configurations) {
@@ -113,10 +113,8 @@ public class ScotlandYardModel implements ScotlandYardGame {
 					configuration.location, configuration.tickets);
 			this.mPlayers.add(player);
 		}
-
 	}
 
-	//End of Constructor
 	public Integer getMrXLocation() {
 		return this.mMrXLastLocation;
 	}
@@ -159,16 +157,34 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 	@Override
 	public void startRotate() {
+		// check if game over
 		if (this.isGameOver()) {
 			throw new IllegalStateException("startRotate called but the game is already over!");
 		}
 
-		// obtain current player
+		Colour currentPlayerColour = this.getCurrentPlayer();
+		Optional<ScotlandYardPlayer> currentPlayer = Player.getByColour(this.mPlayers, currentPlayerColour);
 
-		// notify player to move via Player.makeMove
-		// TODO: use empty list OR a list containing a single PassMove
-		// TODO: replace fake list with generated valid mves
+		if (currentPlayer.isPresent()) {
+			throw new RuntimeException("Could not get current player instance");
+		} else {
+			ScotlandYardPlayer current = currentPlayer.get();
+			// generate list of valid moves
+			HashSet<Move> moves = new HashSet<Move>();
 
+			Integer location = getPlayerLocation(currentPlayerColour).get();
+
+			// notify player to move via Player.makeMove
+			// TODO: use empty list OR a list containing a single PassMove
+			// TODO: replace fake list with generated valid moves
+			current.player().makeMove(this, location, moves, this);
+
+			// TODO: figure out the rest of this
+
+			// update model: last player (so the next time startRotate was called)
+			Optional<Colour> updatedLastPlayer = Optional.of(currentPlayerColour);
+			this.mLastPlayer = updatedLastPlayer;
+		}
 	}
 
 	@Override
@@ -261,8 +277,8 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		return Collections.unmodifiableList(mRounds);
 	}
 
-	@Override
 	public Graph<Integer, Transport> getGraph() {
+	@Override
 		return new ImmutableGraph<Integer, Transport>(mGraph);
 	}
 

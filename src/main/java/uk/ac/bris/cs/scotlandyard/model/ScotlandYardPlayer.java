@@ -2,6 +2,9 @@ package uk.ac.bris.cs.scotlandyard.model;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import static uk.ac.bris.cs.scotlandyard.model.Colour.*;
+import java.util.ArrayList;
 
 /**
  * A class that contains all the information about a particular player.
@@ -21,12 +24,49 @@ public class ScotlandYardPlayer {
 	 * @param location the location of the player.
 	 * @param tickets the tickets associated with the player.
 	 */
-	public ScotlandYardPlayer(Player player, Colour colour, int location,
-			Map<Ticket, Integer> tickets) {
+	public ScotlandYardPlayer(Player player, Colour colour, int location, Map<Ticket, Integer> tickets) {
 		this.player = player;
 		this.colour = colour;
 		this.location = location;
 		this.tickets = new HashMap<>(tickets);
+	}
+
+	static public Optional<ScotlandYardPlayer> getByColour(ArrayList<ScotlandYardPlayer> players, Colour colour) {
+		boolean found = false;
+		ScotlandYardPlayer result;
+
+		if (colour == (BLACK)) {
+			found = true;
+			result = players.get(0);
+		} else {
+			for(ScotlandYardPlayer player: players) {
+				if(player.colour() == colour){
+					if (found) {
+						throw new RuntimeException("multiple instances found with colour " + colour + " !? wtf?");
+					} else {
+						found = true;
+						result = player;
+					}
+				}
+			}
+		}
+
+		if(!found) {
+			return Optional.empty();
+		} else {
+			Optional<ScotlandYardPlayer> output = Optional.of(result);
+			return output;
+		}
+}
+
+	if(!found)
+
+	{
+		return Optional.empty();
+	}else
+	{
+		return Optional.of(result);
+	}
 	}
 
 	/**
