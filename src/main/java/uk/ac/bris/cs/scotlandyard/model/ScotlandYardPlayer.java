@@ -6,6 +6,7 @@ import java.util.Optional;
 import static uk.ac.bris.cs.scotlandyard.model.Colour.*;
 import java.util.ArrayList;
 
+
 /**
  * A class that contains all the information about a particular player.
  */
@@ -31,9 +32,9 @@ public class ScotlandYardPlayer {
 		this.tickets = new HashMap<>(tickets);
 	}
 
-	public Optional<ScotlandYardPlayer> getByColour(ArrayList<ScotlandYardPlayer> players, Colour colour) {
+	static public Optional<ScotlandYardPlayer> getByColour(ArrayList<ScotlandYardPlayer> players, Colour colour) {
 		boolean found = false;
-		ScotlandYardPlayer result;
+		ScotlandYardPlayer result = BLACK;
 
 		if (colour == (BLACK)) {
 			found = true;

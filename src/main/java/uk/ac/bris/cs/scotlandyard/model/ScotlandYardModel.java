@@ -1,6 +1,15 @@
 package uk.ac.bris.cs.scotlandyard.model;
 
+import static java.util.Arrays.asList;
+import static java.util.Collections.emptySet;
+import static java.util.Collections.singletonList;
+import static java.util.Collections.unmodifiableCollection;
+import static java.util.Collections.unmodifiableSet;
+import static java.util.Collections.unmodifiableList;
 import static java.util.Objects.requireNonNull;
+import static uk.ac.bris.cs.scotlandyard.model.Colour.BLACK;
+import static uk.ac.bris.cs.scotlandyard.model.Ticket.*;
+import static uk.ac.bris.cs.scotlandyard.model.Player.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -17,7 +26,6 @@ import org.omg.IOP.TAG_RMI_CUSTOM_MAX_STREAM_FORMAT;
 import java.util.*; // TODO: figure out what we actually need to import here (to solve errors for ImmutableGraph etc)
 import uk.ac.bris.cs.gamekit.graph.Edge;
 import uk.ac.bris.cs.gamekit.graph.Graph;
-import uk.ac.bris.cs.scotlandyard.model.Colour.BLACK;
 import uk.ac.bris.cs.gamekit.graph.ImmutableGraph;
 import uk.ac.bris.cs.gamekit.graph.UndirectedGraph;
 
@@ -108,7 +116,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 	public void accept(Move move) {
 		// TODO: finish this
-		System.out.printLn("You made a move!");
+		System.out.println("You made a move!");
 		return;
 	}
 
