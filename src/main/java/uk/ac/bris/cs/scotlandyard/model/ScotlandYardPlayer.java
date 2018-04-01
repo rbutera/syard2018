@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 import static uk.ac.bris.cs.scotlandyard.model.Colour.*;
 import java.util.ArrayList;
-
+import static java.util.Objects.requireNonNull;
 
 /**
  * A class that contains all the information about a particular player.
@@ -34,19 +34,19 @@ public class ScotlandYardPlayer {
 
 	static public Optional<ScotlandYardPlayer> getByColour(ArrayList<ScotlandYardPlayer> players, Colour colour) {
 		boolean found = false;
-		ScotlandYardPlayer result = BLACK;
+		Optional<ScotlandYardPlayer> result = Optional.empty();
 
 		if (colour == (BLACK)) {
 			found = true;
-			result = players.get(0);
+			result = Optional.of(players.get(0));
 		} else {
 			for (ScotlandYardPlayer player : players) {
 				if (player.colour() == colour) {
 					if (found) {
-						throw new RuntimeException("multiple instances found with colour " + colour + " !? wtf?");
+						throw new RuntimeException("multiple instances found with colour " + colour.toString() + " !? wtf?");
 					} else {
 						found = true;
-						result = player;
+						result = Optional.of(player);
 					}
 				}
 			}
@@ -54,9 +54,10 @@ public class ScotlandYardPlayer {
 
 		if (!found) {
 			return Optional.empty();
+		} else if (result.isPresent()) {
+			return result;
 		} else {
-			Optional<ScotlandYardPlayer> output = Optional.of(result);
-			return output;
+			throw new RuntimeException("Could not get colour " + colour.toString());
 		}
 	}
 

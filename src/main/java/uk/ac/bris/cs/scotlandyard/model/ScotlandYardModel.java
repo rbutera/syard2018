@@ -114,9 +114,10 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		}
 	}
 
-	public void accept(Move move) {
+	public void processMove(Move move) {
+
 		// TODO: finish this
-		System.out.println("You made a move!");
+		System.out.println("Move made: " + move.toString());
 		return;
 	}
 
@@ -182,8 +183,9 @@ public class ScotlandYardModel implements ScotlandYardGame {
 			// notify player to move via Player.makeMove
 			// TODO: use empty list OR a list containing a single PassMove
 			// TODO: replace fake list with generated valid moves
+
 			if (location.isPresent()) {
-				current.player().makeMove(this, location.get(), moves, this);
+				current.player().makeMove(this, location.get(), moves, (choice) -> this.processMove(choice));
 			} else {
 				throw new RuntimeException("empty Optional <Integer> (location)");
 			}
@@ -220,7 +222,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 			if (player.colour() == BLACK) {
 				mrXLocation = player.location();
 			} else {
-				if (player.location() == mrXlocation) {
+				if (player.location() == mrXLocation) {
 					winners.add(player.colour());
 				}
 			}
