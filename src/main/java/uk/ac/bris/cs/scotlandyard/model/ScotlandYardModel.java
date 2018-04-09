@@ -37,8 +37,8 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	private int mCurrentRound = NOT_STARTED;
 	private int mMrXLastLocation = 0;
 	private int mMovesPlayed = 0; // TODO: increment moves played every time someone makes a move
-	private Colour mCurrentPlayer = BLACK;
 	private Optional<Colour> mLastPlayer = Optional.empty();
+	private ArrayList<Colour> mWinners = new ArrayList<>();
 
 	//Constructor
 	public ScotlandYardModel(List<Boolean> rounds, Graph<Integer, Transport> graph, PlayerConfiguration mrX,
@@ -115,10 +115,9 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	}
 
 	public void processMove(Move move) {
-
 		// TODO: finish this
 		System.out.println("Move made: " + move.toString());
-		return;
+		this.mMovesPlayed++;
 	}
 
 	private Integer getMrXLocation() {
@@ -271,24 +270,67 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		}
 	}
 
+	private boolean playerIsTicketless (Colour colour) {
+	    return !(getPlayerTickets(colour, BUS).isPresent() || getPlayerTickets(colour, TAXI).isPresent() || getPlayerTickets(colour, UNDERGROUND).isPresent())
+    }
+
+    private ArrayList<Integer> getOccupiedLocations () {
+	    ArrayList<Integer> output = new ArrayList<>();
+
+        for (Colour colour: getPlayers()) {
+            if (colour != BLACK) {
+                Optional<Integer> loc = getPlayerLocation(colour);
+                if (loc.isPresent()) {
+                    output.add(loc.get());
+                }
+            }
+        }
+
+	    return output;
+    }
+
+    private Set<Move> getMoves (ScotlandYardPlayer player) {
+	    Set<Move> result = new HashSet<>();
+
+
+
+	    return result;
+    }
+
 	private boolean winCheckMrX() {
-		return false;
+		// check if all detectives are ticketless
+        boolean allTicketless = true;
+        for (Colour colour: getPlayers()) {
+            if(colour != BLACK) {
+                allTicketless = allTicketless && playerIsTicketless(colour);
+            }
+        }
+
+		// check if all detectives have exhausted valid moves
+        boolean noValidMoves = false;
+
+
+		// check if all rounds have been used up
+        boolean noRoundsLeft = false;
+
+
+        return allTicketless || noValidMoves || noRoundsLeft;
 	}
 
 	private boolean winCheckDetective() {
+		// check if mrX is stuck
+
+		// check if mrX has been captured
+
 		return false;
 	}
 
 	@Override
 	public boolean isGameOver() {
-		boolean mrXWin = false;
-		boolean playerWin = false;
-		boolean gameOver = false;
+		boolean mrXWin = winCheckMrX();
+		boolean playerWin = winCheckDetective();
 
-		if (mrXWin || playerWin) {
-			gameOver = true;
-		}
-		return gameOver;
+		return mrXWin || playerWin;
 	}
 
 	@Override
