@@ -263,10 +263,32 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		return result;
 	}
 
+	private void winners(boolean isMrX) {
+		for (Colour player : getPlayers()) {
+			if ((player.isDetective() && !isMrX) || (player.isMrX() && isMrX)) {
+				this.mWinners.add(player);
+			}
+		}
+	}
+
+	private boolean winCheckMrX() {
+		return false;
+	}
+
+	private boolean winCheckDetective() {
+		return false;
+	}
+
 	@Override
 	public boolean isGameOver() {
-		// TODO
-		return false;
+		boolean mrXWin = false;
+		boolean playerWin = false;
+		boolean gameOver = false;
+
+		if (mrXWin || playerWin) {
+			gameOver = true;
+		}
+		return gameOver;
 	}
 
 	@Override
