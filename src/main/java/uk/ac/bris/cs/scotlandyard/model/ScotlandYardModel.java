@@ -39,6 +39,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	private int mMovesPlayed = 0; // TODO: increment moves played every time someone makes a move
 	private Colour mCurrentPlayer = BLACK;
 	private Optional<Colour> mLastPlayer = Optional.empty();
+	private ArrayList<Colour> mWinners = new ArrayList<>();
 
 	//Constructor
 	public ScotlandYardModel(List<Boolean> rounds, Graph<Integer, Transport> graph, PlayerConfiguration mrX,
@@ -114,96 +115,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		}
 	}
 
-	public void processMove(Move move) {
-
-		// TODO: finish this
-		System.out.println("Move made: " + move.toString());
-		return;
-	}
-
-	private Integer getMrXLocation() {
-		return this.mMrXLastLocation;
-	}
-
-	/**
-	 * Returns the colour of the next player to play this round
-	 */
-	private Colour nextPlayer(Colour current) {
-		List<Colour> players = getPlayers();
-		Colour result = BLACK; // initialise as black just incase
-		int currentIndex = -1;
-
-		for (Colour player : players) {
-			if (player == current) {
-				currentIndex = players.indexOf(player);
-				if (currentIndex < players.size() - 1) {
-					result = players.get(currentIndex + 1);
-				}
-			}
-		}
-
-		if (currentIndex < 0) {
-			throw new RuntimeException("nextPlayer unable to generate index for Colour " + current);
-		}
-
-		return result;
-	}
-
-	@Override
-	public void registerSpectator(Spectator spectator) {
-		// TODO
-		throw new RuntimeException("Implement me");
-	}
-
-	@Override
-	public void unregisterSpectator(Spectator spectator) {
-		// TODO
-		throw new RuntimeException("Implement me");
-	}
-
-	@Override
-	public void startRotate() {
-		// check if game over
-		if (this.isGameOver()) {
-			throw new IllegalStateException("startRotate called but the game is already over!");
-		}
-
-		Colour currentPlayerColour = this.getCurrentPlayer();
-		Optional<ScotlandYardPlayer> currentPlayer = ScotlandYardPlayer.getByColour(this.mPlayers, currentPlayerColour);
-
-		if (!currentPlayer.isPresent()) {
-			throw new RuntimeException("Could not get current player instance");
-		} else {
-			ScotlandYardPlayer current = currentPlayer.get();
-			// generate list of valid moves
-			HashSet<Move> moves = new HashSet<>();
-
-			Optional<Integer> location = getPlayerLocation(currentPlayerColour);
-
-			// notify player to move via Player.makeMove
-			// TODO: use empty list OR a list containing a single PassMove
-			// TODO: replace fake list with generated valid moves
-
-			if (location.isPresent()) {
-				current.player().makeMove(this, location.get(), moves, (choice) -> this.processMove(choice));
-			} else {
-				throw new RuntimeException("empty Optional <Integer> (location)");
-			}
-
-			// TODO: figure out the rest of this
-
-			// update model: last player (so the next time startRotate was called)
-			Optional<Colour> updatedLastPlayer = Optional.of(currentPlayerColour);
-			this.mLastPlayer = updatedLastPlayer;
-		}
-	}
-
-	@Override
-	public Collection<Spectator> getSpectators() {
-		// TODO
-		throw new RuntimeException("Implement me");
-	}
-
+	/** GENERIC GETTERS SECTION */
 	@Override
 	public List<Colour> getPlayers() {
 		ArrayList<Colour> result = new ArrayList<>();
@@ -211,24 +123,6 @@ public class ScotlandYardModel implements ScotlandYardGame {
 			result.add(player.colour());
 		}
 		return Collections.unmodifiableList(result);
-	}
-
-	@Override
-	public Set<Colour> getWinningPlayers() {
-		HashSet<Colour> winners = new HashSet<>();
-		Integer mrXLocation = 0;
-
-		for (ScotlandYardPlayer player : this.mPlayers) {
-			if (player.colour() == BLACK) {
-				mrXLocation = player.location();
-			} else {
-				if (player.location() == mrXLocation) {
-					winners.add(player.colour());
-				}
-			}
-		}
-
-		return Collections.unmodifiableSet(winners);
 	}
 
 	@Override
@@ -263,38 +157,10 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		return result;
 	}
 
-	private void winners(boolean isMrX) {
-		for (Colour player : getPlayers()) {
-			if ((player.isDetective() && !isMrX) || (player.isMrX() && isMrX)) {
-				this.mWinners.add(player);
-			}
-		}
-	}
-
-	private boolean winCheckMrX() {
-		return false;
-	}
-
-	private boolean winCheckDetective() {
-		return false;
-	}
-
-	@Override
-	public boolean isGameOver() {
-		boolean mrXWin = false;
-		boolean playerWin = false;
-		boolean gameOver = false;
-
-		if (mrXWin || playerWin) {
-			gameOver = true;
-		}
-		return gameOver;
-	}
-
 	@Override
 	public Colour getCurrentPlayer() {
 		if (this.mLastPlayer.isPresent()) {
-			return nextPlayer(this.mLastPlayer.get());
+			return getNextPlayer(this.mLastPlayer.get());
 		} else {
 			return (BLACK);
 		}
@@ -315,4 +181,135 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		return new ImmutableGraph<>(mGraph);
 	}
 
+	private Integer getMrXLocation() {
+		return this.mMrXLastLocation;
+	}
+
+	/**
+	 * Returns the colour of the next player to play this round
+	 */
+	private Colour getNextPlayer(Colour current) {
+		List<Colour> players = getPlayers();
+		Colour result = BLACK; // initialise as black just incase
+		int currentIndex = -1;
+
+		for (Colour player : players) {
+			if (player == current) {
+				currentIndex = players.indexOf(player);
+				if (currentIndex < players.size() - 1) {
+					result = players.get(currentIndex + 1);
+				}
+			}
+		}
+
+		if (currentIndex < 0) {
+			throw new RuntimeException("getNextPlayer unable to generate index for Colour " + current);
+		}
+
+		return result;
+	}
+
+	/** END GETTERS SECTION */
+
+	/** ROTATION AND MOVEMENT LOGIC SECTION */
+	@Override
+	public void startRotate() {
+		// check if game over
+		if (this.isGameOver()) {
+			throw new IllegalStateException("startRotate called but the game is already over!");
+		}
+
+		Colour currentPlayerColour = this.getCurrentPlayer();
+		Optional<ScotlandYardPlayer> currentPlayer = ScotlandYardPlayer.getByColour(this.mPlayers, currentPlayerColour);
+
+		if (!currentPlayer.isPresent()) {
+			throw new RuntimeException("Could not get current player instance");
+		} else {
+			ScotlandYardPlayer current = currentPlayer.get();
+			// generate list of valid moves
+			HashSet<Move> moves = new HashSet<>();
+
+			Optional<Integer> location = getPlayerLocation(currentPlayerColour);
+
+			// notify player to move via Player.makeMove
+			// TODO: use empty list OR a list containing a single PassMove
+			// TODO: replace fake list with generated valid moves
+
+			if (location.isPresent()) {
+				current.player().makeMove(this, location.get(), moves, (choice) -> this.processMove(choice));
+				// update model: last player (so the next time startRotate was called)
+				Optional<Colour> updatedLastPlayer = Optional.of(currentPlayerColour);
+				this.mLastPlayer = updatedLastPlayer;
+			} else {
+				throw new RuntimeException("empty Optional <Integer> (location)");
+			}
+		}
+	}
+
+	public void processMove(Move move) {
+
+		// TODO: finish this
+		System.out.println("Move made: " + move.toString());
+		return;
+	}
+
+	/** END ROTATION+MOVEMENT LOGIC SECTION */
+
+	/** WIN CHECKING SECTION */
+	/**
+	 * setWinners
+	 * populates `this.mWinners` list with winning players
+	 * (bool) isMrX - if mrX is the winner true, else false
+	 */
+	private void setWinningPlayers(boolean isMrX) {
+		for (Colour player : getPlayers()) {
+			if ((player.isDetective() && !isMrX) || (player.isMrX() && isMrX)) {
+				this.mWinners.add(player);
+			}
+		}
+	}
+
+	@Override
+	public Set<Colour> getWinningPlayers() {
+		Set<Colour> output = new HashSet<Colour>(this.mWinners);
+		return Collections.unmodifiableSet(output);
+	}
+
+	private boolean checkWinMrX() {
+		return false;
+	}
+
+	private boolean checkWinDetective() {
+		return false;
+	}
+
+	@Override
+	public boolean isGameOver() {
+		boolean mrXWin = checkWinMrX();
+		boolean playerWin = checkWinDetective();
+		return mrXWin || playerWin;
+	}
+
+	/** END WIN CHECKING SECTION */
+
+	/** SPECTATOR SECTION */
+	@Override
+	public void registerSpectator(Spectator spectator) {
+		// TODO
+		throw new RuntimeException("Implement me");
+	}
+
+	@Override
+	public void unregisterSpectator(Spectator spectator) {
+		// TODO
+		throw new RuntimeException("Implement me");
+	}
+
+	@Override
+	public Collection<Spectator> getSpectators() {
+		// TODO
+		throw new RuntimeException("Implement me");
+	}
+
+	/** END SPECTATOR SECTION */
 }
