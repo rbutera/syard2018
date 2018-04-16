@@ -221,6 +221,19 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		return Collections.unmodifiableSet(output);
 	}
 
+	/**
+	 * returns an immutable list of occupied locations
+	 */
+	private List<Integer> getOccupiedLocations() {
+		ArrayList<Integer> output = new ArrayList<Integer>();
+		for (ScotlandYardPlayer player : this.mPlayers) {
+			if (player.isDetective()) {
+				output.add(player.location());
+			}
+		}
+		return Collections.unmodifiableList(output);
+	}
+
 	/** END GETTERS SECTION */
 
 	/** ROTATION AND MOVEMENT LOGIC SECTION */
@@ -244,7 +257,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 			Optional<Integer> location = getPlayerLocation(currentPlayerColour, true);
 
 			// notify player to move via Player.makeMove
-			// TODO: use empty list OR a list containing a single PassMove
+			// TODO: use empty list OR a list containing a single PassMovegit
 			// TODO: replace fake list with generated valid moves
 
 			if (location.isPresent()) {
@@ -268,11 +281,12 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 	/** WIN CHECKING SECTION */
 	/**
-	 * setWinners
+	 * setWinningPlayers
 	 * populates `this.mWinners` list with winning players
 	 * (bool) isMrX - if mrX is the winner true, else false
 	 */
 	private void setWinningPlayers(boolean isMrX) {
+		this.mPlayers.clear();
 		for (Colour player : getPlayers()) {
 			if ((player.isDetective() && !isMrX) || (player.isMrX() && isMrX)) {
 				this.mWinners.add(player);
