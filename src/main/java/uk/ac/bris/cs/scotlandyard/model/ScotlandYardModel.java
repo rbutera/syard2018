@@ -125,8 +125,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		return Collections.unmodifiableList(result);
 	}
 
-	@Override
-	public Optional<Integer> getPlayerLocation(Colour colour) {
+	public Optional<Integer> getPlayerLocation(Colour colour, boolean forceMrX) {
 		Optional<Integer> requestedLocation = Optional.empty();
 		boolean playerFound = false;
 
@@ -134,7 +133,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		for (ScotlandYardPlayer player : this.mPlayers) {
 			if (!playerFound && player.colour() == colour) {
 				playerFound = true;
-				if (colour != BLACK) {
+				if (colour != BLACK || forceMrX) {
 					requestedLocation = Optional.of(player.location());
 				} else {
 					requestedLocation = Optional.of(this.getMrXLocation());
@@ -143,6 +142,11 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		}
 
 		return requestedLocation;
+	}
+
+	@Override
+	public Optional<Integer> getPlayerLocation(Colour colour) {
+		return getPlayerLocation(colour, false);
 	}
 
 	@Override
@@ -209,6 +213,14 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		return result;
 	}
 
+	private Set<Move> getMoves(Colour colour) {
+		Set<Move> output = new HashSet<>();
+		// TODO: get moves for a given Colour
+		System.out
+				.println("** getMoves for " + colour + " FAIL - (not yet implemented) - returning an empty set of moves **");
+		return Collections.unmodifiableSet(output);
+	}
+
 	/** END GETTERS SECTION */
 
 	/** ROTATION AND MOVEMENT LOGIC SECTION */
@@ -227,9 +239,9 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		} else {
 			ScotlandYardPlayer current = currentPlayer.get();
 			// generate list of valid moves
-			HashSet<Move> moves = new HashSet<>();
+			Set<Move> moves = getMoves(currentPlayerColour);
 
-			Optional<Integer> location = getPlayerLocation(currentPlayerColour);
+			Optional<Integer> location = getPlayerLocation(currentPlayerColour, true);
 
 			// notify player to move via Player.makeMove
 			// TODO: use empty list OR a list containing a single PassMove
@@ -247,7 +259,6 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	}
 
 	public void processMove(Move move) {
-
 		// TODO: finish this
 		System.out.println("Move made: " + move.toString());
 		return;

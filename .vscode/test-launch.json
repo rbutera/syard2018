@@ -1,0 +1,22 @@
+{
+    "run": [
+        {
+            "name": "cw-model",
+            "projectName": "cw-model",
+            "workingDirectory": "/Users/rai/syard2018",
+            "args": [],
+            "vmargs": [],
+            "preLaunchTask": ""
+        }
+    ],
+    "debug": [
+        {
+            "name": "cw-model",
+            "projectName": "cw-model",
+            "workingDirectory": "/Users/rai/syard2018",
+            "args": [],
+            "vmargs": [],
+            "preLaunchTask": ""
+        }
+    ]
+}
