@@ -1,33 +1,13 @@
 package uk.ac.bris.cs.scotlandyard.model;
 
-import static java.util.Arrays.asList;
-import static java.util.Collections.emptySet;
-import static java.util.Collections.singletonList;
-import static java.util.Collections.unmodifiableCollection;
-import static java.util.Collections.unmodifiableSet;
-import static java.util.Collections.unmodifiableList;
+import uk.ac.bris.cs.gamekit.graph.Graph;
+import uk.ac.bris.cs.gamekit.graph.ImmutableGraph;
+
+import java.util.*;
+
 import static java.util.Objects.requireNonNull;
 import static uk.ac.bris.cs.scotlandyard.model.Colour.BLACK;
 import static uk.ac.bris.cs.scotlandyard.model.Ticket.*;
-import static uk.ac.bris.cs.scotlandyard.model.Player.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.function.Consumer;
-
-import javax.security.auth.callback.ConfirmationCallback;
-
-import org.omg.IOP.TAG_RMI_CUSTOM_MAX_STREAM_FORMAT;
-
-import java.util.*; // TODO: figure out what we actually need to import here (to solve errors for ImmutableGraph etc)
-import uk.ac.bris.cs.gamekit.graph.Edge;
-import uk.ac.bris.cs.gamekit.graph.Graph;
-import uk.ac.bris.cs.gamekit.graph.ImmutableGraph;
-import uk.ac.bris.cs.gamekit.graph.UndirectedGraph;
 
 // TODO implement all methods and pass all tests
 public class ScotlandYardModel implements ScotlandYardGame {
@@ -292,7 +272,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
     private Set<Move> getMoves (ScotlandYardPlayer player) {
 	    Set<Move> result = new HashSet<>();
 
-
+		k
 
 	    return result;
     }
