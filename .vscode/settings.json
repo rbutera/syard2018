@@ -3,7 +3,7 @@
     "commands": [
       {
         "match": "\\.java$",
-        "cmd": "./mvnw clean compile && ./mvnw test"
+        "cmd": ";clear && ./mvnw clean compile && ./mvnw test"
       }
     ]
   },

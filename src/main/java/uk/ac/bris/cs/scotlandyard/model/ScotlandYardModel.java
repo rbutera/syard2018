@@ -267,13 +267,14 @@ public class ScotlandYardModel implements ScotlandYardGame {
 					}
 					if (player.hasTickets(DOUBLE)) {// TODO: check if sufficient rounds remaining for a double move
 						Collection<Edge<Integer, Transport>> doubleMoveDestinations = getOptions(destination);
-						Integer destination2 = getDestination(option);
-						Ticket transport2 = getTicket(option);
+					for(Edge<Integer, Transport> doubleMoveOption : doubleMoveDestinations){
+												Integer destination2 = getDestination(doubleMoveOption);
+						Ticket transport2 = getTicket(doubleMoveOption);
 						// TODO: finish double moves
 						// TODO: add tickets for available valid double moves
 						boolean secondDestinationAlreadyOccupied = occupied.contains(destination2);
 						boolean sufficientTickets = (transport != transport2 && player.hasTickets(transport2))
-								|| (transport == transport2 && player.hasTickets(transport2, 2)); //TODO: check
+								|| (transport == transport2 && player.hasTickets(transport2, 2) || player.hasTickets(SECRET, 2)); //TODO: check
 
 						if (!secondDestinationAlreadyOccupied && sufficientTickets) {
 							TicketMove firstMove, secondMove;
@@ -287,6 +288,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 								TicketMove secretFirstMove = new TicketMove(player.colour(), SECRET, destination);
 								TicketMove secretSecondMove = new TicketMove(player.colour(), SECRET, destination2);
 
+
 								if (player.hasTickets(transport2)) {
 									output.add(new DoubleMove(player.colour(), secretFirstMove, secondMove));
 								}
@@ -294,7 +296,12 @@ public class ScotlandYardModel implements ScotlandYardGame {
 								if (player.hasTickets(transport)) {
 									output.add(new DoubleMove(player.colour(), firstMove, secretSecondMove));
 								}
+
+								if (player.hasTickets(SECRET, 2)){
+									output.add(new DoubleMove(player.colour(), secretFirstMove, secretSecondMove));
+								} // foo
 							}
+						}
 						}
 					}
 				}
