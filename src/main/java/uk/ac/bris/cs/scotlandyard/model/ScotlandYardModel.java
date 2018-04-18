@@ -342,20 +342,23 @@ public class ScotlandYardModel implements ScotlandYardGame {
 			// TODO: replace fake list with generated valid moves
 
 			if (location.isPresent()) {
-				current.player().makeMove(this, location.get(), moves, (choice) -> this.processMove(choice));
+				current.player().makeMove(this, location.get(), moves,
+						(choice) -> this.processMove(currentPlayerColour, choice));
 				// update model: last player (so the next time startRotate was called)
-				Optional<Colour> updatedLastPlayer = Optional.of(currentPlayerColour);
-				this.mLastPlayer = updatedLastPlayer;
 			} else {
 				throw new RuntimeException("empty Optional <Integer> (location)");
 			}
 		}
 	}
 
-	public void processMove(Move move) {
+	public void processMove(Colour colour, Move move) {
 		// TODO: finish this
+		// TODO: update the location
+		// TODO: increment movesPlayed / currentRound
+		// TODO: update last player
+		Optional<Colour> updatedLastPlayer = Optional.of(colour);
+		this.mLastPlayer = updatedLastPlayer;
 		System.out.println("Move made: " + move.toString());
-		return;
 	}
 
 	/** END ROTATION+MOVEMENT LOGIC SECTION */
@@ -381,12 +384,37 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		return Collections.unmodifiableSet(output);
 	}
 
+	/**	returns true if mrX has won
+	 * mrX's win conditions:
+	 * 	- all detectives are ticketless
+	 *  - all detectives have 0 valid moves available
+	 *  - max rounds have been played
+	 */
 	private boolean checkWinMrX() {
-		return false;
+		boolean result = false;
+
+		// TODO: all detectives are ticketless
+
+		// TODO: all detectives have 0 valid moves available
+
+		// TODO: max rounds have been played
+
+		return result;
 	}
 
+	/**	returns true if detectives have won
+	 * detective's win conditions:
+	 * 	- mrX is stuck
+	 *  - mrX is captured
+	 */
 	private boolean checkWinDetective() {
-		return false;
+		boolean result = false;
+
+		// TODO: mrX is stuck
+
+		// TODO: mrX is captured
+
+		return result;
 	}
 
 	@Override
