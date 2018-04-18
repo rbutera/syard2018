@@ -44,9 +44,16 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	//Constructor
 	public ScotlandYardModel(List<Boolean> rounds, Graph<Integer, Transport> graph, PlayerConfiguration mrX,
 			PlayerConfiguration firstDetective, PlayerConfiguration... restOfTheDetectives) {
+
+		// data stores for processed data
 		this.mRounds = requireNonNull(rounds);
 		this.mGraph = requireNonNull(graph);
+		Set<Integer> locations = new HashSet<>();
+		this.mPlayers = new ArrayList<>(); //List of ScotlandYardPlayers (mutable)
+		Set<Colour> colours = new HashSet<>();
+		ArrayList<PlayerConfiguration> configurations = new ArrayList<>(); // temporary list for validation
 
+		// basic sanity-check validation
 		if (mRounds.isEmpty()) {
 			throw new IllegalArgumentException("Empty mRounds");
 		}
@@ -58,24 +65,16 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		if (mrX.colour != BLACK) { // or mr.colour.isDetective()
 			throw new IllegalArgumentException("MrX should be Black");
 		}
-
-		// Loop over all detectives in temporary list to validate
-		ArrayList<PlayerConfiguration> configurations = new ArrayList<>(); // temporary list for validation
-
 		configurations.add(mrX);
 		configurations.add(firstDetective);
 
-		// add configurations to temporary list
+		// Loop over all detectives in temporary list to validate
 		for (PlayerConfiguration configuration : restOfTheDetectives) {
+			// add configurations to temporary list
 			configurations.add(requireNonNull(configuration));
 		}
 
 		// start processing all configurations
-		// data stores for processed data
-		Set<Integer> locations = new HashSet<>();
-		this.mPlayers = new ArrayList<>(); //List of ScotlandYardPlayers (mutable)
-		Set<Colour> colours = new HashSet<>();
-
 		for (PlayerConfiguration configuration : configurations) {
 			// Check if players have duplicated locations
 			if (locations.contains(configuration.location)) {
@@ -102,10 +101,10 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 			if (configuration.colour.isDetective()) {
 				if (requireNonNull(configuration.tickets.get(SECRET)) != 0) {
-					throw new IllegalArgumentException("Detective should not have secret tickets");
+					throw new IllegalArgumentException("Detective should not have SECRET tickets");
 				}
 				if (requireNonNull(configuration.tickets.get(DOUBLE)) != 0) {
-					throw new IllegalArgumentException("Detective should not have secret tickets");
+					throw new IllegalArgumentException("Detective should not have SECRET tickets");
 				}
 			}
 
@@ -125,6 +124,11 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		return Collections.unmodifiableList(result);
 	}
 
+	/** overloaded version of getPlayerLocation
+	 * the second argument `forceMrX` can be set to true
+	 * if true, returns mrX's true location even on non-reveal rounds,
+	 * if false, returns mrX's last revealed location
+	 **/
 	public Optional<Integer> getPlayerLocation(Colour colour, boolean forceMrX) {
 		Optional<Integer> requestedLocation = Optional.empty();
 		boolean playerFound = false;
@@ -213,11 +217,90 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		return result;
 	}
 
+	Integer getDestination(Edge<Integer, Transport> input) {
+		// TODO: implement getDestination
+		return 0;
+	}
+
+	Ticket getTicket(Edge<Integer, Transport> input) {
+		// TODO: implement getDestination
+		return TAXI;
+	}
+
+	Collection<Edge<Integer, Transport>> getOptions(Integer input) {
+		// TODO: implement getOptions
+		Collection<Edge<Integer, Transport>> output = new ArrayList<Edge<Integer, Transport>>();
+
+		return Collections.unmodifiableCollection(output);
+	}
+
+	// TODO: finish getMoves
+	/**
+	 * getMoves
+	 * returns an unmodifiable set of valid moves for a specific player (uses `colour`)
+	 * see also: getOccupiedLocations, getOptions, getDestination, getTicket,
+	 */
 	private Set<Move> getMoves(Colour colour) {
 		Set<Move> output = new HashSet<>();
 		// TODO: get moves for a given Colour
 		System.out
 				.println("** getMoves for " + colour + " FAIL - (not yet implemented) - returning an empty set of moves **");
+
+		Optional<ScotlandYardPlayer> p = ScotlandYardPlayer.getByColour(this.mPlayers, colour);
+		ScotlandYardPlayer player;
+
+		if (p.isPresent()) {
+			player = p.get();
+			List<Integer> occupied = getOccupiedLocations();
+			Collection<Edge<Integer, Transport>> options = getOptions(player.location());
+			for (Edge<Integer, Transport> option : options) {
+				Integer destination = getDestination(option);
+				Ticket transport = getTicket(option);
+				if (!occupied.contains(destination)) {
+					if (player.hasTickets(transport)) {
+						output.add(new TicketMove(player.colour(), transport, destination));
+					}
+					if (player.hasTickets(SECRET)) {
+						output.add(new TicketMove(player.colour(), SECRET, destination));
+					}
+					if (player.hasTickets(DOUBLE)) {// TODO: check if sufficient rounds remaining for a double move
+						Collection<Edge<Integer, Transport>> doubleMoveDestinations = getOptions(destination);
+						Integer destination2 = getDestination(option);
+						Ticket transport2 = getTicket(option);
+						// TODO: finish double moves
+						// TODO: add tickets for available valid double moves
+						boolean secondDestinationAlreadyOccupied = occupied.contains(destination2);
+						boolean sufficientTickets = (transport != transport2 && player.hasTickets(transport2))
+								|| (transport == transport2 && player.hasTickets(transport2, 2)); //TODO: check
+
+						if (!secondDestinationAlreadyOccupied && sufficientTickets) {
+							TicketMove firstMove, secondMove;
+							firstMove = new TicketMove(player.colour(), transport, destination);
+							secondMove = new TicketMove(player.colour(), transport2, destination2);
+							output.add(new DoubleMove(player.colour(), firstMove, secondMove));
+
+							// enables support for double moves starting with a secret ticket
+							if (player.hasTickets(SECRET) && !secondDestinationAlreadyOccupied
+									&& (sufficientTickets || (player.hasTickets(transport) || player.hasTickets(transport2)))) {
+								TicketMove secretFirstMove = new TicketMove(player.colour(), SECRET, destination);
+								TicketMove secretSecondMove = new TicketMove(player.colour(), SECRET, destination2);
+
+								if (player.hasTickets(transport2)) {
+									output.add(new DoubleMove(player.colour(), secretFirstMove, secondMove));
+								}
+
+								if (player.hasTickets(transport)) {
+									output.add(new DoubleMove(player.colour(), firstMove, secretSecondMove));
+								}
+							}
+						}
+					}
+				}
+			}
+		} else {
+			throw new RuntimeException("getMoves called with invalid colour (" + colour + ")");
+		}
+
 		return Collections.unmodifiableSet(output);
 	}
 
@@ -257,7 +340,6 @@ public class ScotlandYardModel implements ScotlandYardGame {
 			Optional<Integer> location = getPlayerLocation(currentPlayerColour, true);
 
 			// notify player to move via Player.makeMove
-			// TODO: use empty list OR a list containing a single PassMovegit
 			// TODO: replace fake list with generated valid moves
 
 			if (location.isPresent()) {
