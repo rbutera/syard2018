@@ -10,6 +10,9 @@ import static java.util.Objects.requireNonNull;
 import static uk.ac.bris.cs.scotlandyard.model.Colour.BLACK;
 import static uk.ac.bris.cs.scotlandyard.model.Ticket.*;
 import static uk.ac.bris.cs.scotlandyard.model.Player.*;
+import static uk.ac.bris.cs.scotlandyard.model.Move.*;
+import static uk.ac.bris.cs.scotlandyard.model.TicketMove.*;
+import static uk.ac.bris.cs.scotlandyard.model.DoubleMove.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -352,13 +355,36 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	}
 
 	public void processMove(Colour colour, Move move) {
-		// TODO: finish this
-		// TODO: update the location
-		// TODO: increment movesPlayed / currentRound
 		// TODO: update last player
 		Optional<Colour> updatedLastPlayer = Optional.of(colour);
 		this.mLastPlayer = updatedLastPlayer;
 		System.out.println("Move made: " + move.toString());
+
+		// TODO: update the location and ticket counts
+		Optional<ScotlandYardPlayer> oPlayer = ScotlandYardPlayer.getByColour(this.mPlayers, colour);
+		if(oPlayer.isPresent()) {
+			ScotlandYardPlayer player = oPlayer.get();
+			// TODO: update ticket counts
+			if (move instanceof DoubleMove) {
+				DoubleMove dbl = (DoubleMove) move;
+				player.removeTicket(dbl.firstMove().ticket());
+				player.removeTicket(dbl.secondMove().ticket());
+				player.location(dbl.finalDestination());
+			} else if (move instanceof TicketMove) {
+				TicketMove tkt = (TicketMove) move;
+				player.removeTicket(tkt.ticket());
+				player.location(tkt.destination());
+			}
+		} else {
+			throw new RuntimeException("processMove could not find the right ScotlandYardPlayer for colour (" + colour + ")");
+		}
+
+		// update currentRound
+		if(move instanceof DoubleMove){
+			this.mCurrentRound += 2;
+		} else {
+			this.mCurrentRound++;
+		}
 	}
 
 	/** END ROTATION+MOVEMENT LOGIC SECTION */
@@ -394,11 +420,25 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		boolean result = false;
 
 		// TODO: all detectives are ticketless
+		boolean ticketless = true;
+		for(ScotlandYardPlayer player : this.mPlayers){
+			if(player.isDetective() && !player.hasNoTickets()){
+				ticketless = false;
+			}
+		}
 
 		// TODO: all detectives have 0 valid moves available
+		boolean moveless = true;
+		for(ScotlandYardPlayer player : this.mPlayers){
+			if(player.isDetective() && getMoves(player.colour()).size() == 0){
+				moveless = false;
+			}
+		}
 
 		// TODO: max rounds have been played
+		boolean roundless = getCurrentRound() >= getRounds().size();
 
+		result = ticketless || moveless || roundless;
 		return result;
 	}
 
@@ -411,9 +451,20 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		boolean result = false;
 
 		// TODO: mrX is stuck
+		boolean stuck = getMoves(BLACK).isEmpty();
 
 		// TODO: mrX is captured
+		boolean captured = false;
+		Integer mrXlocation = -1;
+		Optional<Integer> oLoc = getPlayerLocation(BLACK, true);
+		if (oLoc.isPresent()){
+			mrXlocation = oLoc.get();
+		}
+		if (getOccupiedLocations().contains(mrXlocation)) {
+			stuck = true;
+		}
 
+		result = stuck || captured;
 		return result;
 	}
 
@@ -421,6 +472,11 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	public boolean isGameOver() {
 		boolean mrXWin = checkWinMrX();
 		boolean playerWin = checkWinDetective();
+		if(mrXWin){
+			setWinningPlayers(true);
+		} else if (playerWin) {
+			setWinningPlayers(false);
+		}
 		return mrXWin || playerWin;
 	}
 

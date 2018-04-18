@@ -6,6 +6,7 @@ import java.util.Optional;
 import static uk.ac.bris.cs.scotlandyard.model.Colour.*;
 import java.util.ArrayList;
 import static java.util.Objects.requireNonNull;
+import static uk.ac.bris.cs.scotlandyard.model.Ticket.*;
 
 /**
  * A class that contains all the information about a particular player.
@@ -59,6 +60,10 @@ public class ScotlandYardPlayer {
 		} else {
 			throw new RuntimeException("Could not get colour " + colour.toString());
 		}
+	}
+
+	static public Optional<ScotlandYardPlayer> getMrX(ArrayList<ScotlandYardPlayer> players){
+		return getByColour(players, BLACK);
 	}
 
 	/**
@@ -116,6 +121,7 @@ public class ScotlandYardPlayer {
 		return tickets;
 	}
 
+
 	/**
 	 * Adds a ticket to the player's current tickets.
 	 *
@@ -149,6 +155,17 @@ public class ScotlandYardPlayer {
 	 */
 	public boolean hasTickets(Ticket ticket) {
 		return tickets.get(ticket) != 0;
+	}
+
+	public boolean hasNoTickets() {
+		Ticket[] transports = {TAXI, BUS, UNDERGROUND, SECRET, DOUBLE};
+		boolean result = false;
+		for (Ticket transport: transports) {
+			if(tickets.get(transport) != 0){
+				result = true;
+			}
+		}
+		return result;
 	}
 
 	/**
