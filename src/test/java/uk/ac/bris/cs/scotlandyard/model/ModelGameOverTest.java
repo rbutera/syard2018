@@ -225,7 +225,7 @@ public class ModelGameOverTest extends ParameterisedModelTestBase {
 				player(BLUE).makeMove().willPick(taxi(105)))
 				.thenRequire(gameOver())
 				.thenAssert("Black is the only winner",
-						g -> assertThat(g.getWinningPlayers()).containsExactlyInAnyOrder(BLACK));
+						g -> assertThat(g.getWinningPlayers()).containsExactlyInAnyOrder(BLACK)).thenIgnoreAnyFurtherInteractions();
 	}
 
 	@Test
@@ -234,13 +234,13 @@ public class ModelGameOverTest extends ParameterisedModelTestBase {
 		PlayerConfiguration blue = harness.newPlayer(BLUE, 85);
 		PlayerConfiguration red = harness.newPlayer(RED, 111);
 
-		harness.play(createGame(mrX, red, blue))
+		harness.play(createGame(mrX, blue, red))
 				.startRotationAndAssertTheseInteractionsOccurInOrder(
 						player(BLACK).makeMove().willPick(taxi(103)),
 						// MrX captured at 103
 						player(BLUE).makeMove().willPick(taxi(103)))
 				.thenRequire(gameOver())
 				.thenAssert("All detectives are winners", g ->
-						assertThat(g.getWinningPlayers()).containsExactlyInAnyOrder(BLUE, RED));
+						assertThat(g.getWinningPlayers()).containsExactlyInAnyOrder(BLUE, RED)).thenIgnoreAnyFurtherInteractions();
 	}
 }

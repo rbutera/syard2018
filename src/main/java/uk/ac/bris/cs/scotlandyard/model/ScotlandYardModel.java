@@ -359,6 +359,11 @@ public class ScotlandYardModel implements ScotlandYardGame {
 				throw new RuntimeException("empty Optional <Integer> (location)");
 			}
 		}
+		if(!isGameOver()){
+			startRotate();
+		} else {
+			System.out.println("Game is over!");
+		}
 	}
 
 	public void processMove(Colour colour, Move move) {
