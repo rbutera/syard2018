@@ -244,10 +244,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	 */
 	private Set<Move> getMoves(Colour colour) {
 		Set<Move> output = new HashSet<>();
-		// TODO: get moves for a given Colour
-		System.out
-				.println("** getMoves for " + colour + " FAIL - (not yet implemented) - returning an empty set of moves **");
-
+		// get moves for a given Colour
 		Optional<ScotlandYardPlayer> p = ScotlandYardPlayer.getByColour(this.mPlayers, colour);
 		ScotlandYardPlayer player;
 
@@ -358,13 +355,11 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		// TODO: update last player
 		Optional<Colour> updatedLastPlayer = Optional.of(colour);
 		this.mLastPlayer = updatedLastPlayer;
-		System.out.println("Move made: " + move.toString());
 
 		// TODO: update the location and ticket counts
 		Optional<ScotlandYardPlayer> oPlayer = ScotlandYardPlayer.getByColour(this.mPlayers, colour);
 		if(oPlayer.isPresent()) {
 			ScotlandYardPlayer player = oPlayer.get();
-			// TODO: update ticket counts
 			if (move instanceof DoubleMove) {
 				DoubleMove dbl = (DoubleMove) move;
 				player.removeTicket(dbl.firstMove().ticket());
@@ -380,6 +375,8 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		}
 
 		// update currentRound
+		System.out.println("ROUND "+ mCurrentRound+ " : " + colour.toString() + " " + move.toString());
+
 		if(move instanceof DoubleMove){
 			this.mCurrentRound += 2;
 		} else {
@@ -470,14 +467,18 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 	@Override
 	public boolean isGameOver() {
-		boolean mrXWin = checkWinMrX();
-		boolean playerWin = checkWinDetective();
-		if(mrXWin){
-			setWinningPlayers(true);
-		} else if (playerWin) {
-			setWinningPlayers(false);
+		if(mCurrentRound == NOT_STARTED){
+			return false;
+		} else {
+			boolean mrXWin = checkWinMrX();
+			boolean playerWin = checkWinDetective();
+			if(mrXWin){
+				setWinningPlayers(true);
+			} else if (playerWin) {
+				setWinningPlayers(false);
+			}
+			return mrXWin || playerWin;
 		}
-		return mrXWin || playerWin;
 	}
 
 	/** END WIN CHECKING SECTION */
