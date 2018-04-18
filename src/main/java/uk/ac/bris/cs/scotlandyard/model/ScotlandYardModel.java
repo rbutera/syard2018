@@ -13,6 +13,7 @@ import static uk.ac.bris.cs.scotlandyard.model.Player.*;
 import static uk.ac.bris.cs.scotlandyard.model.Move.*;
 import static uk.ac.bris.cs.scotlandyard.model.TicketMove.*;
 import static uk.ac.bris.cs.scotlandyard.model.DoubleMove.*;
+import static uk.ac.bris.cs.scotlandyard.model.Spectator.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -43,6 +44,8 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	private Colour mCurrentPlayer = BLACK;
 	private Optional<Colour> mLastPlayer = Optional.empty();
 	private ArrayList<Colour> mWinners = new ArrayList<>();
+	private Boolean mGameOverNotified = false;
+	private ArrayList<Spectator> mSpectators = new ArrayList<>();
 
 	//Constructor
 	public ScotlandYardModel(List<Boolean> rounds, Graph<Integer, Transport> graph, PlayerConfiguration mrX,
@@ -297,7 +300,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 				}
 			}
 		} else {
-			throw new RuntimeException("getMoves called with invalid colour (" + colour + ")");
+			throw new IllegalArgumentException("getMoves called with invalid colour (" + colour + ")");
 		}
 
 		return Collections.unmodifiableSet(output);
@@ -330,7 +333,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		Optional<ScotlandYardPlayer> currentPlayer = ScotlandYardPlayer.getByColour(this.mPlayers, currentPlayerColour);
 
 		if (!currentPlayer.isPresent()) {
-			throw new RuntimeException("Could not get current player instance");
+			throw new IllegalArgumentException("Could not get current player instance");
 		} else {
 			ScotlandYardPlayer current = currentPlayer.get();
 			// generate list of valid moves
@@ -371,7 +374,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 				player.location(tkt.destination());
 			}
 		} else {
-			throw new RuntimeException("processMove could not find the right ScotlandYardPlayer for colour (" + colour + ")");
+			throw new IllegalArgumentException("processMove could not find the right ScotlandYardPlayer for colour (" + colour + ")");
 		}
 
 		// update currentRound
@@ -381,6 +384,13 @@ public class ScotlandYardModel implements ScotlandYardGame {
 			this.mCurrentRound += 2;
 		} else {
 			this.mCurrentRound++;
+		}
+
+		if(this.mSpectators.size() > 0){
+			spectatorNotifyMove(move);
+			if (isGameOver()){
+				spectatorNotifyGameOver();
+			}
 		}
 	}
 
@@ -482,25 +492,71 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	}
 
 	/** END WIN CHECKING SECTION */
+// overloaded version to check if it will be a reveal round in x rounds from now
+    public boolean isRevealRound(Integer x) {
+        int currentRound = getCurrentRound();
+        return getRounds().size() > (currentRound + x - 1)
+                && getRounds().get(currentRound + x - 1);
+    }
+
+
+    public boolean isRevealRound() {
+        return isRevealRound(0);
+		}
+	/** REVEAL ROUND SECTION */
+
+	/** END REVEAL ROUND SECTION */
 
 	/** SPECTATOR SECTION */
 	@Override
 	public void registerSpectator(Spectator spectator) {
-		// TODO
-		throw new RuntimeException("Implement me");
+		requireNonNull(spectator);
+		if (!getSpectators().contains(spectator)){
+			this.mSpectators.add(spectator);
+		} else {
+			throw new IllegalArgumentException("Duplicate spectator");
+		}
 	}
+
 
 	@Override
 	public void unregisterSpectator(Spectator spectator) {
 		// TODO
-		throw new RuntimeException("Implement me");
+		requireNonNull(spectator);
+
+		if (!getSpectators().contains(spectator)) {
+				throw new IllegalArgumentException("Spectator not found");
+		}
+
+		this.mSpectators.remove(spectator);
 	}
 
 	@Override
 	public Collection<Spectator> getSpectators() {
 		// TODO
-		throw new RuntimeException("Implement me");
+		return Collections.unmodifiableList(this.mSpectators);
 	}
 
+	private void spectatorNotifyGameOver(){
+		// foo
+		Collection<Spectator> specs = getSpectators();
+
+		if(!getSpectators().isEmpty() && !this.mGameOverNotified){
+			for (Spectator spec : specs) {
+				spec.onGameOver(this, this.getWinningPlayers());
+			}
+			this.mGameOverNotified = true;
+		}
+	}
+
+	private void spectatorNotifyMove(Move move){
+		Collection<Spectator> specs = getSpectators();
+
+		if(!getSpectators().isEmpty() && !this.mGameOverNotified){
+			for (Spectator spec : specs) {
+				spec.onMoveMade(this, move);
+			}
+		}
+	}
 	/** END SPECTATOR SECTION */
 }

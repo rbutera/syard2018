@@ -2,8 +2,8 @@
   "saveAndRun": {
     "commands": [
       {
-        "match": "\\.java$"
-        // "cmd": "./mvnw clean test"
+        "match": "\\.java$",
+        "cmd": "./mvnw clean compile && ./mvnw test"
       }
     ]
   },
