@@ -398,6 +398,9 @@ public class ScotlandYardModel implements ScotlandYardGame {
 			if (isGameOver()){
 				spectatorNotifyGameOver();
 			}
+			if(getNextPlayer(colour) == BLACK){
+				spectatorNotifyRotation();
+			}
 		}
 	}
 
@@ -482,7 +485,6 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		return result;
 	}
 
-	@Override
 	public boolean isGameOver() {
 		if(mCurrentRound == NOT_STARTED){
 			return false;
@@ -562,6 +564,16 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		if(!getSpectators().isEmpty() && !this.mGameOverNotified){
 			for (Spectator spec : specs) {
 				spec.onMoveMade(this, move);
+			}
+		}
+	}
+
+	private void spectatorNotifyRotation(){
+		Collection<Spectator> specs = getSpectators();
+
+		if(!getSpectators().isEmpty() && !this.mGameOverNotified){
+			for (Spectator spec : specs) {
+				spec.onRotationComplete(this);
 			}
 		}
 	}
