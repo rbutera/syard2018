@@ -219,18 +219,17 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 	Integer getDestination(Edge<Integer, Transport> input) {
 		// TODO: implement getDestination
-		return 0;
+		return input.destination().value();
 	}
 
 	Ticket getTicket(Edge<Integer, Transport> input) {
 		// TODO: implement getDestination
-		return TAXI;
+		return Ticket.fromTransport(input.data());
 	}
 
 	Collection<Edge<Integer, Transport>> getOptions(Integer input) {
 		// TODO: implement getOptions
-		Collection<Edge<Integer, Transport>> output = new ArrayList<Edge<Integer, Transport>>();
-
+		Collection<Edge<Integer, Transport>> output = getGraph().getEdgesFrom(getGraph().getNode(input));
 		return Collections.unmodifiableCollection(output);
 	}
 
