@@ -1,37 +1,14 @@
 package uk.ac.bris.cs.scotlandyard.model;
 
-import static java.util.Arrays.asList;
-import static java.util.Collections.emptySet;
-import static java.util.Collections.singletonList;
-import static java.util.Collections.unmodifiableCollection;
-import static java.util.Collections.unmodifiableSet;
-import static java.util.Collections.unmodifiableList;
-import static java.util.Objects.requireNonNull;
-import static uk.ac.bris.cs.scotlandyard.model.Colour.BLACK;
-import static uk.ac.bris.cs.scotlandyard.model.Ticket.*;
-import static uk.ac.bris.cs.scotlandyard.model.Player.*;
-import static uk.ac.bris.cs.scotlandyard.model.Move.*;
-import static uk.ac.bris.cs.scotlandyard.model.TicketMove.*;
-import static uk.ac.bris.cs.scotlandyard.model.DoubleMove.*;
-import static uk.ac.bris.cs.scotlandyard.model.Spectator.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.function.Consumer;
-
-import javax.security.auth.callback.ConfirmationCallback;
-
-import org.omg.IOP.TAG_RMI_CUSTOM_MAX_STREAM_FORMAT;
-
-import java.util.*; // TODO: figure out what we actually need to import here (to solve errors for ImmutableGraph etc)
 import uk.ac.bris.cs.gamekit.graph.Edge;
 import uk.ac.bris.cs.gamekit.graph.Graph;
 import uk.ac.bris.cs.gamekit.graph.ImmutableGraph;
-import uk.ac.bris.cs.gamekit.graph.UndirectedGraph;
+
+import java.util.*;
+
+import static java.util.Objects.requireNonNull;
+import static uk.ac.bris.cs.scotlandyard.model.Colour.BLACK;
+import static uk.ac.bris.cs.scotlandyard.model.Ticket.*;
 
 // TODO implement all methods and pass all tests
 public class ScotlandYardModel implements ScotlandYardGame {
@@ -246,6 +223,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	 * see also: getOccupiedLocations, getOptions, getDestination, getTicket,
 	 */
 	private Set<Move> getMoves(Colour colour) {
+        System.out.println(String.format("getMoves(%s)", colour.toString()));
 		Set<Move> output = new HashSet<>();
 		// get moves for a given Colour
 		Optional<ScotlandYardPlayer> p = ScotlandYardPlayer.getByColour(this.mPlayers, colour);
@@ -272,18 +250,19 @@ public class ScotlandYardModel implements ScotlandYardGame {
 						Ticket transport2 = getTicket(doubleMoveOption);
 						// TODO: finish double moves
 						// TODO: add tickets for available valid double moves
-						boolean secondDestinationAlreadyOccupied = occupied.contains(destination2);
+
+                        boolean clashWithOtherPlayer = occupied.contains(destination) || occupied.contains(destination2);
 						boolean sufficientTickets = (transport != transport2 && player.hasTickets(transport2))
 								|| (transport == transport2 && player.hasTickets(transport2, 2) || player.hasTickets(SECRET, 2)); //TODO: check
 
-						if (!secondDestinationAlreadyOccupied && sufficientTickets) {
+                        if (!clashWithOtherPlayer && sufficientTickets) {
 							TicketMove firstMove, secondMove;
 							firstMove = new TicketMove(player.colour(), transport, destination);
 							secondMove = new TicketMove(player.colour(), transport2, destination2);
 							output.add(new DoubleMove(player.colour(), firstMove, secondMove));
 
 							// enables support for double moves starting with a secret ticket
-							if (player.hasTickets(SECRET) && !secondDestinationAlreadyOccupied
+                            if (player.hasTickets(SECRET) && !clashWithOtherPlayer
 									&& (sufficientTickets || (player.hasTickets(transport) || player.hasTickets(transport2)))) {
 								TicketMove secretFirstMove = new TicketMove(player.colour(), SECRET, destination);
 								TicketMove secretSecondMove = new TicketMove(player.colour(), SECRET, destination2);
@@ -332,6 +311,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	@Override
 	public void startRotate() {
 		// check if game over
+        //
 		if (this.isGameOver()) {
 			throw new IllegalStateException("startRotate called but the game is already over!");
 		}
@@ -400,12 +380,12 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 		if(this.mSpectators.size() > 0){
 			spectatorNotifyMove(move);
-			if (isGameOver()){
-				spectatorNotifyGameOver();
-			}
 			if(getNextPlayer(colour) == BLACK){
 				spectatorNotifyRotation();
 			}
+            if (isGameOver()) {
+                spectatorNotifyGameOver();
+            }
 		}
 	}
 
@@ -483,7 +463,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 			mrXlocation = oLoc.get();
 		}
 		if (getOccupiedLocations().contains(mrXlocation)) {
-			stuck = true;
+            captured = true;
 		}
 
 		result = stuck || captured;
