@@ -342,7 +342,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 				}
 			}
 		} else {
-			spectatorNotifyGameOver();
+			throw new IllegalStateException("startRotate called but game is already over");
 		}
 	}
 
@@ -393,15 +393,17 @@ public class ScotlandYardModel implements ScotlandYardGame {
 			if(getNextPlayer(colour) == BLACK){
 				spectatorNotifyRotation();
 			}
+			if(isGameOver()){
+				spectatorNotifyGameOver();
+			}
 		}
 
-//		if(!isGameOver()){
-//			System.out.println("Rotating for the next player");
-//			startRotate();
-//		} else {
-//			System.out.println("startRotate: Game is over!");
-//		}
-		startRotate();
+		if(!isGameOver()){
+			System.out.println(String.format("ROUND %s complete. Rotating for the next player", roundCopy));
+			startRotate();
+		} else {
+			System.out.println("startRotate: Game is over!");
+		}
 	}
 
 	/** END ROTATION+MOVEMENT LOGIC SECTION */
