@@ -300,13 +300,13 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	 * returns an immutable list of occupied locations
 	 */
 	private List<Integer> getOccupiedLocations() {
-		System.out.println("getOccupiedLocations()");
 		ArrayList<Integer> output = new ArrayList<Integer>();
 		for (ScotlandYardPlayer player : this.mPlayers) {
 			if (player.isDetective()) {
 				output.add(player.location());
 			}
 		}
+		System.out.println("getOccupiedLocations() = " + output);
 		return Collections.unmodifiableList(output);
 	}
 
@@ -317,32 +317,32 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	public void startRotate() {
 		System.out.println("startRotate()");
 		// check if game over
-		if (this.isGameOver()) {
-			throw new IllegalStateException("startRotate called but the game is already over!");
-		}
+		if (!this.isGameOver()) {
+			Colour currentPlayerColour = this.getCurrentPlayer();
+			Optional<ScotlandYardPlayer> currentPlayer = ScotlandYardPlayer.getByColour(this.mPlayers, currentPlayerColour);
 
-		Colour currentPlayerColour = this.getCurrentPlayer();
-		Optional<ScotlandYardPlayer> currentPlayer = ScotlandYardPlayer.getByColour(this.mPlayers, currentPlayerColour);
-
-		if (!currentPlayer.isPresent()) {
-			throw new IllegalArgumentException("Could not get current player instance");
-		} else {
-			ScotlandYardPlayer current = currentPlayer.get();
-			// generate list of valid moves
-			Set<Move> moves = getMoves(currentPlayerColour);
-
-			Optional<Integer> location = getPlayerLocation(currentPlayerColour, true);
-
-			// notify player to move via Player.makeMove
-			// TODO: replace fake list with generated valid moves
-
-			if (location.isPresent()) {
-				System.out.println(String.format("startRotate: %s::makeMove will have %s choices", currentPlayerColour, moves.size()));
-				current.player().makeMove(this, location.get(), moves, (choice) -> this.processMove(currentPlayerColour, choice));
-				// update model: last player (so the next time startRotate was called)
+			if (!currentPlayer.isPresent()) {
+				throw new IllegalArgumentException("Could not get current player instance");
 			} else {
-				throw new RuntimeException("empty Optional <Integer> (location)");
+				ScotlandYardPlayer current = currentPlayer.get();
+				// generate list of valid moves
+				Set<Move> moves = getMoves(currentPlayerColour);
+
+				Optional<Integer> location = getPlayerLocation(currentPlayerColour, true);
+
+				// notify player to move via Player.makeMove
+				// TODO: replace fake list with generated valid moves
+
+				if (location.isPresent()) {
+					System.out.println(String.format("startRotate: %s::makeMove will have %s choices", currentPlayerColour, moves.size()));
+					current.player().makeMove(this, location.get(), moves, (choice) -> this.processMove(currentPlayerColour, choice));
+					// update model: last player (so the next time startRotate was called)
+				} else {
+					throw new RuntimeException("empty Optional <Integer> (location)");
+				}
 			}
+		} else {
+			spectatorNotifyGameOver();
 		}
 	}
 
@@ -393,17 +393,15 @@ public class ScotlandYardModel implements ScotlandYardGame {
 			if(getNextPlayer(colour) == BLACK){
 				spectatorNotifyRotation();
 			}
-			if (isGameOver()) {
-				spectatorNotifyGameOver();
-			}
 		}
 
-		if(!isGameOver()){
-			System.out.println("Rotating for the next player");
-			startRotate();
-		} else {
-			System.out.println("startRotate: Game is over!");
-		}
+//		if(!isGameOver()){
+//			System.out.println("Rotating for the next player");
+//			startRotate();
+//		} else {
+//			System.out.println("startRotate: Game is over!");
+//		}
+		startRotate();
 	}
 
 	/** END ROTATION+MOVEMENT LOGIC SECTION */
@@ -507,9 +505,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 	public boolean isGameOver() {
 		boolean result;
-		if(mCurrentRound == NOT_STARTED){
-			result = false;
-		} else {
+
 			boolean mrXWin = checkWinMrX();
 			boolean playerWin = checkWinDetective();
 			if(mrXWin){
@@ -518,7 +514,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 				setWinningPlayers(false);
 			}
 			result = mrXWin || playerWin;
-		}
+
 		if(result){
 			System.out.println("GAME OVER");
 		} else {
