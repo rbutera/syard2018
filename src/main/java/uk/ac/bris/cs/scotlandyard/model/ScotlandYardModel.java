@@ -527,7 +527,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	 *  - max rounds have been played
 	 */
 	private boolean checkWinMrX() {
-//		DEBUG_LOG("Checking if MrX has won");
+		DEBUG_LOG("Checking if MrX has won");
 		boolean result = false;
 
 		// TODO: all detectives are ticketless
@@ -547,7 +547,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		}
 
 		// TODO: max rounds have been played
-		boolean roundless = getCurrentRound() > getRounds().size();
+		boolean roundless = getCurrentRound() >= getRounds().size() && getCurrentPlayer() == BLACK;
 
 		result = ticketless || moveless || roundless;
 		if (result) {
@@ -566,7 +566,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		boolean result = false;
 
 		// TODO: mrX is stuck
-		boolean stuck = getMoves(BLACK).isEmpty();
+		boolean stuck = getCurrentPlayer().isMrX() && getMoves(BLACK).isEmpty();
 
 		// TODO: mrX is captured
 		boolean captured = false;
