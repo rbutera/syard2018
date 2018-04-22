@@ -172,13 +172,28 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		return Collections.unmodifiableList(mRounds);
 	}
 
+	public int getRoundsRemaining() {
+		return getRounds().size() - getCurrentRound();
+	}
+
 	@Override
 	public Graph<Integer, Transport> getGraph() {
 		return new ImmutableGraph<>(mGraph);
 	}
 
 	private Integer getMrXLocation() {
-		return this.mMrXLastLocation;
+		if (isRevealRound()){
+			Optional<ScotlandYardPlayer> oMrX = ScotlandYardPlayer.getMrX(this.mPlayers);
+			if (oMrX.isPresent()){
+				int location = oMrX.get().location();
+				this.mMrXLastLocation = location;
+				return location;
+			} else {
+				throw new IllegalStateException("getMrXLocation could not get the ScotlandYardPlayer for MrX");
+			}
+		} else {
+			return this.mMrXLastLocation;
+		}
 	}
 
 	/**
@@ -251,7 +266,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 					if (player.hasTickets(SECRET)) {
 						output.add(new TicketMove(player.colour(), SECRET, destination));
 					}
-					if (player.hasTickets(DOUBLE)) {// TODO: check if sufficient rounds remaining for a double move
+					if (player.hasTickets(DOUBLE) && getRoundsRemaining() >= 2) {// TODO: check if sufficient rounds remaining for a double move
 						Collection<Edge<Integer, Transport>> doubleMoveDestinations = getOptions(destination);
 					for(Edge<Integer, Transport> doubleMoveOption : doubleMoveDestinations){
 												Integer destination2 = getDestination(doubleMoveOption);
@@ -294,6 +309,10 @@ public class ScotlandYardModel implements ScotlandYardGame {
 			}
 		} else {
 			throw new IllegalArgumentException("getMoves called with invalid colour (" + colour + ")");
+		}
+
+		if(output.isEmpty() && player.isDetective()) {
+			output.add(new PassMove(colour));
 		}
 
 		return Collections.unmodifiableSet(output);
@@ -347,7 +366,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 			if (location.isPresent()) {
 				// reveal round logic
-				if(currentPlayerColour == BLACK && mCurrentRound != NOT_STARTED && isRevealRound()){
+				if(currentPlayerColour == BLACK && isRevealRound()){
 					int last = this.mMrXLastLocation;
 					this.mMrXLastLocation = location.get();
 					DEBUG_LOG(String.format("Reveal round: mMrXLastLocation = %s -> %s", last, this.mMrXLastLocation));
@@ -356,8 +375,9 @@ public class ScotlandYardModel implements ScotlandYardGame {
 				// prompt player for move
 				DEBUG_LOG(String.format("startRotate: %s @ %s ::makeMove will have %s choices", currentPlayerColour, location.get(), moves.size()));
 				current.player().makeMove(this, location.get(), moves, (choice) -> this.processMove(currentPlayerColour, choice));
+
 			} else {
-				throw new RuntimeException("empty Optional <Integer> (location)");
+				throw new RuntimeException("location is missing");
 			}
 		}
 	}
@@ -383,94 +403,93 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	}
 
 	public void processMove(Colour colour, Move move) {
-		// TODO: update last player
-		Optional<Colour> updatedLastPlayer = Optional.of(colour);
-		this.mLastPlayer = updatedLastPlayer;
-		DEBUG_LOG("this.mLastPlayer -> " + colour.toString());
-		DEBUG_LOG(String.format("processMove(%s, %s)", colour, move));
-		int roundCopy = this.mCurrentRound;
+		requireNonNull(colour);
+		requireNonNull(move);
 
-		// TODO: update the location and ticket counts
-		Optional<ScotlandYardPlayer> oPlayer = ScotlandYardPlayer.getByColour(this.mPlayers, colour);
-		if(oPlayer.isPresent()) {
-			ScotlandYardPlayer player = oPlayer.get();
-			DEBUG_LOG("processMove@start: " + player.toString());
-			if (move instanceof DoubleMove) {
-				DoubleMove dbl = (DoubleMove) move;
-				TicketMove firstMove = isRevealRound() ? dbl.firstMove() : new TicketMove(colour, dbl.firstMove().ticket(), getMrXLocation());
-				if (isRevealRound()){
-					DEBUG_LOG("updating MrX's public location to " + dbl.firstMove().destination());
-					this.mMrXLastLocation = dbl.firstMove().destination();
-				}
-				TicketMove secondMove = isRevealRound(1) ? dbl.secondMove() : new TicketMove(colour, dbl.secondMove().ticket(), getMrXLocation());
-				DoubleMove toNotify = new DoubleMove(colour, firstMove, secondMove);
-				spectatorNotifyMove(toNotify);
-				player.removeTicket(DOUBLE);
-				nextRound();
-				player.removeTicket(dbl.firstMove().ticket());
-				spectatorNotifyMove(firstMove);
-				player.location(dbl.firstMove().destination());
-				nextRound();
+		// Check that the move was one of the valid moves we provided
+		Optional<Integer> oLoc = getPlayerLocation(colour, true);
 
+		if(!(oLoc.isPresent() && getMoves(colour).contains(move))){
+			throw new IllegalArgumentException("that wasn't one of the moves we provided!");
+		} else {
+			// TODO: update last player
+			Optional<Colour> updatedLastPlayer = Optional.of(colour);
+			this.mLastPlayer = updatedLastPlayer;
+			DEBUG_LOG("this.mLastPlayer -> " + colour.toString());
+			DEBUG_LOG(String.format("processMove(%s, %s)", colour, move));
+			int roundCopy = this.mCurrentRound;
 
-				spectatorNotifyMove(secondMove);
-				player.removeTicket(dbl.secondMove().ticket());
-				player.location(dbl.finalDestination());
-				DEBUG_LOG(String.format("DoubleMove detected.. removing 2 tickets (%s + %s) and setting location to %s", dbl.firstMove().ticket(), dbl.secondMove().ticket(), dbl.finalDestination()));
-			} else if (move instanceof TicketMove) {
-				TicketMove tkt = (TicketMove) move;
-				DEBUG_LOG(String.format("Standard TicketMove detected.. removing %s ticket.", tkt.ticket()));
-				if(player.isMrX()){
+			// TODO: update the location and ticket counts
+			Optional<ScotlandYardPlayer> oPlayer = ScotlandYardPlayer.getByColour(this.mPlayers, colour);
+			if(oPlayer.isPresent()) {
+				ScotlandYardPlayer player = oPlayer.get();
+				DEBUG_LOG("processMove@start: " + player.toString());
+				if (move instanceof DoubleMove) {
+					DoubleMove dbl = (DoubleMove) move;
 					nextRound();
-				} else {
-					DEBUG_LOG("giving the ticket to Mr X");
-					Optional<ScotlandYardPlayer> oMrX = ScotlandYardPlayer.getByColour(this.mPlayers, BLACK);
-					ScotlandYardPlayer mrX;
-					if (oMrX.isPresent()){
-						mrX = oMrX.get();
-						mrX.addTicket(tkt.ticket());
-					} else {
-						throw new IllegalStateException("processMove failed to add ticket to mr X - unable to get Mr X's scotlandyardplayer instance");
+					TicketMove firstMove = isRevealRound() ? dbl.firstMove() : new TicketMove(colour, dbl.firstMove().ticket(), getMrXLocation());
+					if (isRevealRound()){
+						DEBUG_LOG("updating MrX's public location to " + dbl.firstMove().destination());
+						this.mMrXLastLocation = dbl.firstMove().destination();
 					}
+					TicketMove secondMove = isRevealRound(1) ? dbl.secondMove() : new TicketMove(colour, dbl.secondMove().ticket(), getMrXLocation());
+					DoubleMove toNotify = new DoubleMove(colour, firstMove, secondMove);
+					spectatorNotifyMove(toNotify);
+					player.removeTicket(DOUBLE);
+					nextRound();
+					player.removeTicket(dbl.firstMove().ticket());
+					spectatorNotifyMove(firstMove);
+					player.location(dbl.firstMove().destination());
+					spectatorNotifyMove(secondMove);
+					player.removeTicket(dbl.secondMove().ticket());
+					player.location(dbl.finalDestination());
+					DEBUG_LOG(String.format("DoubleMove detected.. removing 2 tickets (%s + %s) and setting location to %s", dbl.firstMove().ticket(), dbl.secondMove().ticket(), dbl.finalDestination()));
+				} else if (move instanceof TicketMove) {
+					TicketMove tkt = (TicketMove) move;
+					DEBUG_LOG(String.format("TicketMove(%s)detected.. removing %s ticket.", tkt.ticket(), tkt.ticket()));
+					if(player.isMrX()){
+						nextRound();
+					} else {
+						DEBUG_LOG("giving the ticket to Mr X");
+						Optional<ScotlandYardPlayer> oMrX = ScotlandYardPlayer.getByColour(this.mPlayers, BLACK);
+						ScotlandYardPlayer mrX;
+						if (oMrX.isPresent()){
+							mrX = oMrX.get();
+							mrX.addTicket(tkt.ticket());
+						} else {
+							throw new IllegalStateException("processMove failed to add ticket to mr X - unable to get Mr X's scotlandyardplayer instance");
+						}
+					}
+					TicketMove toNotify = new TicketMove(colour, tkt.ticket(), (colour == BLACK && isRevealRound()) ? getMrXLocation() : tkt.destination());
+					spectatorNotifyMove(toNotify);
+					player.location(tkt.destination());
+					player.removeTicket(tkt.ticket());
+				} else if (move instanceof PassMove) {
+					DEBUG_LOG(String.format("%s PASSES", colour.toString()));
+				} else {
+					throw new InvalidStateException(String.format("move (%s) is not an instance of DoubleMove, TicketMove or PassMove. Wtf?", move));
 				}
-				player.removeTicket(tkt.ticket());
-				player.location(tkt.destination());
-				TicketMove toNotify = new TicketMove(colour, tkt.ticket(), (colour == BLACK && isRevealRound()) ? getMrXLocation() : tkt.destination());
-				spectatorNotifyMove(toNotify);
-			} else if (move instanceof PassMove) {
-				DEBUG_LOG(String.format("%s PASSES", colour.toString()));
+				DEBUG_LOG("processMove@end: " + player.toString());
 			} else {
-				throw new InvalidStateException(String.format("move (%s) is not an instance of DoubleMove, TicketMove or PassMove. Wtf?", move));
+				throw new IllegalArgumentException("processMove could not find the right ScotlandYardPlayer for colour (" + colour + ")");
 			}
-			DEBUG_LOG("processMove@end: " + player.toString());
-		} else {
-			throw new IllegalArgumentException("processMove could not find the right ScotlandYardPlayer for colour (" + colour + ")");
-		}
 
-		System.out.println("ROUND "+ mCurrentRound+ ": " + colour.toString() + " " + move.toString());
+			System.out.println("ROUND "+ mCurrentRound+ ": " + colour.toString() + " " + move.toString());
 
-		if(colour == BLACK){
-			// update currentRound
-			DEBUG_LOG(String.format("mCurrentRound = %s -> %s", roundCopy, mCurrentRound));
-		}
-
-		if(getCurrentPlayer() == BLACK){
-			spectatorNotifyRotation();
-			if(isGameOver()){
-				spectatorNotifyGameOver();
+			if(colour == BLACK){
+				// update currentRound
+				DEBUG_LOG(String.format("mCurrentRound = %s -> %s", roundCopy, mCurrentRound));
 			}
-		} else {
-			playerTurn();
-			if(!isGameOver()){
-				DEBUG_LOG(String.format("Turn %s complete. Rotating for the next player (%s)", roundCopy, getCurrentPlayer().toString()));
+
+			if(getCurrentPlayer() == BLACK){
+				spectatorNotifyRotation();
+				if(isGameOver()){
+					spectatorNotifyGameOver();
+				}
 			} else {
-				DEBUG_LOG("processMove: Game is over!");
-				spectatorNotifyGameOver();
+				playerTurn();
 			}
 		}
-
-
-
 	}
 
 	/** END ROTATION+MOVEMENT LOGIC SECTION */
@@ -518,30 +537,22 @@ public class ScotlandYardModel implements ScotlandYardGame {
 				ticketless = false;
 			}
 		}
-		if (ticketless) {
-			DEBUG_LOG("MR X WIN: All players are ticketless");
-		}
 
 		// TODO: all detectives have 0 valid moves available
 		boolean moveless = true;
-		for(ScotlandYardPlayer player : this.mPlayers){
-			if(player.isDetective() && getMoves(player.colour()).size() != 0){
+		for(ScotlandYardPlayer player : this.mPlayers) {
+			if (player.isDetective() && getMoves(player.colour()).size() != 0) {
 				moveless = false;
 			}
 		}
 
-		if (moveless) {
-			DEBUG_LOG("MR X WIN: All players are moveless");
-		}
-
 		// TODO: max rounds have been played
-		boolean roundless = getCurrentRound() >= getRounds().size();
-
-		if (roundless) {
-			DEBUG_LOG("MR X WIN: No rounds left");
-		}
+		boolean roundless = getCurrentRound() > getRounds().size();
 
 		result = ticketless || moveless || roundless;
+		if (result) {
+			DEBUG_LOG(String.format("Mr X Win: Tickets? (%s) Moves? (%s) Rounds? (%s)", ticketless, moveless, roundless));
+		}
 		return result;
 	}
 
@@ -569,6 +580,9 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		}
 
 		result = stuck || captured;
+		if (result) {
+			DEBUG_LOG(String.format("Detective Win: Stuck? (%s) Captured? (%s)", stuck, captured));
+		}
 		return result;
 	}
 
@@ -596,18 +610,21 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	/** END WIN CHECKING SECTION */
 // overloaded version to check if it will be a reveal round in x rounds from now
     public boolean isRevealRound(Integer x) {
-    	DEBUG_LOG(String.format("isRevealRound(%s): curr = %s, getRounds = %s", x, getCurrentRound(), getRounds()));
 		boolean result = false;
+		List<Boolean> rounds = getRounds();
 		int currentRound = getCurrentRound();
-		int numRounds = getRounds().size();
+		int numRounds = rounds.size();
+
 		if (numRounds < 1) {
 			throw new IllegalStateException("numRounds should be non-zero");
 		}
-		if (currentRound + x >= numRounds) {
+		if (currentRound + x > numRounds) {
 			throw new IllegalStateException(String.format("isRevealRound(%s) is invalid when max rounds is %s and current round is %s", x, numRounds, currentRound));
-		} else {
-			result = getRounds().get(currentRound + x);
+		} else if (currentRound > 0) {
+			result = getRounds().get((currentRound - 1) + x);
 		}
+		DEBUG_LOG(String.format("isRevealRound(%s): curr = %s, rounds[%s], ans = %s", x, getCurrentRound(), getRounds().size(), result ? "true" : "false"));
+
 		return result;
     }
 
