@@ -371,6 +371,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 				DoubleMove dbl = (DoubleMove) move;
 				player.removeTicket(dbl.firstMove().ticket());
 				player.removeTicket(dbl.secondMove().ticket());
+				player.removeTicket(DOUBLE);
 				player.location(dbl.finalDestination());
 				DEBUG_LOG(String.format("DoubleMove detected.. removing 2 tickets (%s + %s) and setting location to %s", dbl.firstMove().ticket(), dbl.secondMove().ticket(), dbl.finalDestination()));
 			} else if (move instanceof TicketMove) {
