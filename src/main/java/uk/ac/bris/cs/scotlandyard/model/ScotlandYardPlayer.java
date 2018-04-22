@@ -33,7 +33,7 @@ public class ScotlandYardPlayer {
 		this.tickets = new HashMap<>(tickets);
 	}
 
-	static public Optional<ScotlandYardPlayer> getByColour(ArrayList<ScotlandYardPlayer> players, Colour colour) {
+	static Optional<ScotlandYardPlayer> getByColour(ArrayList<ScotlandYardPlayer> players, Colour colour) {
 		boolean found = false;
 		Optional<ScotlandYardPlayer> result = Optional.empty();
 

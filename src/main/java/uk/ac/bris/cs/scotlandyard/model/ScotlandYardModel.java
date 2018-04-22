@@ -482,10 +482,10 @@ public class ScotlandYardModel implements ScotlandYardGame {
 			}
 
 			if(getCurrentPlayer() == BLACK){
-				spectatorNotifyRotation();
 				if(isGameOver()){
 					spectatorNotifyGameOver();
 				}
+				spectatorNotifyRotation();
 			} else {
 				playerTurn();
 			}
@@ -588,7 +588,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 	public boolean isGameOver() {
 		boolean result;
-
+			DEBUG_LOG("isGameOver?");
 			boolean mrXWin = checkWinMrX();
 			boolean playerWin = checkWinDetective();
 			if(mrXWin){
