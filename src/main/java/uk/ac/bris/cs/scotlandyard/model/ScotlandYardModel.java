@@ -230,7 +230,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	 * see also: getOccupiedLocations, getOptions, getDestination, getTicket,
 	 */
 	private Set<Move> getMoves(Colour colour){
-        DEBUG_LOG(String.format("getMoves(%s)", colour.toString()));
+//        DEBUG_LOG(String.format("getMoves(%s)", colour.toString()));
 		Set<Move> output = new HashSet<>();
 		// get moves for a given Colour
 		Optional<ScotlandYardPlayer> p = ScotlandYardPlayer.getByColour(this.mPlayers, colour);
@@ -308,7 +308,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 				output.add(player.location());
 			}
 		}
-		DEBUG_LOG("getOccupiedLocations() = " + output);
+//		DEBUG_LOG("getOccupiedLocations() = " + output);
 		return Collections.unmodifiableList(output);
 	}
 
@@ -336,6 +336,11 @@ public class ScotlandYardModel implements ScotlandYardGame {
 			throw new IllegalArgumentException("Could not get current player instance");
 		} else {
 			ScotlandYardPlayer current = currentPlayer.get();
+
+			if(current.isMrX()) {
+				spectatorNotifyRoundStarted();
+			}
+
 			// generate list of valid moves
 			Set<Move> moves = getMoves(currentPlayerColour);
 
@@ -355,24 +360,42 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		}
 	}
 
+	private void spectatorNotifyRoundStarted() {
+		Collection<Spectator> specs = getSpectators();
+		DEBUG_LOG(String.format("NOTIFICATION(%s): Round %s Started", specs.size(), getCurrentRound()));
+
+		if(!getSpectators().isEmpty()){
+			for (Spectator spec : specs) {
+				spec.onRoundStarted(this, getCurrentRound());
+			}
+		}
+	}
+
 	public void processMove(Colour colour, Move move) {
-		DEBUG_LOG(String.format("processMove(%s, %s)", colour, move));
 		// TODO: update last player
 		Optional<Colour> updatedLastPlayer = Optional.of(colour);
-		int roundCopy = this.mCurrentRound;
 		this.mLastPlayer = updatedLastPlayer;
 		DEBUG_LOG("this.mLastPlayer -> " + colour.toString());
+		DEBUG_LOG(String.format("processMove(%s, %s)", colour, move));
+		int roundCopy = this.mCurrentRound;
+
+		spectatorNotifyMove(move);
 
 		// TODO: update the location and ticket counts
 		Optional<ScotlandYardPlayer> oPlayer = ScotlandYardPlayer.getByColour(this.mPlayers, colour);
 		if(oPlayer.isPresent()) {
 			ScotlandYardPlayer player = oPlayer.get();
+			DEBUG_LOG("processMove@start: " + player.toString());
 			if (move instanceof DoubleMove) {
 				DoubleMove dbl = (DoubleMove) move;
 				player.removeTicket(dbl.firstMove().ticket());
+				this.mCurrentRound++;
+				spectatorNotifyMove(dbl.firstMove());
+				spectatorNotifyRoundStarted();
 				player.removeTicket(dbl.secondMove().ticket());
 				player.removeTicket(DOUBLE);
 				player.location(dbl.finalDestination());
+				spectatorNotifyMove(dbl.secondMove());
 				DEBUG_LOG(String.format("DoubleMove detected.. removing 2 tickets (%s + %s) and setting location to %s", dbl.firstMove().ticket(), dbl.secondMove().ticket(), dbl.finalDestination()));
 			} else if (move instanceof TicketMove) {
 				TicketMove tkt = (TicketMove) move;
@@ -391,6 +414,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 				}
 				player.location(tkt.destination());
 			}
+			DEBUG_LOG("processMove@end: " + player.toString());
 		} else {
 			throw new IllegalArgumentException("processMove could not find the right ScotlandYardPlayer for colour (" + colour + ")");
 		}
@@ -399,34 +423,29 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 		if(colour == BLACK){
 			// update currentRound
-
-			if(move instanceof DoubleMove){
-				this.mCurrentRound += 2;
-
-			} else {
 				this.mCurrentRound++;
-			}
 			DEBUG_LOG(String.format("mCurrentRound = %s -> %s", roundCopy, mCurrentRound));
 		}
 
-
-		if(this.mSpectators.size() > 0){
-			DEBUG_LOG("Notifying spectators");
-			spectatorNotifyMove(move);
-			if(getNextPlayer(colour) == BLACK){
-				spectatorNotifyRotation();
-			}
-			if(isGameOver()){
+		if(getCurrentPlayer() == BLACK){
+			spectatorNotifyRotation();
+			if(!isGameOver()){
+				turn();
+			} else {
 				spectatorNotifyGameOver();
 			}
+		} else {
+			if(!isGameOver()){
+				DEBUG_LOG(String.format("Turn %s complete. Rotating for the next player (%s)", roundCopy, getCurrentPlayer().toString()));
+			} else {
+				DEBUG_LOG("startRotate: Game is over!");
+				spectatorNotifyGameOver();
+			}
+			turn();
 		}
 
-		if(!isGameOver()){
-			DEBUG_LOG(String.format("Turn %s complete. Rotating for the next player", roundCopy));
-		} else {
-			DEBUG_LOG("startRotate: Game is over!");
-		}
-		turn();
+
+
 	}
 
 	/** END ROTATION+MOVEMENT LOGIC SECTION */
@@ -464,7 +483,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	 *  - max rounds have been played
 	 */
 	private boolean checkWinMrX() {
-		DEBUG_LOG("Checking if MrX has won");
+//		DEBUG_LOG("Checking if MrX has won");
 		boolean result = false;
 
 		// TODO: all detectives are ticketless
@@ -507,7 +526,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	 *  - mrX is captured
 	 */
 	private boolean checkWinDetective() {
-		DEBUG_LOG("Checking if detectives have won");
+//		DEBUG_LOG("Checking if detectives have won");
 		boolean result = false;
 
 		// TODO: mrX is stuck
@@ -540,11 +559,12 @@ public class ScotlandYardModel implements ScotlandYardGame {
 			}
 			result = mrXWin || playerWin;
 
-		if(result){
+		if(result) {
 			DEBUG_LOG("GAME OVER");
-		} else {
-			DEBUG_LOG("GAME STILL IN PROGRESS");
 		}
+//		} else {
+//			DEBUG_LOG("GAME STILL IN PROGRESS");
+//		}
 		return result;
 	}
 
@@ -612,7 +632,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		Collection<Spectator> specs = getSpectators();
 		DEBUG_LOG(String.format("NOTIFICATION(%s): Move (%s)", specs.size(), move));
 
-		if(!getSpectators().isEmpty() && !this.mGameOverNotified){
+		if(!getSpectators().isEmpty()){
 			for (Spectator spec : specs) {
 				spec.onMoveMade(this, move);
 			}
@@ -623,7 +643,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		Collection<Spectator> specs = getSpectators();
 		DEBUG_LOG(String.format("NOTIFICATION(%s): GAME OVER", specs.size()));
 
-		if(!getSpectators().isEmpty() && !this.mGameOverNotified){
+		if(!getSpectators().isEmpty()){
 			for (Spectator spec : specs) {
 				spec.onRotationComplete(this);
 			}

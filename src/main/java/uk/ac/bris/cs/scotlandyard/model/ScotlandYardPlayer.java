@@ -165,11 +165,11 @@ public class ScotlandYardPlayer {
 	}
 
 	public boolean hasNoTickets() {
-		System.out.println(String.format("hasNoTickets(%s)?", this.colour().toString()));
+//		System.out.println(String.format("hasNoTickets(%s)?", this.colour().toString()));
 		Ticket[] transports = {TAXI, BUS, UNDERGROUND, SECRET, DOUBLE};
 		boolean result = true;
 		for (Ticket transport: transports) {
-			System.out.println(String.format("%s has %s %s tickets",this.colour().toString(), tickets.get(transport), transport.toString()));
+//			System.out.println(String.format("%s has %s %s tickets",this.colour().toString(), tickets.get(transport), transport.toString()));
 			if(tickets.get(transport) != 0){
 				result = false;
 			}
