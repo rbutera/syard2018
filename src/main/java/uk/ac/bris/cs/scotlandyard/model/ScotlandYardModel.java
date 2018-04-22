@@ -468,7 +468,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		}
 
 		// TODO: max rounds have been played
-		boolean roundless = getCurrentRound() >= getRounds().size();
+		boolean roundless = getCurrentRound() > getRounds().size();
 
 		if (roundless) {
 			System.out.println("MR X WIN: No rounds left");
