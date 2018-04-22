@@ -394,6 +394,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 				player.removeTicket(dbl.secondMove().ticket());
 				player.removeTicket(DOUBLE);
 				player.location(dbl.finalDestination());
+				nextRound();
 				spectatorNotifyMove(dbl.secondMove());
 				DEBUG_LOG(String.format("DoubleMove detected.. removing 2 tickets (%s + %s) and setting location to %s", dbl.firstMove().ticket(), dbl.secondMove().ticket(), dbl.finalDestination()));
 			} else if (move instanceof TicketMove) {
@@ -412,6 +413,9 @@ public class ScotlandYardModel implements ScotlandYardGame {
 					}
 				}
 				player.location(tkt.destination());
+				if(player.isMrX()){
+					nextRound();
+				}
 			}
 			DEBUG_LOG("processMove@end: " + player.toString());
 		} else {
@@ -422,7 +426,6 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 		if(colour == BLACK){
 			// update currentRound
-				nextRound();
 			DEBUG_LOG(String.format("mCurrentRound = %s -> %s", roundCopy, mCurrentRound));
 		}
 
