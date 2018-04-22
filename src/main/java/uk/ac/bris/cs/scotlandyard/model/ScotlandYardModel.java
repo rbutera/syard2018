@@ -398,6 +398,10 @@ public class ScotlandYardModel implements ScotlandYardGame {
 			if (move instanceof DoubleMove) {
 				DoubleMove dbl = (DoubleMove) move;
 				TicketMove firstMove = isRevealRound() ? dbl.firstMove() : new TicketMove(colour, dbl.firstMove().ticket(), getMrXLocation());
+				if (isRevealRound()){
+					DEBUG_LOG("updating MrX's public location to " + dbl.firstMove().destination());
+					this.mMrXLastLocation = dbl.firstMove().destination();
+				}
 				TicketMove secondMove = isRevealRound(1) ? dbl.secondMove() : new TicketMove(colour, dbl.secondMove().ticket(), getMrXLocation());
 				DoubleMove toNotify = new DoubleMove(colour, firstMove, secondMove);
 				spectatorNotifyMove(toNotify);
@@ -431,6 +435,8 @@ public class ScotlandYardModel implements ScotlandYardGame {
 				}
 				player.removeTicket(tkt.ticket());
 				player.location(tkt.destination());
+				TicketMove toNotify = new TicketMove(colour, tkt.ticket(), (colour == BLACK && isRevealRound()) ? getMrXLocation() : tkt.destination());
+				spectatorNotifyMove(toNotify);
 			} else if (move instanceof PassMove) {
 				DEBUG_LOG(String.format("%s PASSES", colour.toString()));
 			} else {
@@ -450,9 +456,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 		if(getCurrentPlayer() == BLACK){
 			spectatorNotifyRotation();
-			if(!isGameOver()){
-				playerTurn();
-			} else {
+			if(isGameOver()){
 				spectatorNotifyGameOver();
 			}
 		} else {
@@ -599,7 +603,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		if (numRounds < 1) {
 			throw new IllegalStateException("numRounds should be non-zero");
 		}
-		if (currentRound + x > numRounds) {
+		if (currentRound + x >= numRounds) {
 			throw new IllegalStateException(String.format("isRevealRound(%s) is invalid when max rounds is %s and current round is %s", x, numRounds, currentRound));
 		} else {
 			result = getRounds().get(currentRound + x);
