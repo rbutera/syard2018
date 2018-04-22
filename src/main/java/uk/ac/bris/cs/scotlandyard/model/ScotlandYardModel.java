@@ -426,7 +426,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 				DEBUG_LOG("processMove@start: " + player.toString());
 				if (move instanceof DoubleMove) {
 					DoubleMove dbl = (DoubleMove) move;
-					nextRound();
+					spectatorNotifyRoundStarted();
 					TicketMove firstMove = isRevealRound() ? dbl.firstMove() : new TicketMove(colour, dbl.firstMove().ticket(), getMrXLocation());
 					if (isRevealRound()){
 						DEBUG_LOG("updating MrX's public location to " + dbl.firstMove().destination());
@@ -440,6 +440,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 					player.removeTicket(dbl.firstMove().ticket());
 					spectatorNotifyMove(firstMove);
 					player.location(dbl.firstMove().destination());
+					nextRound();
 					spectatorNotifyMove(secondMove);
 					player.removeTicket(dbl.secondMove().ticket());
 					player.location(dbl.finalDestination());
