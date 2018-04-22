@@ -17,7 +17,6 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	private int mCurrentRound = NOT_STARTED;
 	private int mMrXLastLocation = 0;
 	private int mMovesPlayed = 0; // TODO: increment moves played every time someone makes a move
-	private Colour mCurrentPlayer = BLACK;
 	private Optional<Colour> mLastPlayer = Optional.empty();
 	private ArrayList<Colour> mWinners = new ArrayList<>();
 	private Boolean mGameOverNotified = false;
@@ -96,6 +95,10 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		}
 	}
 
+	private void DEBUG_LOG (String input){
+		System.out.println(String.format("%s %s | %s", this.mCurrentRound, this.getCurrentPlayer().toString(), input));
+	}
+
 	/** GENERIC GETTERS SECTION */
 	@Override
 	public List<Colour> getPlayers() {
@@ -120,10 +123,10 @@ public class ScotlandYardModel implements ScotlandYardGame {
 			if (!playerFound && player.colour() == colour) {
 				playerFound = true;
 				if (colour != BLACK || forceMrX) {
-					System.out.println(String.format("gPL: %s @ %s", colour.toString(), player.location()));
+					// System.out.println(String.format("gPL: %s @ %s", colour.toString(), player.location()));
 					requestedLocation = Optional.of(player.location());
 				} else {
-					System.out.println(String.format("gPL: %s @ %s (MASKED)", colour.toString(), player.location()));
+					// System.out.println(String.format("gPL: %s @ %s (MASKED)", colour.toString(), player.location()));
 					requestedLocation = Optional.of(this.getMrXLocation());
 				}
 			}
@@ -181,7 +184,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	 * Returns the colour of the next player to play this round
 	 */
 	private Colour getNextPlayer(Colour current) {
-		System.out.println(String.format("getNextPlayer: %s -> ??", current.toString()));
+//		System.out.println(String.format("getNextPlayer: %s -> ??", current.toString()));
 		List<Colour> players = getPlayers();
 		Colour result = BLACK; // initialise as black just incase
 		int currentIndex = -1;
@@ -199,7 +202,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 			throw new RuntimeException("getNextPlayer unable to generate index for Colour " + current);
 		}
 
-		System.out.println(String.format("getNextPlayer: %s -> %s", current.toString(), result));
+		// System.out.println(String.format("getNextPlayer: %s -> %s", current.toString(), result));
 
 		return result;
 	}
@@ -227,7 +230,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	 * see also: getOccupiedLocations, getOptions, getDestination, getTicket,
 	 */
 	private Set<Move> getMoves(Colour colour){
-        System.out.println(String.format("getMoves(%s)", colour.toString()));
+        DEBUG_LOG(String.format("getMoves(%s)", colour.toString()));
 		Set<Move> output = new HashSet<>();
 		// get moves for a given Colour
 		Optional<ScotlandYardPlayer> p = ScotlandYardPlayer.getByColour(this.mPlayers, colour);
@@ -271,7 +274,6 @@ public class ScotlandYardModel implements ScotlandYardGame {
 								TicketMove secretFirstMove = new TicketMove(player.colour(), SECRET, destination);
 								TicketMove secretSecondMove = new TicketMove(player.colour(), SECRET, destination2);
 
-
 								if (player.hasTickets(transport2)) {
 									output.add(new DoubleMove(player.colour(), secretFirstMove, secondMove));
 								}
@@ -306,7 +308,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 				output.add(player.location());
 			}
 		}
-		System.out.println("getOccupiedLocations() = " + output);
+		DEBUG_LOG("getOccupiedLocations() = " + output);
 		return Collections.unmodifiableList(output);
 	}
 
@@ -315,43 +317,51 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	/** ROTATION AND MOVEMENT LOGIC SECTION */
 	@Override
 	public void startRotate() {
-		System.out.println("startRotate()");
+		DEBUG_LOG("");
+		DEBUG_LOG("startRotate()");
+
 		// check if game over
 		if (!this.isGameOver()) {
-			Colour currentPlayerColour = this.getCurrentPlayer();
-			Optional<ScotlandYardPlayer> currentPlayer = ScotlandYardPlayer.getByColour(this.mPlayers, currentPlayerColour);
-
-			if (!currentPlayer.isPresent()) {
-				throw new IllegalArgumentException("Could not get current player instance");
-			} else {
-				ScotlandYardPlayer current = currentPlayer.get();
-				// generate list of valid moves
-				Set<Move> moves = getMoves(currentPlayerColour);
-
-				Optional<Integer> location = getPlayerLocation(currentPlayerColour, true);
-
-				// notify player to move via Player.makeMove
-				// TODO: replace fake list with generated valid moves
-
-				if (location.isPresent()) {
-					System.out.println(String.format("startRotate: %s::makeMove will have %s choices", currentPlayerColour, moves.size()));
-					current.player().makeMove(this, location.get(), moves, (choice) -> this.processMove(currentPlayerColour, choice));
-					// update model: last player (so the next time startRotate was called)
-				} else {
-					throw new RuntimeException("empty Optional <Integer> (location)");
-				}
-			}
+			turn();
 		} else {
 			throw new IllegalStateException("startRotate called but game is already over");
 		}
 	}
 
+	public void turn() {
+		Colour currentPlayerColour = this.getCurrentPlayer();
+		Optional<ScotlandYardPlayer> currentPlayer = ScotlandYardPlayer.getByColour(this.mPlayers, currentPlayerColour);
+
+		if (!currentPlayer.isPresent()) {
+			throw new IllegalArgumentException("Could not get current player instance");
+		} else {
+			ScotlandYardPlayer current = currentPlayer.get();
+			// generate list of valid moves
+			Set<Move> moves = getMoves(currentPlayerColour);
+
+
+			Optional<Integer> location = getPlayerLocation(currentPlayerColour, true);
+
+			// notify player to move via Player.makeMove
+			// TODO: replace fake list with generated valid moves
+
+			if (location.isPresent()) {
+				DEBUG_LOG(String.format("startRotate: %s::makeMove will have %s choices", currentPlayerColour, moves.size()));
+				current.player().makeMove(this, location.get(), moves, (choice) -> this.processMove(currentPlayerColour, choice));
+				// update model: last player (so the next time startRotate was called)
+			} else {
+				throw new RuntimeException("empty Optional <Integer> (location)");
+			}
+		}
+	}
+
 	public void processMove(Colour colour, Move move) {
-		System.out.println(String.format("processMove(%s, %s)", colour, move));
+		DEBUG_LOG(String.format("processMove(%s, %s)", colour, move));
 		// TODO: update last player
 		Optional<Colour> updatedLastPlayer = Optional.of(colour);
+		int roundCopy = this.mCurrentRound;
 		this.mLastPlayer = updatedLastPlayer;
-		System.out.println("this.mLastPlayer -> " + colour.toString());
+		DEBUG_LOG("this.mLastPlayer -> " + colour.toString());
 
 		// TODO: update the location and ticket counts
 		Optional<ScotlandYardPlayer> oPlayer = ScotlandYardPlayer.getByColour(this.mPlayers, colour);
@@ -362,33 +372,45 @@ public class ScotlandYardModel implements ScotlandYardGame {
 				player.removeTicket(dbl.firstMove().ticket());
 				player.removeTicket(dbl.secondMove().ticket());
 				player.location(dbl.finalDestination());
-				System.out.println(String.format("DoubleMove detected.. removing 2 tickets (%s + %s) and setting location to %s", dbl.firstMove().ticket(), dbl.secondMove().ticket(), dbl.finalDestination()));
+				DEBUG_LOG(String.format("DoubleMove detected.. removing 2 tickets (%s + %s) and setting location to %s", dbl.firstMove().ticket(), dbl.secondMove().ticket(), dbl.finalDestination()));
 			} else if (move instanceof TicketMove) {
 				TicketMove tkt = (TicketMove) move;
-				System.out.println(String.format("Standard TicketMove detected.. removing %s ticket.", tkt.ticket()));
+				DEBUG_LOG(String.format("Standard TicketMove detected.. removing %s ticket.", tkt.ticket()));
 				player.removeTicket(tkt.ticket());
+				if(player.isDetective()){
+					DEBUG_LOG("giving the ticket to Mr X");
+					Optional<ScotlandYardPlayer> oMrX = ScotlandYardPlayer.getByColour(this.mPlayers, BLACK);
+					ScotlandYardPlayer mrX;
+					if (oMrX.isPresent()){
+						mrX = oMrX.get();
+						mrX.addTicket(tkt.ticket());
+					} else {
+						throw new IllegalStateException("processMove failed to add ticket to mr X - unable to get Mr X's scotlandyardplayer instance");
+					}
+				}
 				player.location(tkt.destination());
 			}
 		} else {
 			throw new IllegalArgumentException("processMove could not find the right ScotlandYardPlayer for colour (" + colour + ")");
 		}
 
-		// update currentRound
-		System.out.println("ROUND "+ mCurrentRound+ " : " + colour.toString() + " " + move.toString());
+		System.out.println("ROUND "+ mCurrentRound+ ": " + colour.toString() + " " + move.toString());
 
-		int roundCopy = this.mCurrentRound;
+		if(colour == BLACK){
+			// update currentRound
 
-		if(move instanceof DoubleMove){
-			this.mCurrentRound += 2;
+			if(move instanceof DoubleMove){
+				this.mCurrentRound += 2;
 
-		} else {
-			this.mCurrentRound++;
+			} else {
+				this.mCurrentRound++;
+			}
+			DEBUG_LOG(String.format("mCurrentRound = %s -> %s", roundCopy, mCurrentRound));
 		}
 
-		System.out.println(String.format("mCurrentRound = %s -> %s", roundCopy, mCurrentRound));
 
 		if(this.mSpectators.size() > 0){
-			System.out.println("Notifying spectators");
+			DEBUG_LOG("Notifying spectators");
 			spectatorNotifyMove(move);
 			if(getNextPlayer(colour) == BLACK){
 				spectatorNotifyRotation();
@@ -399,11 +421,11 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		}
 
 		if(!isGameOver()){
-			System.out.println(String.format("ROUND %s complete. Rotating for the next player", roundCopy));
-			startRotate();
+			DEBUG_LOG(String.format("Turn %s complete. Rotating for the next player", roundCopy));
 		} else {
-			System.out.println("startRotate: Game is over!");
+			DEBUG_LOG("startRotate: Game is over!");
 		}
+		turn();
 	}
 
 	/** END ROTATION+MOVEMENT LOGIC SECTION */
@@ -416,9 +438,9 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	 */
 	private void setWinningPlayers(boolean isMrX) {
 		if (isMrX) {
-			System.out.println("MR X HAS WON");
+			DEBUG_LOG("MR X HAS WON");
 		} else {
-			System.out.println("DETECTIVES HAVE WON");
+			DEBUG_LOG("DETECTIVES HAVE WON");
 		}
 		this.mWinners.clear();
 		for (Colour player : getPlayers()) {
@@ -441,7 +463,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	 *  - max rounds have been played
 	 */
 	private boolean checkWinMrX() {
-		System.out.println("Checking if MrX has won");
+		DEBUG_LOG("Checking if MrX has won");
 		boolean result = false;
 
 		// TODO: all detectives are ticketless
@@ -452,7 +474,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 			}
 		}
 		if (ticketless) {
-			System.out.println("MR X WIN: All players are ticketless");
+			DEBUG_LOG("MR X WIN: All players are ticketless");
 		}
 
 		// TODO: all detectives have 0 valid moves available
@@ -464,14 +486,14 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		}
 
 		if (moveless) {
-			System.out.println("MR X WIN: All players are moveless");
+			DEBUG_LOG("MR X WIN: All players are moveless");
 		}
 
 		// TODO: max rounds have been played
-		boolean roundless = getCurrentRound() > getRounds().size();
+		boolean roundless = getCurrentRound() >= getRounds().size();
 
 		if (roundless) {
-			System.out.println("MR X WIN: No rounds left");
+			DEBUG_LOG("MR X WIN: No rounds left");
 		}
 
 		result = ticketless || moveless || roundless;
@@ -484,7 +506,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	 *  - mrX is captured
 	 */
 	private boolean checkWinDetective() {
-		System.out.println("Checking if detectives have won");
+		DEBUG_LOG("Checking if detectives have won");
 		boolean result = false;
 
 		// TODO: mrX is stuck
@@ -518,9 +540,9 @@ public class ScotlandYardModel implements ScotlandYardGame {
 			result = mrXWin || playerWin;
 
 		if(result){
-			System.out.println("GAME OVER");
+			DEBUG_LOG("GAME OVER");
 		} else {
-			System.out.println("GAME STILL IN PROGRESS");
+			DEBUG_LOG("GAME STILL IN PROGRESS");
 		}
 		return result;
 	}
@@ -544,7 +566,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	/** SPECTATOR SECTION */
 	@Override
 	public void registerSpectator(Spectator spectator) {
-		System.out.println("Registering a spectator");
+		DEBUG_LOG("Registering a spectator");
 		requireNonNull(spectator);
 		if (!getSpectators().contains(spectator)){
 			this.mSpectators.add(spectator);
@@ -556,7 +578,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 	@Override
 	public void unregisterSpectator(Spectator spectator) {
-		System.out.println("Unregistering spectator");
+		DEBUG_LOG("Unregistering spectator");
 		// TODO
 		requireNonNull(spectator);
 
@@ -574,7 +596,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	}
 
 	private void spectatorNotifyGameOver(){
-		System.out.println("NOTIFICATION: GAME OVER");
+		DEBUG_LOG("NOTIFICATION: GAME OVER");
 		Collection<Spectator> specs = getSpectators();
 
 		if(!getSpectators().isEmpty() && !this.mGameOverNotified){
@@ -587,7 +609,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 	private void spectatorNotifyMove(Move move){
 		Collection<Spectator> specs = getSpectators();
-		System.out.println(String.format("NOTIFICATION(%s): Move (%s)", specs.size(), move));
+		DEBUG_LOG(String.format("NOTIFICATION(%s): Move (%s)", specs.size(), move));
 
 		if(!getSpectators().isEmpty() && !this.mGameOverNotified){
 			for (Spectator spec : specs) {
@@ -598,7 +620,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 	private void spectatorNotifyRotation(){
 		Collection<Spectator> specs = getSpectators();
-		System.out.println(String.format("NOTIFICATION(%s): GAME OVER", specs.size()));
+		DEBUG_LOG(String.format("NOTIFICATION(%s): GAME OVER", specs.size()));
 
 		if(!getSpectators().isEmpty() && !this.mGameOverNotified){
 			for (Spectator spec : specs) {
