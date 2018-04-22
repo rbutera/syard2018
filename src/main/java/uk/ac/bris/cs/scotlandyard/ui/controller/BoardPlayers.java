@@ -74,7 +74,7 @@ public class BoardPlayers {
 			notifications.show(NOTIFY_TIMEOUT, timed);
 			if (colour.isMrX() && strictTimer) {
 				NotificationBuilder builder = new NotificationBuilder(
-						"Mr.X's turn, detectives please look away")
+						"Mr.X's playerTurn, detectives please look away")
 								.addAction("OK", () -> {
 									notifications.dismiss(MRX_WARN);
 									showNotificationAndAsk(location, name, moves, board, callback);

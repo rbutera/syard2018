@@ -72,7 +72,7 @@ public interface ScotlandYardView {
 	boolean isGameOver();
 
 	/**
-	 * The player whose turn it is. Should be {@link Colour#BLACK} at the start
+	 * The player whose playerTurn it is. Should be {@link Colour#BLACK} at the start
 	 * of game
 	 *
 	 * @return The colour of the current player; never null

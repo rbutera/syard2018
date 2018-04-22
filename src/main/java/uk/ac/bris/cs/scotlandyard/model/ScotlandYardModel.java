@@ -322,13 +322,13 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 		// check if game over
 		if (!this.isGameOver()) {
-			turn();
+			playerTurn();
 		} else {
 			throw new IllegalStateException("startRotate called but game is already over");
 		}
 	}
 
-	public void turn() {
+	public void playerTurn() {
 		Colour currentPlayerColour = this.getCurrentPlayer();
 		Optional<ScotlandYardPlayer> currentPlayer = ScotlandYardPlayer.getByColour(this.mPlayers, currentPlayerColour);
 
@@ -346,9 +346,16 @@ public class ScotlandYardModel implements ScotlandYardGame {
 			// TODO: replace fake list with generated valid moves
 
 			if (location.isPresent()) {
+				// reveal round logic
+				if(currentPlayerColour == BLACK && mCurrentRound != NOT_STARTED && isRevealRound()){
+					int last = this.mMrXLastLocation;
+					this.mMrXLastLocation = location.get();
+					DEBUG_LOG(String.format("Reveal round: mMrXLastLocation = %s -> %s", last, this.mMrXLastLocation));
+				}
+
+				// prompt player for move
 				DEBUG_LOG(String.format("startRotate: %s @ %s ::makeMove will have %s choices", currentPlayerColour, location.get(), moves.size()));
 				current.player().makeMove(this, location.get(), moves, (choice) -> this.processMove(currentPlayerColour, choice));
-				// update model: last player (so the next time startRotate was called)
 			} else {
 				throw new RuntimeException("empty Optional <Integer> (location)");
 			}
@@ -383,8 +390,6 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		DEBUG_LOG(String.format("processMove(%s, %s)", colour, move));
 		int roundCopy = this.mCurrentRound;
 
-		spectatorNotifyMove(move);
-
 		// TODO: update the location and ticket counts
 		Optional<ScotlandYardPlayer> oPlayer = ScotlandYardPlayer.getByColour(this.mPlayers, colour);
 		if(oPlayer.isPresent()) {
@@ -392,13 +397,21 @@ public class ScotlandYardModel implements ScotlandYardGame {
 			DEBUG_LOG("processMove@start: " + player.toString());
 			if (move instanceof DoubleMove) {
 				DoubleMove dbl = (DoubleMove) move;
-				player.removeTicket(dbl.firstMove().ticket());
-				spectatorNotifyMove(dbl.firstMove());
-				nextRound();
-				player.removeTicket(dbl.secondMove().ticket());
+				TicketMove firstMove = isRevealRound() ? dbl.firstMove() : new TicketMove(colour, dbl.firstMove().ticket(), getMrXLocation());
+				TicketMove secondMove = isRevealRound(1) ? dbl.secondMove() : new TicketMove(colour, dbl.secondMove().ticket(), getMrXLocation());
+				DoubleMove toNotify = new DoubleMove(colour, firstMove, secondMove);
+				spectatorNotifyMove(toNotify);
 				player.removeTicket(DOUBLE);
+				nextRound();
+				player.removeTicket(dbl.firstMove().ticket());
+				spectatorNotifyMove(firstMove);
+				player.location(dbl.firstMove().destination());
+				nextRound();
+
+
+				spectatorNotifyMove(secondMove);
+				player.removeTicket(dbl.secondMove().ticket());
 				player.location(dbl.finalDestination());
-				spectatorNotifyMove(dbl.secondMove());
 				DEBUG_LOG(String.format("DoubleMove detected.. removing 2 tickets (%s + %s) and setting location to %s", dbl.firstMove().ticket(), dbl.secondMove().ticket(), dbl.finalDestination()));
 			} else if (move instanceof TicketMove) {
 				TicketMove tkt = (TicketMove) move;
@@ -419,8 +432,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 				player.removeTicket(tkt.ticket());
 				player.location(tkt.destination());
 			} else if (move instanceof PassMove) {
-
-				throw new InvalidStateException(String.format("PassMove not yet implemented", move));
+				DEBUG_LOG(String.format("%s PASSES", colour.toString()));
 			} else {
 				throw new InvalidStateException(String.format("move (%s) is not an instance of DoubleMove, TicketMove or PassMove. Wtf?", move));
 			}
@@ -439,18 +451,18 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		if(getCurrentPlayer() == BLACK){
 			spectatorNotifyRotation();
 			if(!isGameOver()){
-				turn();
+				playerTurn();
 			} else {
 				spectatorNotifyGameOver();
 			}
 		} else {
+			playerTurn();
 			if(!isGameOver()){
 				DEBUG_LOG(String.format("Turn %s complete. Rotating for the next player (%s)", roundCopy, getCurrentPlayer().toString()));
 			} else {
-				DEBUG_LOG("startRotate: Game is over!");
+				DEBUG_LOG("processMove: Game is over!");
 				spectatorNotifyGameOver();
 			}
-			turn();
 		}
 
 
@@ -580,9 +592,19 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	/** END WIN CHECKING SECTION */
 // overloaded version to check if it will be a reveal round in x rounds from now
     public boolean isRevealRound(Integer x) {
-        int currentRound = getCurrentRound();
-        return getRounds().size() > (currentRound + x - 1)
-                && getRounds().get(currentRound + x - 1);
+    	DEBUG_LOG(String.format("isRevealRound(%s): curr = %s, getRounds = %s", x, getCurrentRound(), getRounds()));
+		boolean result = false;
+		int currentRound = getCurrentRound();
+		int numRounds = getRounds().size();
+		if (numRounds < 1) {
+			throw new IllegalStateException("numRounds should be non-zero");
+		}
+		if (currentRound + x > numRounds) {
+			throw new IllegalStateException(String.format("isRevealRound(%s) is invalid when max rounds is %s and current round is %s", x, numRounds, currentRound));
+		} else {
+			result = getRounds().get(currentRound + x);
+		}
+		return result;
     }
 
 
