@@ -37,28 +37,35 @@ public class ScotlandYardPlayer {
 		boolean found = false;
 		Optional<ScotlandYardPlayer> result = Optional.empty();
 
-		if (colour == (BLACK)) {
-			found = true;
-			result = Optional.of(players.get(0));
-		} else {
-			for (ScotlandYardPlayer player : players) {
-				if (player.colour() == colour) {
-					if (found) {
-						throw new RuntimeException("multiple instances found with colour " + colour.toString() + " !? wtf?");
-					} else {
-						found = true;
-						result = Optional.of(player);
+		requireNonNull(players);
+		requireNonNull(colour);
+
+		if (players.size() > 0) {
+			if (colour == (BLACK)) {
+				found = true;
+				result = Optional.of(players.get(0));
+			} else {
+				for (ScotlandYardPlayer player : players) {
+					if (player.colour() == colour) {
+						if (found) {
+							throw new RuntimeException("multiple instances found with colour " + colour.toString() + " !? wtf?");
+						} else {
+							found = true;
+							result = Optional.of(player);
+						}
 					}
 				}
 			}
-		}
 
-		if (!found) {
-			return Optional.empty();
-		} else if (result.isPresent()) {
-			return result;
+			if (!found) {
+				return Optional.empty();
+			} else if (result.isPresent()) {
+				return result;
+			} else {
+				throw new RuntimeException("Could not get colour " + colour.toString());
+			}
 		} else {
-			throw new RuntimeException("Could not get colour " + colour.toString());
+			throw new IllegalArgumentException("getByColour was passed an empty list!");
 		}
 	}
 
@@ -158,11 +165,13 @@ public class ScotlandYardPlayer {
 	}
 
 	public boolean hasNoTickets() {
+		System.out.println(String.format("hasNoTickets(%s)?", this.colour().toString()));
 		Ticket[] transports = {TAXI, BUS, UNDERGROUND, SECRET, DOUBLE};
-		boolean result = false;
+		boolean result = true;
 		for (Ticket transport: transports) {
+			System.out.println(String.format("%s has %s %s tickets",this.colour().toString(), tickets.get(transport), transport.toString()));
 			if(tickets.get(transport) != 0){
-				result = true;
+				result = false;
 			}
 		}
 		return result;
