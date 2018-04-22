@@ -317,7 +317,6 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	/** ROTATION AND MOVEMENT LOGIC SECTION */
 	@Override
 	public void startRotate() {
-		DEBUG_LOG("");
 		DEBUG_LOG("startRotate()");
 
 		// check if game over
@@ -337,10 +336,6 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		} else {
 			ScotlandYardPlayer current = currentPlayer.get();
 
-			if(current.isMrX()) {
-				spectatorNotifyRoundStarted();
-			}
-
 			// generate list of valid moves
 			Set<Move> moves = getMoves(currentPlayerColour);
 
@@ -351,13 +346,18 @@ public class ScotlandYardModel implements ScotlandYardGame {
 			// TODO: replace fake list with generated valid moves
 
 			if (location.isPresent()) {
-				DEBUG_LOG(String.format("startRotate: %s::makeMove will have %s choices", currentPlayerColour, moves.size()));
+				DEBUG_LOG(String.format("startRotate: %s @ %s ::makeMove will have %s choices", currentPlayerColour, location.get(), moves.size()));
 				current.player().makeMove(this, location.get(), moves, (choice) -> this.processMove(currentPlayerColour, choice));
 				// update model: last player (so the next time startRotate was called)
 			} else {
 				throw new RuntimeException("empty Optional <Integer> (location)");
 			}
 		}
+	}
+
+	private void nextRound(){
+		this.mCurrentRound++;
+		spectatorNotifyRoundStarted();
 	}
 
 	private void spectatorNotifyRoundStarted() {
@@ -389,9 +389,8 @@ public class ScotlandYardModel implements ScotlandYardGame {
 			if (move instanceof DoubleMove) {
 				DoubleMove dbl = (DoubleMove) move;
 				player.removeTicket(dbl.firstMove().ticket());
-				this.mCurrentRound++;
+				nextRound();
 				spectatorNotifyMove(dbl.firstMove());
-				spectatorNotifyRoundStarted();
 				player.removeTicket(dbl.secondMove().ticket());
 				player.removeTicket(DOUBLE);
 				player.location(dbl.finalDestination());
@@ -423,7 +422,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 		if(colour == BLACK){
 			// update currentRound
-				this.mCurrentRound++;
+				nextRound();
 			DEBUG_LOG(String.format("mCurrentRound = %s -> %s", roundCopy, mCurrentRound));
 		}
 
@@ -617,14 +616,18 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	}
 
 	private void spectatorNotifyGameOver(){
-		DEBUG_LOG("NOTIFICATION: GAME OVER");
-		Collection<Spectator> specs = getSpectators();
+		if(!isGameOver()){
+			throw new IllegalStateException("spectatorNotifyGameOver called but game is not over yet");
+		} else {
+			DEBUG_LOG("NOTIFICATION: GAME OVER");
+			Collection<Spectator> specs = getSpectators();
 
-		if(!getSpectators().isEmpty() && !this.mGameOverNotified){
-			for (Spectator spec : specs) {
-				spec.onGameOver(this, this.getWinningPlayers());
+			if(!getSpectators().isEmpty() && !this.mGameOverNotified){
+				for (Spectator spec : specs) {
+					spec.onGameOver(this, this.getWinningPlayers());
+				}
+				this.mGameOverNotified = true;
 			}
-			this.mGameOverNotified = true;
 		}
 	}
 
@@ -641,7 +644,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 	private void spectatorNotifyRotation(){
 		Collection<Spectator> specs = getSpectators();
-		DEBUG_LOG(String.format("NOTIFICATION(%s): GAME OVER", specs.size()));
+		DEBUG_LOG(String.format("NOTIFICATION(%s): rotation complete", specs.size()));
 
 		if(!getSpectators().isEmpty()){
 			for (Spectator spec : specs) {
