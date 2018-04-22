@@ -1,5 +1,6 @@
 package uk.ac.bris.cs.scotlandyard.model;
 
+import sun.plugin.dom.exception.InvalidStateException;
 import uk.ac.bris.cs.gamekit.graph.Edge;
 import uk.ac.bris.cs.gamekit.graph.Graph;
 import uk.ac.bris.cs.gamekit.graph.ImmutableGraph;
@@ -335,7 +336,6 @@ public class ScotlandYardModel implements ScotlandYardGame {
 			throw new IllegalArgumentException("Could not get current player instance");
 		} else {
 			ScotlandYardPlayer current = currentPlayer.get();
-
 			// generate list of valid moves
 			Set<Move> moves = getMoves(currentPlayerColour);
 
@@ -355,9 +355,13 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		}
 	}
 
-	private void nextRound(){
-		this.mCurrentRound++;
+	private void nextRound(int diff){
+		this.mCurrentRound += diff;
 		spectatorNotifyRoundStarted();
+	}
+
+	private void nextRound() {
+		this.nextRound(1);
 	}
 
 	private void spectatorNotifyRoundStarted() {
@@ -389,19 +393,19 @@ public class ScotlandYardModel implements ScotlandYardGame {
 			if (move instanceof DoubleMove) {
 				DoubleMove dbl = (DoubleMove) move;
 				player.removeTicket(dbl.firstMove().ticket());
-				nextRound();
 				spectatorNotifyMove(dbl.firstMove());
+				nextRound();
 				player.removeTicket(dbl.secondMove().ticket());
 				player.removeTicket(DOUBLE);
 				player.location(dbl.finalDestination());
-				nextRound();
 				spectatorNotifyMove(dbl.secondMove());
 				DEBUG_LOG(String.format("DoubleMove detected.. removing 2 tickets (%s + %s) and setting location to %s", dbl.firstMove().ticket(), dbl.secondMove().ticket(), dbl.finalDestination()));
 			} else if (move instanceof TicketMove) {
 				TicketMove tkt = (TicketMove) move;
 				DEBUG_LOG(String.format("Standard TicketMove detected.. removing %s ticket.", tkt.ticket()));
-				player.removeTicket(tkt.ticket());
-				if(player.isDetective()){
+				if(player.isMrX()){
+					nextRound();
+				} else {
 					DEBUG_LOG("giving the ticket to Mr X");
 					Optional<ScotlandYardPlayer> oMrX = ScotlandYardPlayer.getByColour(this.mPlayers, BLACK);
 					ScotlandYardPlayer mrX;
@@ -412,10 +416,13 @@ public class ScotlandYardModel implements ScotlandYardGame {
 						throw new IllegalStateException("processMove failed to add ticket to mr X - unable to get Mr X's scotlandyardplayer instance");
 					}
 				}
+				player.removeTicket(tkt.ticket());
 				player.location(tkt.destination());
-				if(player.isMrX()){
-					nextRound();
-				}
+			} else if (move instanceof PassMove) {
+
+				throw new InvalidStateException(String.format("PassMove not yet implemented", move));
+			} else {
+				throw new InvalidStateException(String.format("move (%s) is not an instance of DoubleMove, TicketMove or PassMove. Wtf?", move));
 			}
 			DEBUG_LOG("processMove@end: " + player.toString());
 		} else {
