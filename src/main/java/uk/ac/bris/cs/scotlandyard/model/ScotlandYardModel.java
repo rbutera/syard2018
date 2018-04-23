@@ -353,7 +353,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	/** ROTATION AND MOVEMENT LOGIC SECTION */
 	@Override
 	public void startRotate() {
-		DEBUG_LOG("startRotate()");
+		DEBUG_LOG(String.format("startRotate() - current round is %s, reveal rounds are %s", getCurrentRound(), getRevealRounds()));
 
 		// check if game over
 		if (!this.isGameOver()) {
@@ -402,9 +402,9 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 				// prompt player for move
 				DEBUG_LOG(String.format("startRotate: %s @ %s ::makeMove will have %s choices", currentPlayerColour, location.get(), moves.size()));
-				if(!isGameOver()){
-					current.player().makeMove(this, location.get(), moves, (choice) -> this.processMove(currentPlayerColour, choice));
-				}
+				isGameOver(); // just to update the model's attributes
+				current.player().makeMove(this, location.get(), moves, (choice) -> this.processMove(currentPlayerColour, choice));
+
 			} else {
 				throw new RuntimeException("location is missing");
 			}
@@ -419,6 +419,19 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 	private void nextRound() {
 		this.nextRound(1);
+	}
+
+	private List<Integer> getRevealRounds () {
+		List<Boolean> rounds = this.getRounds();
+		ArrayList<Integer> output = new ArrayList();
+
+		for(int i = 0; i < rounds.size(); i++){
+			if(rounds.get(i)){
+				output.add(i);
+			}
+		}
+
+		return Collections.unmodifiableList(output);
 	}
 
 	public void processMove(Colour colour, Move move) {
@@ -489,13 +502,19 @@ public class ScotlandYardModel implements ScotlandYardGame {
 					if(player.isMrX()){
 						if(isRevealRound(1)){
 							DEBUG_LOG("will be a reveal round when nextRound is called so pre-emptively saving mrX's location");
-							saveMrXLocation(tkt.destination());
+							if(tkt.ticket() != SECRET){
+								saveMrXLocation(tkt.destination());
+							} else {
+								DEBUG_LOG("SECRET MOVE: not pre-emptively saving MrX's location");
+							}
 						}
 						nextRound();
 						if (!isRevealRound()) {
 							toNotify = new TicketMove(colour, tkt.ticket(), this.mMrXLastLocation);
 						} else {
-							saveMrXLocation(tkt.destination());
+							if(tkt.ticket() != SECRET){
+								saveMrXLocation(tkt.destination());
+							}
 							toNotify = new TicketMove(colour, tkt.ticket(), tkt.destination());
 						}
 					} else {
