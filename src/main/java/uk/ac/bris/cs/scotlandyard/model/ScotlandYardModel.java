@@ -402,8 +402,12 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 				// prompt player for move
 				DEBUG_LOG(String.format("startRotate: %s @ %s ::makeMove will have %s choices", currentPlayerColour, location.get(), moves.size()));
-				isGameOver(); // just to update the model's attributes
-				current.player().makeMove(this, location.get(), moves, (choice) -> this.processMove(currentPlayerColour, choice));
+
+				if(!isGameOver()){
+					current.player().makeMove(this, location.get(), moves, (choice) -> this.processMove(currentPlayerColour, choice));
+				} else {
+					spectatorNotifyGameOver();
+				}
 
 			} else {
 				throw new RuntimeException("location is missing");
