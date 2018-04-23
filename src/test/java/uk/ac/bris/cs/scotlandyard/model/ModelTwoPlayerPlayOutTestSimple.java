@@ -178,8 +178,8 @@ public class ModelTwoPlayerPlayOutTestSimple extends ParameterisedModelTestBase 
 						.givenMoves(hasSize(197))
 						.willPick(taxi(BLACK, 79)),
 				spectator().onRoundStarted()
-						.givenGameState(eq(seed.current(BLUE).round(3).players(
 								//<editor-fold defaultstate="collapsed">
+						.givenGameState(eq(seed.current(BLUE).round(3).players(
 								black(79).with(TX, 3, BS, 3, UG, 3, X2, 2, SC, 5),
 								blue(86).with(TX, 10, BS, 7, UG, 4, X2, 0, SC, 0))
 								//</editor-fold>
