@@ -90,7 +90,7 @@ public interface Requirement<T> {
 					missing.removeAll(actual);
 					Set<T> extra = new HashSet<>(actual);
 					extra.removeAll(expected);
-					if (!extra.isEmpty() && !missing.isEmpty()) {
+					if (!extra.isEmpty() || !missing.isEmpty()) {
 						softly.fail(format("Moves is missing %s, and erroneously contains %s",
 								missing, extra), stack);
 					}

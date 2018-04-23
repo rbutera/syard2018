@@ -1,6 +1,5 @@
 package uk.ac.bris.cs.scotlandyard.model;
 
-import sun.plugin.dom.exception.InvalidStateException;
 import uk.ac.bris.cs.gamekit.graph.Edge;
 import uk.ac.bris.cs.gamekit.graph.Graph;
 import uk.ac.bris.cs.gamekit.graph.ImmutableGraph;
@@ -481,7 +480,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 					DEBUG_LOG(String.format("%s PASSES", colour.toString()));
 					spectatorNotifyMove((PassMove) move);
 				} else {
-					throw new InvalidStateException(String.format("move (%s) is not an instance of DoubleMove, TicketMove or PassMove. Wtf?", move));
+					throw new IllegalStateException(String.format("move (%s) is not an instance of DoubleMove, TicketMove or PassMove. Wtf?", move));
 				}
 				DEBUG_LOG("processMove@end: " + player.toString());
 			} else {

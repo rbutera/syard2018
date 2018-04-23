@@ -239,7 +239,7 @@ public class ModelValidMoveTest extends ParameterisedModelTestBase {
 
 	@Test
 	public void testMrXNoDoubleMovesIfNotEnoughRoundLeft() {
-		PlayerConfiguration mrX = harness.newPlayer(BLACK, 104, 4, 3, 3, 2, 0);
+		PlayerConfiguration mrX = harness.newPlayer(BLACK, 104, 4, 3, 3, 2, 5);
 		PlayerConfiguration blue = harness.newPlayer(BLUE, 117);
 
 		// no double move because we have no next round to play the second move
