@@ -140,7 +140,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		for (ScotlandYardPlayer player : this.mPlayers) {
 			if (!playerFound && player.colour() == colour) {
 				playerFound = true;
-				if (colour != BLACK || (colour == BLACK && forceMrX)) {
+				if (colour != BLACK || forceMrX) {
 					// System.out.println(String.format("gPL: %s @ %s", colour.toString(), player.location()));
 					requestedLocation = Optional.of(player.location());
 				} else {
