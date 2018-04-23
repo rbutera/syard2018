@@ -494,10 +494,11 @@ public class ScotlandYardModel implements ScotlandYardGame {
 			}
 
 			if(getCurrentPlayer() == BLACK){
-				if(isGameOver()){
+				if(isGameOver()) {
 					spectatorNotifyGameOver();
+				} else {
+					spectatorNotifyRotation();
 				}
-				spectatorNotifyRotation();
 			} else {
 				playerTurn();
 			}
