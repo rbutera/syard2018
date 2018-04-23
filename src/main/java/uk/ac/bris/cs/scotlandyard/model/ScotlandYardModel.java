@@ -13,13 +13,14 @@ import static uk.ac.bris.cs.scotlandyard.model.Ticket.*;
 public class ScotlandYardModel implements ScotlandYardGame {
 	private List<Boolean> mRounds;
 	private Graph<Integer, Transport> mGraph;
-	private ArrayList<ScotlandYardPlayer> mPlayers = new ArrayList<>();
+	private ArrayList<ScotlandYardPlayer> mPlayers;
 	private int mCurrentRound = NOT_STARTED;
 	private int mMrXLastLocation = 0;
 	private int mMovesPlayed = 0; // TODO: increment moves played every time someone makes a move
+	private Colour mRotating = BLACK;
 	private Optional<Colour> mLastPlayer = Optional.empty();
 	private ArrayList<Colour> mWinners = new ArrayList<>();
-	private Boolean mGameOverNotified = false;
+	private boolean mGameOverNotified;
 	private ArrayList<Spectator> mSpectators = new ArrayList<>();
 	private Boolean mGameStarted = false;
 
@@ -97,7 +98,8 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	}
 
 	private void DEBUG_LOG (String input){
-		System.out.println(String.format("%s %s | %s", this.mCurrentRound, this.getCurrentPlayer().toString(), input));
+		String output = String.format("%s(%s) [%s/%s] - %s", this.mCurrentRound, this.mRotating.toString(), getRotatorIndex(this.mRotating), this.getPlayers().size(), input);
+		System.out.println(output);
 	}
 
 	/** GENERIC GETTERS SECTION */
@@ -111,17 +113,18 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	}
 
 
-	private int saveMrXLocation (int location) {
-		DEBUG_LOG(String.format("saveMrXLocation(%s)", location));
+	private void saveMrXLocation (int location) {
+
 		Optional<ScotlandYardPlayer> oMrX = ScotlandYardPlayer.getMrX(this.mPlayers);
 		if(oMrX.isPresent()){
-			this.mMrXLastLocation = location;
-			oMrX.get().location(location);
+			if(this.mMrXLastLocation != location) {
+				this.mMrXLastLocation = location;
+				oMrX.get().location(location);
+				DEBUG_LOG(String.format("saveMrXLocation %s -> %s", this.mMrXLastLocation, location));
+			}
 		} else {
 			throw new IllegalStateException("cannot save mrX's location - cannot get MrX's ScotlandYardPlayer instance");
 		}
-
-		return this.mMrXLastLocation;
 	}
 
 	/** overloaded version of getPlayerLocation
@@ -360,8 +363,20 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		}
 	}
 
+	private Integer getRotatorIndex (Colour input) {
+		Integer result = 0;
+		List<Colour> players = this.getPlayers();
+		for (int i = 0; i < this.getPlayers().size() ; i++) {
+			if(players.get(i) == input){
+				result = i + 1;
+			}
+		}
+		return result;
+	}
+
 	public void playerTurn() {
 		Colour currentPlayerColour = this.getCurrentPlayer();
+		this.mRotating = currentPlayerColour;
 		Optional<ScotlandYardPlayer> currentPlayer = ScotlandYardPlayer.getByColour(this.mPlayers, currentPlayerColour);
 
 		if (!currentPlayer.isPresent()) {
@@ -408,6 +423,12 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	public void processMove(Colour colour, Move move) {
 		requireNonNull(colour);
 		requireNonNull(move);
+
+		if (move instanceof DoubleMove) {
+			this.mMovesPlayed += 2;
+		} else if (move instanceof TicketMove || move instanceof PassMove) {
+			this.mMovesPlayed++;
+		}
 
 		// Check that the move was one of the valid moves we provided
 		Optional<Integer> oLoc = getPlayerLocation(colour, true);
@@ -666,9 +687,9 @@ public class ScotlandYardModel implements ScotlandYardGame {
 			}
 		}
 		// DEBUG_LOG(String.format("isRevealRound(%s): curr = %s, rounds[%s], ans = %s", x, getCurrentRound(), getRounds().size(), result ? "true" : "false"));
-		if (result) {
-			DEBUG_LOG(String.format("isRevealRound(%s) on round  %s = TRUE (%s)", x, currentRound, rounds));
-		}
+//		if (result) {
+//			DEBUG_LOG(String.format("isRevealRound(%s) on round  %s = TRUE (%s)", x, currentRound, rounds));
+//		}
 
 		return result;
     }
@@ -717,7 +738,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		if(!isGameOver()){
 			throw new IllegalStateException("spectatorNotifyGameOver called but game is not over yet");
 		} else {
-			DEBUG_LOG("NOTIFICATION: GAME OVER");
+			DEBUG_LOG(String.format("NOTIFICATION: GAME OVER (Winners: %s) - %s rounds and %s moves played", getWinningPlayers(), this.mCurrentRound, this.mMovesPlayed));
 			Collection<Spectator> specs = getSpectators();
 
 			if(!getSpectators().isEmpty() && !this.mGameOverNotified){
