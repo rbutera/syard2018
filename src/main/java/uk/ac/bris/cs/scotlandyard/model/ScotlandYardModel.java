@@ -609,6 +609,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		result = ticketless || moveless || roundless;
 		if (result) {
 			DEBUG_LOG(String.format("Mr X Win: Tickets? (%s) Moves? (%s) Rounds? (%s)", ticketless, moveless, roundless));
+			this.setWinningPlayers(true);
 		}
 		return result;
 	}
@@ -639,6 +640,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		result = stuck || captured;
 		if (result) {
 			DEBUG_LOG(String.format("Detective Win: Stuck? (%s) Captured? (%s)", stuck, captured));
+			this.setWinningPlayers(false);
 		}
 		return result;
 	}
