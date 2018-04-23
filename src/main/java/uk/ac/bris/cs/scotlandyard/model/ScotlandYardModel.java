@@ -426,13 +426,24 @@ public class ScotlandYardModel implements ScotlandYardGame {
 				DEBUG_LOG("processMove@start: " + player.toString());
 				if (move instanceof DoubleMove) {
 					DoubleMove dbl = (DoubleMove) move;
-					TicketMove firstMove = isRevealRound() ? dbl.firstMove() : new TicketMove(colour, dbl.firstMove().ticket(), getMrXLocation());
-					if (isRevealRound()){
-						DEBUG_LOG("updating MrX's public location to " + dbl.firstMove().destination());
+					TicketMove firstMove, secondMove;
+					if(isRevealRound()) {
+						int location = oLoc.get();
+						firstMove = new TicketMove(colour, dbl.firstMove().ticket(), dbl.firstMove().destination());
 						this.mMrXLastLocation = dbl.firstMove().destination();
+						DEBUG_LOG("updating MrX's public location to " + dbl.firstMove().destination());
+					} else {
+						firstMove = new TicketMove(colour, dbl.firstMove().ticket(), this.mMrXLastLocation);
 					}
-					TicketMove secondMove = isRevealRound(1) ? dbl.secondMove() : new TicketMove(colour, dbl.secondMove().ticket(), getMrXLocation());
-					DoubleMove toNotify = new DoubleMove(colour, firstMove, secondMove);
+
+					if(isRevealRound(1)){ // next turn is reveal
+						secondMove = new TicketMove(colour, dbl.secondMove().ticket(), dbl.secondMove().destination());
+						this.mMrXLastLocation = dbl.secondMove().destination();
+					} else {
+						secondMove = new TicketMove(colour, dbl.secondMove().ticket(), this.mMrXLastLocation);
+					}
+
+					DoubleMove toNotify = new DoubleMove(colour, requireNonNull(firstMove), requireNonNull(secondMove));
 					spectatorNotifyMove(toNotify);
 					nextRound();
 					player.removeTicket(DOUBLE);
@@ -622,6 +633,8 @@ public class ScotlandYardModel implements ScotlandYardGame {
 			throw new IllegalStateException(String.format("isRevealRound(%s) is invalid when max rounds is %s and current round is %s", x, numRounds, currentRound));
 		} else if (currentRound > 0) {
 			result = getRounds().get((currentRound - 1) + x);
+		} else if (currentRound == 0) {
+			result = getRounds().get(currentRound + x);
 		}
 		DEBUG_LOG(String.format("isRevealRound(%s): curr = %s, rounds[%s], ans = %s", x, getCurrentRound(), getRounds().size(), result ? "true" : "false"));
 
