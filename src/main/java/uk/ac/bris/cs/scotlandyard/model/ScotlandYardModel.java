@@ -123,7 +123,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		for (ScotlandYardPlayer player : this.mPlayers) {
 			if (!playerFound && player.colour() == colour) {
 				playerFound = true;
-				if (colour != BLACK || forceMrX) {
+				if (colour != BLACK || (colour == BLACK && forceMrX)) {
 					// System.out.println(String.format("gPL: %s @ %s", colour.toString(), player.location()));
 					requestedLocation = Optional.of(player.location());
 				} else {
@@ -182,7 +182,9 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	}
 
 	private Integer getMrXLocation() {
-		if (isRevealRound() && this.mGameStarted){
+		if (getCurrentRound() == 0) {
+			return 0;
+		} else if (isRevealRound() && this.mGameStarted){
 			Optional<ScotlandYardPlayer> oMrX = ScotlandYardPlayer.getMrX(this.mPlayers);
 			if (oMrX.isPresent()){
 				int location = oMrX.get().location();
@@ -458,9 +460,16 @@ public class ScotlandYardModel implements ScotlandYardGame {
 					DEBUG_LOG(String.format("DoubleMove detected.. removing 2 tickets (%s + %s) and setting location to %s", dbl.firstMove().ticket(), dbl.secondMove().ticket(), dbl.finalDestination()));
 				} else if (move instanceof TicketMove) {
 					TicketMove tkt = (TicketMove) move;
+					TicketMove toNotify = tkt;
 					DEBUG_LOG(String.format("TicketMove(%s)detected.. removing %s ticket.", tkt.ticket(), tkt.ticket()));
+					player.removeTicket(tkt.ticket());
 					if(player.isMrX()){
 						nextRound();
+						if (!isRevealRound()) {
+							toNotify = new TicketMove(colour, tkt.ticket(), this.mMrXLastLocation);
+						} else {
+							this.mMrXLastLocation = tkt.destination();
+						}
 					} else {
 						DEBUG_LOG("giving the ticket to Mr X");
 						Optional<ScotlandYardPlayer> oMrX = ScotlandYardPlayer.getByColour(this.mPlayers, BLACK);
@@ -472,10 +481,9 @@ public class ScotlandYardModel implements ScotlandYardGame {
 							throw new IllegalStateException("processMove failed to add ticket to mr X - unable to get Mr X's scotlandyardplayer instance");
 						}
 					}
-					TicketMove toNotify = new TicketMove(colour, tkt.ticket(), (colour == BLACK && isRevealRound()) ? getMrXLocation() : tkt.destination());
-					spectatorNotifyMove(toNotify);
+
 					player.location(tkt.destination());
-					player.removeTicket(tkt.ticket());
+					spectatorNotifyMove(toNotify);
 				} else if (move instanceof PassMove) {
 					DEBUG_LOG(String.format("%s PASSES", colour.toString()));
 					spectatorNotifyMove((PassMove) move);
@@ -549,7 +557,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	 *  - max rounds have been played
 	 */
 	private boolean checkWinMrX() {
-		DEBUG_LOG("Checking if MrX has won");
+//		DEBUG_LOG("Checking if MrX has won");
 		boolean result = false;
 
 		// TODO: all detectives are ticketless
@@ -610,7 +618,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 	public boolean isGameOver() {
 		boolean result;
-			DEBUG_LOG("isGameOver?");
+//			DEBUG_LOG("isGameOver?");
 			boolean mrXWin = checkWinMrX();
 			boolean playerWin = checkWinDetective();
 			if(mrXWin){
@@ -647,7 +655,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		} else if (currentRound == 0) {
 			result = getRounds().get(currentRound + x);
 		}
-		DEBUG_LOG(String.format("isRevealRound(%s): curr = %s, rounds[%s], ans = %s", x, getCurrentRound(), getRounds().size(), result ? "true" : "false"));
+		// DEBUG_LOG(String.format("isRevealRound(%s): curr = %s, rounds[%s], ans = %s", x, getCurrentRound(), getRounds().size(), result ? "true" : "false"));
 
 		return result;
     }
