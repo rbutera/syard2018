@@ -402,8 +402,9 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 				// prompt player for move
 				DEBUG_LOG(String.format("startRotate: %s @ %s ::makeMove will have %s choices", currentPlayerColour, location.get(), moves.size()));
-				current.player().makeMove(this, location.get(), moves, (choice) -> this.processMove(currentPlayerColour, choice));
-
+				if(!isGameOver()){
+					current.player().makeMove(this, location.get(), moves, (choice) -> this.processMove(currentPlayerColour, choice));
+				}
 			} else {
 				throw new RuntimeException("location is missing");
 			}
@@ -609,7 +610,6 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		result = ticketless || moveless || roundless;
 		if (result) {
 			DEBUG_LOG(String.format("Mr X Win: Tickets? (%s) Moves? (%s) Rounds? (%s)", ticketless, moveless, roundless));
-			this.setWinningPlayers(true);
 		}
 		return result;
 	}
@@ -640,7 +640,6 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		result = stuck || captured;
 		if (result) {
 			DEBUG_LOG(String.format("Detective Win: Stuck? (%s) Captured? (%s)", stuck, captured));
-			this.setWinningPlayers(false);
 		}
 		return result;
 	}
@@ -766,7 +765,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	private void spectatorNotifyMove(Move move){
 		Collection<Spectator> specs = getSpectators();
 		DEBUG_LOG(String.format("NOTIFICATION(%s): Move (%s)", specs.size(), move));
-
+		isGameOver();
 		if(!getSpectators().isEmpty()){
 			for (Spectator spec : specs) {
 				spec.onMoveMade(this, move);
