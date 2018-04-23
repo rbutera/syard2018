@@ -477,6 +477,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 					player.removeTicket(tkt.ticket());
 				} else if (move instanceof PassMove) {
 					DEBUG_LOG(String.format("%s PASSES", colour.toString()));
+					spectatorNotifyMove((PassMove) move);
 				} else {
 					throw new InvalidStateException(String.format("move (%s) is not an instance of DoubleMove, TicketMove or PassMove. Wtf?", move));
 				}
