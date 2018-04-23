@@ -29,83 +29,73 @@ public interface Requirement<T> {
 		};
 	}
 
-	//	@SafeVarargs static <T> Requirement<T> where(Requirement<T> first, Requirement<T>... rest) {
-	//		List<Requirement<T>> reqs = Lists.asList(first, rest);
-	//		return named(reqs.stream()
-	//						.map(Requirement::toString)
-	//						.collect(joining(", ")),
-	//				(softly, actual) -> {
-	//					for (Requirement<T> req : reqs) req.check(softly, actual);
-	//				});
-	//	}
+//	@SafeVarargs static <T> Requirement<T> where(Requirement<T> first, Requirement<T>... rest) {
+//		List<Requirement<T>> reqs = Lists.asList(first, rest);
+//		return named(reqs.stream()
+//						.map(Requirement::toString)
+//						.collect(joining(", ")),
+//				(softly, actual) -> {
+//					for (Requirement<T> req : reqs) req.check(softly, actual);
+//				});
+//	}
 
 	static <T> Requirement<T> named(String name, Requirement<T> that) {
 		return new Requirement<T>() {
-			@Override
-			public void check(AssertionContext softly, T actual) {
+			@Override public void check(AssertionContext softly, T actual) {
 				that.check(softly, actual);
 			}
-
-			@Override
-			public String toString() {
-				return name;
-			}
+			@Override public String toString() { return name; }
 		};
 	}
 
 	static <T> Requirement<T> canBeAnything() {
-		return named("can be anything", (softly, actual) -> {
-		});
+		return named("can be anything", (softly, actual) -> {});
 	}
-
-	static <T> Requirement<T> doesNotMatter() {
-		return canBeAnything();
-	}
-
+	static <T> Requirement<T> doesNotMatter() { return canBeAnything(); }
 	static <T> Requirement<T> eq(T expected) {
 		List<StackTraceElement> stack = Assertions.capture();
-		return named("= " + Objects.toString(expected, "<null>"), (softly, actual) -> {
-			if (!Objects.equals(expected, actual))
-				softly.fail(format("expected:<%s> but was:<%s>", expected, actual), stack);
-		});
+		return named("= " + Objects.toString(expected, "<null>"),
+				(softly, actual) -> {
+					if (!Objects.equals(expected, actual))
+						softly.fail(format("expected:<%s> but was:<%s>", expected, actual), stack);
+				});
 	}
-
 	static <T> Requirement<T> neq(T notExpected) {
 		List<StackTraceElement> stack = Assertions.capture();
-		return named("!= " + Objects.toString(notExpected, "<null>"), (softly, actual) -> {
-			if (Objects.equals(notExpected, actual))
-				softly.fail(format("Found forbidden value: <%s>", notExpected), stack);
-		});
+		return named("!= " + Objects.toString(notExpected, "<null>"),
+				(softly, actual) -> {
+					if (Objects.equals(notExpected, actual))
+						softly.fail(format("Found forbidden value: <%s>", notExpected), stack);
+				});
 	}
-
 	static <T> Requirement<T> isA(Class<?> expected) {
 		List<StackTraceElement> stack = Assertions.capture();
-		return named("is a  " + Objects.toString(expected.getName(), "<null>"), (softly, actual) -> {
-			if (!expected.isInstance(actual))
-				softly.fail(format("Found wrong type: expected %s but found type %s: <%s>", expected.getName(),
-						actual.getClass().getName(), actual), stack);
-		});
+		return named("is a  " + Objects.toString(expected.getName(), "<null>"),
+				(softly, actual) -> {
+					if (!expected.isInstance(actual))
+						softly.fail(format("Found wrong type: expected %s but found type %s: <%s>",
+								expected.getName(), actual.getClass().getName(), actual), stack);
+				});
 	}
 
-	@SuppressWarnings("varargs")
-	@SafeVarargs
+	@SuppressWarnings("varargs") @SafeVarargs
 	static <T> Requirement<Set<T>> containsOnly(T... expected) {
 		return containsOnly(Arrays.stream(expected).collect(Collectors.toSet()));
 	}
-
 	static <T> Requirement<Set<T>> containsOnly(Set<T> expected) {
 		List<StackTraceElement> stack = Assertions.capture();
-		return named(String.format("= %s", expected), (softly, actual) -> {
-			Set<T> missing = new HashSet<>(expected);
-			missing.removeAll(actual);
-			Set<T> extra = new HashSet<>(actual);
-			extra.removeAll(expected);
-			if (!extra.isEmpty() || !missing.isEmpty()) {
-				softly.fail(format("Moves is missing %s, and erroneously contains %s", missing, extra), stack);
-			}
-		});
+		return named(String.format("= %s", expected),
+				(softly, actual) -> {
+					Set<T> missing = new HashSet<>(expected);
+					missing.removeAll(actual);
+					Set<T> extra = new HashSet<>(actual);
+					extra.removeAll(expected);
+					if (!extra.isEmpty() && !missing.isEmpty()) {
+						softly.fail(format("Moves is missing %s, and erroneously contains %s",
+								missing, extra), stack);
+					}
+				});
 	}
-
 	static <T> Requirement<T> fromAssertion(Consumer<T> requirement) {
 		return fromAssertion("obeys assertion: see below", requirement);
 	}
@@ -142,7 +132,8 @@ public interface Requirement<T> {
 	}
 
 	static Requirement<ScotlandYardGame> currentRoundNumberIs(int round) {
-		return fromAssertion(format("is on round %d", round), game -> assertThat(game.getCurrentRound()).isEqualTo(round));
+		return fromAssertion(format("is on round %d", round),
+				game -> assertThat(game.getCurrentRound()).isEqualTo(round));
 	}
 
 	static Requirement<ScotlandYardView> isOnRound(int round) {
@@ -174,7 +165,9 @@ public interface Requirement<T> {
 				return;
 			}
 			if (actual.size() != size) {
-				softly.fail(format("expected:<%s> but was:<%d(%s)> ", size, actual.size(), actual), stack);
+				softly.fail(format("expected:<%s> but was:<%d(%s)> ",
+						size, actual.size(), actual),
+						stack);
 			}
 		});
 	}

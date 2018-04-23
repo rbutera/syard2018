@@ -22,6 +22,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	private ArrayList<Colour> mWinners = new ArrayList<>();
 	private Boolean mGameOverNotified = false;
 	private ArrayList<Spectator> mSpectators = new ArrayList<>();
+	private Boolean mGameStarted = false;
 
 	//Constructor
 	public ScotlandYardModel(List<Boolean> rounds, Graph<Integer, Transport> graph, PlayerConfiguration mrX,
@@ -182,7 +183,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	}
 
 	private Integer getMrXLocation() {
-		if (isRevealRound()){
+		if (isRevealRound() && this.mGameStarted){
 			Optional<ScotlandYardPlayer> oMrX = ScotlandYardPlayer.getMrX(this.mPlayers);
 			if (oMrX.isPresent()){
 				int location = oMrX.get().location();
@@ -383,6 +384,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	}
 
 	private void nextRound(int diff){
+		this.mGameStarted = true;
 		this.mCurrentRound += diff;
 		spectatorNotifyRoundStarted();
 	}
@@ -521,10 +523,18 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		}
 		this.mWinners.clear();
 		for (Colour player : getPlayers()) {
-			if ((player.isDetective() && !isMrX) || (player.isMrX() && isMrX)) {
-				this.mWinners.add(player);
+			if (isMrX) {
+				if(player.isMrX()) {
+					this.mWinners.add(player);
+				}
+			} else {
+				if(player.isDetective()){
+					this.mWinners.add(player);
+				}
 			}
 		}
+
+		DEBUG_LOG(String.format("winners: %s", this.mWinners));
 	}
 
 	@Override
@@ -634,7 +644,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		if (currentRound + x > numRounds) {
 			throw new IllegalStateException(String.format("isRevealRound(%s) is invalid when max rounds is %s and current round is %s", x, numRounds, currentRound));
 		} else if (currentRound > 0) {
-			result = getRounds().get((currentRound - 1) + x);
+			result = getRounds().get((currentRound - 1 + x));
 		} else if (currentRound == 0) {
 			result = getRounds().get(currentRound + x);
 		}

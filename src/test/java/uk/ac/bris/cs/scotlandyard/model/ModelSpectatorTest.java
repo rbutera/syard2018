@@ -42,23 +42,18 @@ import static uk.ac.bris.cs.scotlandyard.model.Colour.YELLOW;
 public class ModelSpectatorTest extends ParameterisedModelTestBase {
 
 	private TestHarness harness;
-
-	@Before
-	public void initialise() {
-		harness = new TestHarness();
-	}
-
-	@After
-	public void tearDown() {
-		harness.forceReleaseShutdownLock();
-	}
+	@Before public void initialise() { harness = new TestHarness(); }
+	@After public void tearDown() { harness.forceReleaseShutdownLock(); }
 
 	// convenience for creating 6 valid player at non-overlapping locations
 	private ScotlandYardGame createValidSixPlayerGame(TestHarness harness) {
 		List<Integer> detectiveLocations = TestGames.DETECTIVE_LOCATIONS;
-		return createGame(harness.newPlayer(BLACK, TestGames.MRX_LOCATIONS.get(0)),
-				harness.newPlayer(RED, detectiveLocations.get(0)), harness.newPlayer(GREEN, detectiveLocations.get(1)),
-				harness.newPlayer(BLUE, detectiveLocations.get(2)), harness.newPlayer(WHITE, detectiveLocations.get(3)),
+		return createGame(
+				harness.newPlayer(BLACK, TestGames.MRX_LOCATIONS.get(0)),
+				harness.newPlayer(RED, detectiveLocations.get(0)),
+				harness.newPlayer(GREEN, detectiveLocations.get(1)),
+				harness.newPlayer(BLUE, detectiveLocations.get(2)),
+				harness.newPlayer(WHITE, detectiveLocations.get(3)),
 				harness.newPlayer(YELLOW, detectiveLocations.get(4)));
 	}
 
@@ -116,7 +111,8 @@ public class ModelSpectatorTest extends ParameterisedModelTestBase {
 		Spectator spectator = harness.createSpectator();
 		// can't register the same spectator
 		game.registerSpectator(spectator);
-		assertThatThrownBy(() -> game.registerSpectator(spectator)).isInstanceOf(IllegalArgumentException.class);
+		assertThatThrownBy(() -> game.registerSpectator(spectator))
+				.isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
@@ -135,14 +131,20 @@ public class ModelSpectatorTest extends ParameterisedModelTestBase {
 		Spectator spectator = harness.createSpectator();
 		game.registerSpectator(spectator);
 
-		harness.play(game)
-				.startRotationAndAssertTheseInteractionsOccurInOrder(player(BLACK).makeMove().willPick(x2(taxi(46), bus(34))),
-						spectator().onMoveMade().givenMove(isA(DoubleMove.class)).givenGameState(isOnRound(0)),
-						spectator().onRoundStarted(),
-						spectator().onMoveMade().givenMove(isA(TicketMove.class)).givenGameState(isOnRound(1)),
-						spectator().onRoundStarted(),
-						spectator().onMoveMade().givenMove(isA(TicketMove.class)).givenGameState(isOnRound(2)),
-						player(BLUE).makeMove().wontRespond())
+		harness.play(game).startRotationAndAssertTheseInteractionsOccurInOrder(
+				player(BLACK).makeMove().willPick(x2(taxi(46), bus(34))),
+				spectator().onMoveMade()
+						.givenMove(isA(DoubleMove.class))
+						.givenGameState(isOnRound(0)),
+				spectator().onRoundStarted(),
+				spectator().onMoveMade()
+						.givenMove(isA(TicketMove.class))
+						.givenGameState(isOnRound(1)),
+				spectator().onRoundStarted(),
+				spectator().onMoveMade()
+						.givenMove(isA(TicketMove.class))
+						.givenGameState(isOnRound(2)),
+				player(BLUE).makeMove().wontRespond())
 				.thenAssertNoFurtherInteractions();
 	}
 
@@ -153,11 +155,15 @@ public class ModelSpectatorTest extends ParameterisedModelTestBase {
 		ScotlandYardGame game = createGame(mrX, blue);
 		game.registerSpectator(harness.createSpectator(ON_MOVE_MADE));
 
-		harness.play(game)
-				.startRotationAndAssertTheseInteractionsOccurInOrder(player(BLACK).makeMove().willPick(x2(taxi(46), bus(34))),
-						spectator().onMoveMade().givenMove(isA(DoubleMove.class)),
-						spectator().onMoveMade().givenMove(isA(TicketMove.class)),
-						spectator().onMoveMade().givenMove(isA(TicketMove.class)), player(BLUE).makeMove().wontRespond())
+		harness.play(game).startRotationAndAssertTheseInteractionsOccurInOrder(
+				player(BLACK).makeMove().willPick(x2(taxi(46), bus(34))),
+				spectator().onMoveMade()
+						.givenMove(isA(DoubleMove.class)),
+				spectator().onMoveMade()
+						.givenMove(isA(TicketMove.class)),
+				spectator().onMoveMade()
+						.givenMove(isA(TicketMove.class)),
+				player(BLUE).makeMove().wontRespond())
 				.thenAssertNoFurtherInteractions();
 	}
 
@@ -169,11 +175,14 @@ public class ModelSpectatorTest extends ParameterisedModelTestBase {
 		game.registerSpectator(harness.createSpectator(ON_MOVE_MADE));
 
 		// during hidden rounds, double move never reveals the actual location
-		harness.play(game)
-				.startRotationAndAssertTheseInteractionsOccurInOrder(player(BLACK).makeMove().willPick(x2(taxi(46), bus(34))),
-						spectator().onMoveMade().givenMove(eq(x2(BLACK, taxi(0), bus(0)))),
-						spectator().onMoveMade().givenMove(eq(taxi(BLACK, 0))),
-						spectator().onMoveMade().givenMove(eq(bus(BLACK, 0))))
+		harness.play(game).startRotationAndAssertTheseInteractionsOccurInOrder(
+				player(BLACK).makeMove().willPick(x2(taxi(46), bus(34))),
+				spectator().onMoveMade()
+						.givenMove(eq(x2(BLACK, taxi(0), bus(0)))),
+				spectator().onMoveMade()
+						.givenMove(eq(taxi(BLACK, 0))),
+				spectator().onMoveMade()
+						.givenMove(eq(bus(BLACK, 0))))
 				.thenIgnoreAnyFurtherInteractions();
 	}
 
@@ -185,16 +194,20 @@ public class ModelSpectatorTest extends ParameterisedModelTestBase {
 		game.registerSpectator(harness.createSpectator(ON_MOVE_MADE));
 
 		// during reveal rounds, double move always reveal the actual location
-		harness.play(game)
-				.startRotationAndAssertTheseInteractionsOccurInOrder(player(BLACK).makeMove().willPick(x2(taxi(46), bus(34))),
-						spectator().onMoveMade().givenMove(eq(x2(BLACK, taxi(46), bus(34)))),
-						spectator().onMoveMade().givenMove(eq(taxi(BLACK, 46))),
-						spectator().onMoveMade().givenMove(eq(bus(BLACK, 34))))
+		harness.play(game).startRotationAndAssertTheseInteractionsOccurInOrder(
+				player(BLACK).makeMove().willPick(x2(taxi(46), bus(34))),
+				spectator().onMoveMade()
+						.givenMove(eq(x2(BLACK, taxi(46), bus(34)))),
+				spectator().onMoveMade()
+						.givenMove(eq(taxi(BLACK, 46))),
+				spectator().onMoveMade()
+						.givenMove(eq(bus(BLACK, 34))))
 				.thenIgnoreAnyFurtherInteractions();
 	}
 
 	@Test
-	public void testDoubleMoveShouldNotifyWithCorrectTicketAndDestinationWhenGoingFromRevealToHiddenRound() {
+	public void
+	testDoubleMoveShouldNotifyWithCorrectTicketAndDestinationWhenGoingFromRevealToHiddenRound() {
 		PlayerConfiguration mrX = harness.newPlayer(BLACK, 45);
 		PlayerConfiguration blue = harness.newPlayer(BLUE, 94);
 		ScotlandYardGame game = createGame(rounds(true, false, false), mrX, blue);
@@ -203,16 +216,17 @@ public class ModelSpectatorTest extends ParameterisedModelTestBase {
 		// if the first move of a double move happens during a reveal round and
 		// the next move is not, reveal actual location for the first ticket and
 		// then the last revealed location for the second ticket
-		harness.play(game)
-				.startRotationAndAssertTheseInteractionsOccurInOrder(player(BLACK).makeMove().willPick(x2(taxi(46), bus(34))),
-						spectator().onMoveMade().givenMove(eq(x2(BLACK, taxi(46), bus(46)))),
-						spectator().onMoveMade().givenMove(eq(taxi(BLACK, 46))),
-						spectator().onMoveMade().givenMove(eq(bus(BLACK, 46))))
+		harness.play(game).startRotationAndAssertTheseInteractionsOccurInOrder(
+				player(BLACK).makeMove().willPick(x2(taxi(46), bus(34))),
+				spectator().onMoveMade().givenMove(eq(x2(BLACK, taxi(46), bus(46)))),
+				spectator().onMoveMade().givenMove(eq(taxi(BLACK, 46))),
+				spectator().onMoveMade().givenMove(eq(bus(BLACK, 46))))
 				.thenIgnoreAnyFurtherInteractions();
 	}
 
 	@Test
-	public void testDoubleMoveShouldNotifyWithCorrectTicketAndDestinationWhenGoingFromHiddenToRevealRound() {
+	public void
+	testDoubleMoveShouldNotifyWithCorrectTicketAndDestinationWhenGoingFromHiddenToRevealRound() {
 		PlayerConfiguration mrX = harness.newPlayer(BLACK, 45);
 		PlayerConfiguration blue = harness.newPlayer(BLUE, 94);
 		ScotlandYardGame game = createGame(rounds(false, true, true), mrX, blue);
@@ -221,41 +235,49 @@ public class ModelSpectatorTest extends ParameterisedModelTestBase {
 		// if the first move of a double move happens during a reveal round and
 		// the next move is not, reveal actual location for the first ticket and
 		// then the last revealed location for the second ticket
-		harness.play(game)
-				.startRotationAndAssertTheseInteractionsOccurInOrder(player(BLACK).makeMove().willPick(x2(taxi(46), bus(34))),
-						spectator().onMoveMade().givenMove(eq(x2(BLACK, taxi(0), bus(34)))),
-						spectator().onMoveMade().givenMove(eq(taxi(BLACK, 0))),
-						spectator().onMoveMade().givenMove(eq(bus(BLACK, 34))))
+		harness.play(game).startRotationAndAssertTheseInteractionsOccurInOrder(
+				player(BLACK).makeMove().willPick(x2(taxi(46), bus(34))),
+				spectator().onMoveMade().givenMove(eq(x2(BLACK, taxi(0), bus(34)))),
+				spectator().onMoveMade().givenMove(eq(taxi(BLACK, 0))),
+				spectator().onMoveMade().givenMove(eq(bus(BLACK, 34))))
 				.thenIgnoreAnyFurtherInteractions();
 	}
 
 	@Test
-	public void testDetectiveTicketMoveShouldNotifyWithCorrectTicketAndDestinationDuringHiddenRound() {
+	public void
+	testDetectiveTicketMoveShouldNotifyWithCorrectTicketAndDestinationDuringHiddenRound() {
 		PlayerConfiguration mrX = harness.newPlayer(BLACK, 45);
 		PlayerConfiguration blue = harness.newPlayer(BLUE, 94);
 		ScotlandYardGame game = createGame(rounds(false, false, false, false), mrX, blue);
 		game.registerSpectator(harness.createSpectator(ON_MOVE_MADE));
 
 		// detective should not have their ticket destination changed in any way
-		harness.play(game)
-				.startRotationAndAssertTheseInteractionsOccurInOrder(player(BLACK).makeMove().willPick(x2(taxi(46), bus(34))),
-						spectator().onMoveMade(), spectator().onMoveMade(), spectator().onMoveMade(),
-						player(BLUE).makeMove().willPick(taxi(95)), spectator().onMoveMade().givenMove(eq(taxi(BLUE, 95))))
+		harness.play(game).startRotationAndAssertTheseInteractionsOccurInOrder(
+				player(BLACK).makeMove().willPick(x2(taxi(46), bus(34))),
+				spectator().onMoveMade(),
+				spectator().onMoveMade(),
+				spectator().onMoveMade(),
+				player(BLUE).makeMove().willPick(taxi(95)),
+				spectator().onMoveMade().givenMove(eq(taxi(BLUE, 95))))
 				.thenIgnoreAnyFurtherInteractions();
 	}
 
 	@Test
-	public void testDetectiveTicketMoveShouldNotifyWithCorrectTicketAndDestinationDuringRevealRound() {
+	public void
+	testDetectiveTicketMoveShouldNotifyWithCorrectTicketAndDestinationDuringRevealRound() {
 		PlayerConfiguration mrX = harness.newPlayer(BLACK, 45);
 		PlayerConfiguration blue = harness.newPlayer(BLUE, 94);
 		ScotlandYardGame game = createGame(rounds(true, true, true, true), mrX, blue);
 		game.registerSpectator(harness.createSpectator(ON_MOVE_MADE));
 
 		// detective should not have their ticket destination changed in any way
-		harness.play(game)
-				.startRotationAndAssertTheseInteractionsOccurInOrder(player(BLACK).makeMove().willPick(x2(taxi(46), bus(34))),
-						spectator().onMoveMade(), spectator().onMoveMade(), spectator().onMoveMade(),
-						player(BLUE).makeMove().willPick(taxi(95)), spectator().onMoveMade().givenMove(eq(taxi(BLUE, 95))))
+		harness.play(game).startRotationAndAssertTheseInteractionsOccurInOrder(
+				player(BLACK).makeMove().willPick(x2(taxi(46), bus(34))),
+				spectator().onMoveMade(),
+				spectator().onMoveMade(),
+				spectator().onMoveMade(),
+				player(BLUE).makeMove().willPick(taxi(95)),
+				spectator().onMoveMade().givenMove(eq(taxi(BLUE, 95))))
 				.thenIgnoreAnyFurtherInteractions();
 	}
 
@@ -268,10 +290,13 @@ public class ModelSpectatorTest extends ParameterisedModelTestBase {
 		game.registerSpectator(harness.createSpectator(ON_MOVE_MADE));
 
 		// pass move should notify once
-		harness.play(game)
-				.startRotationAndAssertTheseInteractionsOccurInOrder(player(BLACK).makeMove().willPick(taxi(46)),
-						spectator().onMoveMade(), player(RED).makeMove().willPick(taxi(112)), spectator().onMoveMade(),
-						player(BLUE).makeMove().willPick(pass()), spectator().onMoveMade().givenMove(eq(pass(BLUE))))
+		harness.play(game).startRotationAndAssertTheseInteractionsOccurInOrder(
+				player(BLACK).makeMove().willPick(taxi(46)),
+				spectator().onMoveMade(),
+				player(RED).makeMove().willPick(taxi(112)),
+				spectator().onMoveMade(),
+				player(BLUE).makeMove().willPick(pass()),
+				spectator().onMoveMade().givenMove(eq(pass(BLUE))))
 				.thenAssertNoFurtherInteractions();
 	}
 
@@ -283,10 +308,11 @@ public class ModelSpectatorTest extends ParameterisedModelTestBase {
 		ScotlandYardGame game = createGame(mrX, red, blue);
 		game.registerSpectator(harness.createSpectator(ON_ROTATION_COMPLETE));
 
-		harness.play(game)
-				.startRotationAndAssertTheseInteractionsOccurInOrder(player(BLACK).makeMove().willPick(taxi(46)),
-						player(RED).makeMove().willPick(taxi(112)), player(BLUE).makeMove().willPick(taxi(95)),
-						spectator().onRotationComplete())
+		harness.play(game).startRotationAndAssertTheseInteractionsOccurInOrder(
+				player(BLACK).makeMove().willPick(taxi(46)),
+				player(RED).makeMove().willPick(taxi(112)),
+				player(BLUE).makeMove().willPick(taxi(95)),
+				spectator().onRotationComplete())
 				.thenIgnoreAnyFurtherInteractions();
 	}
 
@@ -299,10 +325,14 @@ public class ModelSpectatorTest extends ParameterisedModelTestBase {
 
 		// notify rotation complete when the rotation completes, but not when the game is over.
 		harness.play(game)
-				.startRotationAndAssertTheseInteractionsOccurInOrder(player(BLACK).makeMove().willPick(taxi(103)),
-						player(BLUE).makeMove().willPick(taxi(68)), spectator().onRotationComplete())
-				.startRotationAndAssertTheseInteractionsOccurInOrder(player(BLACK).makeMove().willPick(taxi(102)),
-						player(BLUE).makeMove().willPick(taxi(51)), spectator().onGameOver())
+				.startRotationAndAssertTheseInteractionsOccurInOrder(
+						player(BLACK).makeMove().willPick(taxi(103)),
+						player(BLUE).makeMove().willPick(taxi(68)),
+						spectator().onRotationComplete())
+				.startRotationAndAssertTheseInteractionsOccurInOrder(
+						player(BLACK).makeMove().willPick(taxi(102)),
+						player(BLUE).makeMove().willPick(taxi(51)),
+						spectator().onGameOver())
 				.thenAssertNoFurtherInteractions();
 	}
 
@@ -314,10 +344,11 @@ public class ModelSpectatorTest extends ParameterisedModelTestBase {
 		ScotlandYardGame game = createGame(mrX, red, blue);
 		game.registerSpectator(harness.createSpectator(ON_ROTATION_COMPLETE));
 
-		harness.play(game)
-				.startRotationAndAssertTheseInteractionsOccurInOrder(player(BLACK).makeMove().willPick(x2(taxi(46), taxi(47))),
-						player(RED).makeMove().willPick(taxi(112)), player(BLUE).makeMove().willPick(taxi(95)),
-						spectator().onRotationComplete())
+		harness.play(game).startRotationAndAssertTheseInteractionsOccurInOrder(
+				player(BLACK).makeMove().willPick(x2(taxi(46), taxi(47))),
+				player(RED).makeMove().willPick(taxi(112)),
+				player(BLUE).makeMove().willPick(taxi(95)),
+				spectator().onRotationComplete())
 				.thenAssertNoFurtherInteractions();
 	}
 
@@ -328,8 +359,10 @@ public class ModelSpectatorTest extends ParameterisedModelTestBase {
 		ScotlandYardGame game = createGame(mrX, red);
 		game.registerSpectator(harness.createSpectator(ON_ROUND_STARTED));
 
-		harness.play(game).startRotationAndAssertTheseInteractionsOccurInOrder(player(BLACK).makeMove().willPickFirst(),
-				spectator().onRoundStarted()).thenIgnoreAnyFurtherInteractions();
+		harness.play(game).startRotationAndAssertTheseInteractionsOccurInOrder(
+				player(BLACK).makeMove().willPickFirst(),
+				spectator().onRoundStarted())
+				.thenIgnoreAnyFurtherInteractions();
 	}
 
 	@Test
@@ -339,8 +372,11 @@ public class ModelSpectatorTest extends ParameterisedModelTestBase {
 		ScotlandYardGame game = createGame(mrX, red);
 		game.registerSpectator(harness.createSpectator(ON_GAME_OVER));
 
-		harness.play(game).startRotationAndAssertTheseInteractionsOccurInOrder(player(BLACK).makeMove().willPick(taxi(46)),
-				player(RED).makeMove().willPick(taxi(46)), spectator().onGameOver()).thenAssertNoFurtherInteractions();
+		harness.play(game).startRotationAndAssertTheseInteractionsOccurInOrder(
+				player(BLACK).makeMove().willPick(taxi(46)),
+				player(RED).makeMove().willPick(taxi(46)),
+				spectator().onGameOver())
+				.thenAssertNoFurtherInteractions();
 	}
 
 	@Test
@@ -350,10 +386,12 @@ public class ModelSpectatorTest extends ParameterisedModelTestBase {
 		ScotlandYardGame game = createGame(mrX, red);
 		game.registerSpectator(harness.createSpectator(ON_MOVE_MADE, ON_GAME_OVER));
 
-		harness.play(game)
-				.startRotationAndAssertTheseInteractionsOccurInOrder(player(BLACK).makeMove().willPick(taxi(46)),
-						spectator().onMoveMade(), player(RED).makeMove().willPick(taxi(46)), spectator().onMoveMade(),
-						spectator().onGameOver().givenWinners(eq(players(RED))))
+		harness.play(game).startRotationAndAssertTheseInteractionsOccurInOrder(
+				player(BLACK).makeMove().willPick(taxi(46)),
+				spectator().onMoveMade(),
+				player(RED).makeMove().willPick(taxi(46)),
+				spectator().onMoveMade(),
+				spectator().onGameOver().givenWinners(eq(players(RED))))
 				.thenAssertNoFurtherInteractions();
 	}
 
@@ -364,10 +402,12 @@ public class ModelSpectatorTest extends ParameterisedModelTestBase {
 		ScotlandYardGame game = createGame(rounds(true), mrX, red);
 		game.registerSpectator(harness.createSpectator(ON_MOVE_MADE, ON_GAME_OVER));
 
-		harness.play(game)
-				.startRotationAndAssertTheseInteractionsOccurInOrder(player(BLACK).makeMove().willPick(taxi(46)),
-						spectator().onMoveMade(), player(RED).makeMove().willPick(taxi(112)), spectator().onMoveMade(),
-						spectator().onGameOver().givenWinners(eq(players(BLACK))))
+		harness.play(game).startRotationAndAssertTheseInteractionsOccurInOrder(
+				player(BLACK).makeMove().willPick(taxi(46)),
+				spectator().onMoveMade(),
+				player(RED).makeMove().willPick(taxi(112)),
+				spectator().onMoveMade(),
+				spectator().onGameOver().givenWinners(eq(players(BLACK))))
 				.thenAssertNoFurtherInteractions();
 	}
 
