@@ -118,9 +118,10 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		Optional<ScotlandYardPlayer> oMrX = ScotlandYardPlayer.getMrX(this.mPlayers);
 		if(oMrX.isPresent()){
 			if(this.mMrXLastLocation != location) {
+				Integer lastLocationCopy = this.mMrXLastLocation;
 				this.mMrXLastLocation = location;
 				oMrX.get().location(location);
-				DEBUG_LOG(String.format("saveMrXLocation %s -> %s", this.mMrXLastLocation, location));
+				DEBUG_LOG(String.format("saveMrXLocation %s -> %s", lastLocationCopy, location));
 			}
 		} else {
 			throw new IllegalStateException("cannot save mrX's location - cannot get MrX's ScotlandYardPlayer instance");
@@ -506,8 +507,10 @@ public class ScotlandYardModel implements ScotlandYardGame {
 					if(player.isMrX()){
 						if(isRevealRound(1)){
 							DEBUG_LOG("will be a reveal round when nextRound is called so pre-emptively saving mrX's location");
+							saveMrXLocation(tkt.destination());
+							//foo
 							if(tkt.ticket() != SECRET){
-								saveMrXLocation(tkt.destination());
+								DEBUG_LOG("NOT A SECRET MOVE");
 							} else {
 								DEBUG_LOG("SECRET MOVE: not pre-emptively saving MrX's location");
 							}
@@ -517,6 +520,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 							toNotify = new TicketMove(colour, tkt.ticket(), this.mMrXLastLocation);
 						} else {
 							if(tkt.ticket() != SECRET){
+								DEBUG_LOG("TicketMove not a SECRET, saving mrX's location");
 								saveMrXLocation(tkt.destination());
 							}
 							toNotify = new TicketMove(colour, tkt.ticket(), tkt.destination());
