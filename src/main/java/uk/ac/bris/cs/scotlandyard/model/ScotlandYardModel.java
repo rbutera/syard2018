@@ -485,7 +485,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 					if(isRevealRound(1)){ // next turn is reveal
 						DEBUG_LOG(">> DOUBLEMOVE - reveal round next round!");
-						firstMove = new TicketMove(colour, dbl.firstMove().ticket(), dbl.firstMove().destination());
+						firstMove = new TicketMove(colour, dbl.firstMove().ticket(), isRevealRound() ? dbl.firstMove().destination() : getMrXLocation());
 						Integer secondLocation;
 						if (isRevealRound(2)) {
 							secondLocation = dbl.secondMove().destination();
