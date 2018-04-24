@@ -434,7 +434,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 		for(int i = 0; i < rounds.size(); i++){
 			if(rounds.get(i)){
-				output.add(i);
+				output.add(i - 1);
 			}
 		}
 
@@ -472,7 +472,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 				if (move instanceof DoubleMove) {
 					DoubleMove dbl = (DoubleMove) move;
 					TicketMove firstMove, secondMove;
-					boolean revealFirstMove, revealSecondMove; // set these to true if the firstMove or secondMove fall on a reveal round
+					boolean revealFirst = false;
 					if(isRevealRound()) {
 						firstMove = new TicketMove(colour, dbl.firstMove().ticket(), dbl.firstMove().destination());
 						DEBUG_LOG("process DoubleMove: reveal round so firstMove will be " + firstMove.toString());
@@ -480,12 +480,14 @@ public class ScotlandYardModel implements ScotlandYardGame {
 						DEBUG_LOG("updating MrX's public location to " + dbl.firstMove().destination());
 					} else {
 						DEBUG_LOG(">> DOUBLEMOVE - not reveal round");
-						firstMove = new TicketMove(colour, dbl.firstMove().ticket(), this.mMrXLastLocation);
+						firstMove = new TicketMove(colour, dbl.firstMove().ticket(), getMrXLocation());
 					}
 
 					if(isRevealRound(1)){ // next turn is reveal
+						revealFirst = true;
 						DEBUG_LOG(">> DOUBLEMOVE - reveal round next round!");
-						firstMove = new TicketMove(colour, dbl.firstMove().ticket(), isRevealRound() ? dbl.firstMove().destination() : getMrXLocation());
+						firstMove = new TicketMove(colour, dbl.firstMove().ticket(), dbl.firstMove().destination());
+
 						Integer secondLocation;
 						if (isRevealRound(2)) {
 							secondLocation = dbl.secondMove().destination();
@@ -497,6 +499,11 @@ public class ScotlandYardModel implements ScotlandYardGame {
 						DEBUG_LOG(">> DOUBLEMOVE - not reveal round next round");
 						secondMove = new TicketMove(colour, dbl.secondMove().ticket(), this.mMrXLastLocation);
 					}
+
+					if (isRevealRound(2)) {
+					    DEBUG_LOG(">> DOUBLE MOVE - move will end on a reveal round");
+					    secondMove = dbl.secondMove();
+                    }
 
 					DoubleMove toNotify = new DoubleMove(colour, requireNonNull(firstMove), requireNonNull(secondMove));
 					player.removeTicket(DOUBLE);
@@ -512,10 +519,16 @@ public class ScotlandYardModel implements ScotlandYardGame {
 					DEBUG_LOG(String.format("DoubleMove ticket processing: removed 1st ticket (%s). New count = %s", dbl.firstMove().ticket(), getPlayerTickets(colour, dbl.firstMove().ticket())));
 					player.removeTicket(dbl.secondMove().ticket());
 					player.location(dbl.firstMove().destination());
+					if (isRevealRound(1)){
+						saveMrXLocation(dbl.secondMove().destination());
+					}
 					nextRound();
 					spectatorNotifyMove(secondMove);
 					DEBUG_LOG(String.format("DoubleMove ticket processing: removed 2nd ticket (%s). New count = %s", dbl.secondMove().ticket(), getPlayerTickets(colour, dbl.secondMove().ticket())));
 					player.location(dbl.finalDestination());
+                    if (isRevealRound()){
+                        saveMrXLocation(dbl.finalDestination());
+                    }
 					DEBUG_LOG(String.format("DoubleMove detected.. removing 2 tickets (%s + %s) and setting location to %s", dbl.firstMove().ticket(), dbl.secondMove().ticket(), dbl.finalDestination()));
 				} else if (move instanceof TicketMove) {
 					TicketMove tkt = (TicketMove) move;
@@ -523,6 +536,10 @@ public class ScotlandYardModel implements ScotlandYardGame {
 					DEBUG_LOG(String.format("TicketMove(%s)detected.. removing %s ticket.", tkt.ticket(), tkt.ticket()));
 					player.removeTicket(tkt.ticket());
 					if(player.isMrX()){
+					    if(isRevealRound()){
+					        DEBUG_LOG(">> TicketMove: saving MrX's current location cause it's a reveal round");
+					        saveMrXLocation(player.location());
+                        }
 						if(isRevealRound(1)){
 							DEBUG_LOG("will be a reveal round when nextRound is called so pre-emptively saving mrX's location");
 							saveMrXLocation(tkt.destination());
