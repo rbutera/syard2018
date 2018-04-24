@@ -472,6 +472,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 				if (move instanceof DoubleMove) {
 					DoubleMove dbl = (DoubleMove) move;
 					TicketMove firstMove, secondMove;
+					boolean revealFirstMove, revealSecondMove; // set these to true if the firstMove or secondMove fall on a reveal round
 					if(isRevealRound()) {
 						firstMove = new TicketMove(colour, dbl.firstMove().ticket(), dbl.firstMove().destination());
 						DEBUG_LOG("process DoubleMove: reveal round so firstMove will be " + firstMove.toString());
@@ -485,7 +486,13 @@ public class ScotlandYardModel implements ScotlandYardGame {
 					if(isRevealRound(1)){ // next turn is reveal
 						DEBUG_LOG(">> DOUBLEMOVE - reveal round next round!");
 						firstMove = new TicketMove(colour, dbl.firstMove().ticket(), dbl.firstMove().destination());
-						secondMove = new TicketMove(colour, dbl.secondMove().ticket(), dbl.firstMove().destination());
+						Integer secondLocation;
+						if (isRevealRound(2)) {
+							secondLocation = dbl.secondMove().destination();
+						} else {
+							secondLocation = dbl.firstMove().destination();
+						}
+						secondMove = new TicketMove(colour, dbl.secondMove().ticket(), secondLocation);
 					} else {
 						DEBUG_LOG(">> DOUBLEMOVE - not reveal round next round");
 						secondMove = new TicketMove(colour, dbl.secondMove().ticket(), this.mMrXLastLocation);
