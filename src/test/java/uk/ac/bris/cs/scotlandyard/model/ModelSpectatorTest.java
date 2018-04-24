@@ -197,7 +197,7 @@ public class ModelSpectatorTest extends ParameterisedModelTestBase {
 		harness.play(game).startRotationAndAssertTheseInteractionsOccurInOrder(
 				player(BLACK).makeMove().willPick(x2(taxi(46), bus(34))),
 				spectator().onMoveMade()
-						.givenMove(eq(x2(BLACK, taxi(46), bus(34)))),
+_d						.givenMove(eq(x2(BLACK, taxi(46), bus(34)))),
 				spectator().onMoveMade()
 						.givenMove(eq(taxi(BLACK, 46))),
 				spectator().onMoveMade()
