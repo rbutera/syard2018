@@ -500,10 +500,10 @@ public class ScotlandYardModel implements ScotlandYardGame {
 						secondMove = new TicketMove(colour, dbl.secondMove().ticket(), this.mMrXLastLocation);
 					}
 
-					if (isRevealRound(2)) {
-					    DEBUG_LOG(">> DOUBLE MOVE - move will end on a reveal round");
-					    secondMove = dbl.secondMove();
-                    }
+//					if (isRevealRound(2)) {
+//					    DEBUG_LOG(">> DOUBLE MOVE - move will end on a reveal round");
+//					    secondMove = dbl.secondMove();
+//                    }
 
 					DoubleMove toNotify = new DoubleMove(colour, requireNonNull(firstMove), requireNonNull(secondMove));
 					player.removeTicket(DOUBLE);
