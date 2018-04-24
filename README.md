@@ -20,6 +20,5 @@ Java project for University of Bristol's Computer Science undergraduate programm
 * [Trello Board](https://trello.com/c/fpLC7bTa/8-https-githubcom-raigasm-syard2018)
 * [Scotland Yard Javadoc](https://www.ole.bris.ac.uk/bbcswebdav/courses/COMS10009_2017/content/project/apidocs/index.html)
 * [CW-MODEL Instructions](https://www.ole.bris.ac.uk/bbcswebdav/courses/COMS10009_2017/content/model/index.html#cw-model)
+* [CW-MODEL API Documentation](https://www.ole.bris.ac.uk/bbcswebdav/courses/COMS10009_2017/content/project/apidocs/index.html)
 * [COMS100009 Wiki](https://tom91136.github.io/coms10009-wiki/)
-
-## Java Resources
