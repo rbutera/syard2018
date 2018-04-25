@@ -23,7 +23,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	private ArrayList<Spectator> mSpectators = new ArrayList<>();
 	private Boolean mGameStarted = false;
 	private ArrayList<Integer> mSavedMrXLocations = new ArrayList<>();
-	
+
 
 	//Constructor
 	public ScotlandYardModel(List<Boolean> rounds, Graph<Integer, Transport> graph, PlayerConfiguration mrX,
@@ -202,7 +202,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	private Integer getMrXLocation() {
 		if (getCurrentRound() == 0) {
 			return 0;
-		} else if (isGameOver() || (isRevealRound() && this.mGameStarted)) {
+		} else if ((isGameOver() && !getLastKnownMrXLocation().equals(0)) || (isRevealRound() && this.mGameStarted)) {
 			Optional<ScotlandYardPlayer> oMrX = ScotlandYardPlayer.getMrX(this.mPlayers);
 			if (oMrX.isPresent()) {
 				return oMrX.get().location();
@@ -417,7 +417,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		}
 	}
 
-    private int getLastKnownMrXLocation() {
+    private Integer getLastKnownMrXLocation() {
         return this.mSavedMrXLocations.get(this.mSavedMrXLocations.size() - 1);
     }
 
