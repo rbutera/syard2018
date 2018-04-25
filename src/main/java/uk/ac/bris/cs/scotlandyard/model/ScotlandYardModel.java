@@ -434,7 +434,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 		for(int i = 0; i < rounds.size(); i++){
 			if(rounds.get(i)){
-				output.add(i - 1);
+				output.add(i);
 			}
 		}
 
@@ -740,13 +740,9 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		}
 		if (currentRound + x > numRounds) {
 			throw new IllegalStateException(String.format("isRevealRound(%s) is invalid when max rounds is %s and current round is %s", x, numRounds, currentRound));
-		} else if (currentRound > 0) {
-			result = getRounds().get((currentRound + x - 1));
-		} else if (currentRound == 0) {
-			if (x >= numRounds) {
-				result = false;
-			} else {
-				result = getRounds().get(x);
+		} else {
+			if (x < numRounds && currentRound < numRounds ) {
+				result = getRounds().get(currentRound + x);
 			}
 		}
 		// DEBUG_LOG(String.format("isRevealRound(%s): curr = %s, rounds[%s], ans = %s", x, getCurrentRound(), getRounds().size(), result ? "true" : "false"));
