@@ -111,6 +111,7 @@ public class ScotlandYardPlayer {
 	 * @param location the location to set
 	 */
 	public void location(int location) {
+	    System.out.printf("ScotlandYardPlayer.location: %s @ (%s -> %s)\n", this.colour, this.location, location);
 		this.location = location;
 	}
 

@@ -15,7 +15,6 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	private Graph<Integer, Transport> mGraph;
 	private ArrayList<ScotlandYardPlayer> mPlayers;
 	private int mCurrentRound = NOT_STARTED;
-	private int mMrXLastLocation = 0;
 	private int mMovesPlayed = 0; // TODO: increment moves played every time someone makes a move
 	private Colour mRotating = BLACK;
 	private Optional<Colour> mLastPlayer = Optional.empty();
@@ -23,6 +22,8 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	private boolean mGameOverNotified;
 	private ArrayList<Spectator> mSpectators = new ArrayList<>();
 	private Boolean mGameStarted = false;
+	private ArrayList<Integer> mSavedMrXLocations = new ArrayList<>();
+	
 
 	//Constructor
 	public ScotlandYardModel(List<Boolean> rounds, Graph<Integer, Transport> graph, PlayerConfiguration mrX,
@@ -34,6 +35,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		Set<Integer> locations = new HashSet<>();
 		this.mPlayers = new ArrayList<>(); //List of ScotlandYardPlayers (mutable)
 		Set<Colour> colours = new HashSet<>();
+		this.mSavedMrXLocations.add(0);
 		ArrayList<PlayerConfiguration> configurations = new ArrayList<>(); // temporary list for validation
 
 		// basic sanity-check validation
@@ -114,15 +116,13 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
 
 	private void saveMrXLocation (Integer location) {
-
-		Optional<ScotlandYardPlayer> oMrX = ScotlandYardPlayer.getMrX(this.mPlayers);
+	    Optional<ScotlandYardPlayer> oMrX = ScotlandYardPlayer.getMrX(this.mPlayers);
 		if(oMrX.isPresent()){
-			if(this.mMrXLastLocation != location) {
-				Integer lastLocationCopy = this.mMrXLastLocation;
-				this.mMrXLastLocation = location;
+				if(!this.mSavedMrXLocations.get(this.mSavedMrXLocations.size() - 1).equals(location)) {
+                    this.mSavedMrXLocations.add(location);
+                }
 				oMrX.get().location(location);
-				DEBUG_LOG(String.format("saveMrXLocation %s -> %s", lastLocationCopy, location));
-			}
+				DEBUG_LOG(String.format("MrX Known Locations = %s", mSavedMrXLocations));
 		} else {
 			throw new IllegalStateException("cannot save mrX's location - cannot get MrX's ScotlandYardPlayer instance");
 		}
@@ -202,7 +202,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 	private Integer getMrXLocation() {
 		if (getCurrentRound() == 0) {
 			return 0;
-		} else if (isRevealRound() && this.mGameStarted) {
+		} else if (isGameOver() || (isRevealRound() && this.mGameStarted)) {
 			Optional<ScotlandYardPlayer> oMrX = ScotlandYardPlayer.getMrX(this.mPlayers);
 			if (oMrX.isPresent()) {
 				return oMrX.get().location();
@@ -210,9 +210,8 @@ public class ScotlandYardModel implements ScotlandYardGame {
 				throw new IllegalStateException("getMrXLocation could not get the ScotlandYardPlayer for MrX");
 			}
 		} else {
-			return this.mMrXLastLocation;
+			return this.mSavedMrXLocations.get(this.mSavedMrXLocations.size() - 1);
 		}
-
 	}
 
 	/**
@@ -398,9 +397,9 @@ public class ScotlandYardModel implements ScotlandYardGame {
 			if (location.isPresent()) {
 				// reveal round logic
 				if(currentPlayerColour == BLACK && isRevealRound()){
-					int last = this.mMrXLastLocation;
+					int last = getLastKnownMrXLocation();
 					saveMrXLocation(location.get());
-					DEBUG_LOG(String.format("Reveal round: mMrXLastLocation = %s -> %s", last, this.mMrXLastLocation));
+					DEBUG_LOG(String.format("Reveal round: mMrXLastLocation = %s -> %s", last, getLastKnownMrXLocation()));
 				}
 
 				// prompt player for move
@@ -418,7 +417,11 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		}
 	}
 
-	private void nextRound(int diff){
+    private int getLastKnownMrXLocation() {
+        return this.mSavedMrXLocations.get(this.mSavedMrXLocations.size() - 1);
+    }
+
+    private void nextRound(int diff){
 		this.mGameStarted = true;
 		this.mCurrentRound += diff;
 		spectatorNotifyRoundStarted();
@@ -497,7 +500,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
 						secondMove = new TicketMove(colour, dbl.secondMove().ticket(), secondLocation);
 					} else {
 						DEBUG_LOG(">> DOUBLEMOVE - not reveal round next round");
-						secondMove = new TicketMove(colour, dbl.secondMove().ticket(), this.mMrXLastLocation);
+						secondMove = new TicketMove(colour, dbl.secondMove().ticket(), getLastKnownMrXLocation());
 					}
 
 //					if (isRevealRound(2)) {
@@ -552,12 +555,10 @@ public class ScotlandYardModel implements ScotlandYardGame {
 						}
 						nextRound();
 						if (!isRevealRound()) {
-							toNotify = new TicketMove(colour, tkt.ticket(), this.mMrXLastLocation);
+							toNotify = new TicketMove(colour, tkt.ticket(), getLastKnownMrXLocation());
 						} else {
-							if(tkt.ticket() != SECRET){
-								DEBUG_LOG("TicketMove not a SECRET, saving mrX's location");
-								saveMrXLocation(tkt.destination());
-							}
+                            DEBUG_LOG("saving mrX's location");
+                            saveMrXLocation(tkt.destination());
 							toNotify = new TicketMove(colour, tkt.ticket(), tkt.destination());
 						}
 					} else {
@@ -571,7 +572,6 @@ public class ScotlandYardModel implements ScotlandYardGame {
 							throw new IllegalStateException("processMove failed to add ticket to mr X - unable to get Mr X's scotlandyardplayer instance");
 						}
 					}
-
 					player.location(tkt.destination());
 					spectatorNotifyMove(toNotify);
 				} else if (move instanceof PassMove) {
@@ -738,8 +738,8 @@ public class ScotlandYardModel implements ScotlandYardGame {
 		if (numRounds < 1) {
 			throw new IllegalStateException("numRounds should be non-zero");
 		}
-		if (currentRound + x > numRounds) {
-			throw new IllegalStateException(String.format("isRevealRound(%s) is invalid when max rounds is %s and current round is %s", x, numRounds, currentRound));
+		if (currentRound + x >= numRounds) {
+			return false;
 		} else {
 			if (x < numRounds && currentRound < numRounds ) {
 				result = getRounds().get(currentRound + x);
