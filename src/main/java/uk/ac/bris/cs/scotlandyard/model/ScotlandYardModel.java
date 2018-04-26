@@ -129,7 +129,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
                 System.out.println();
                 DEBUG_LOG(String.format("NEW MRX LOCATION REVEALED: %s", location));
             } else {
-                DEBUG_LOG(String.format("MRX ALREADY REVEALED @ %s"));
+                DEBUG_LOG(String.format("MRX ALREADY REVEALED @ %s", location));
             }
             oMrX.get().location(location);
             DEBUG_LOG(String.format("MrX Last Known Locations = %s", mSavedMrXLocations));
@@ -584,12 +584,16 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
             if (getCurrentPlayer() == BLACK) {
                 if (isGameOver()) {
+                    DEBUG_LOG("GAME OVER AND SAVING LOCATION");
+                    Optional<ScotlandYardPlayer> oX = ScotlandYardPlayer.getMrX(this.mPlayers);
+                    oX.ifPresent(scotlandYardPlayer -> saveMrXLocation(getMrXLocation()));
                     spectatorNotifyGameOver();
                 } else {
                     mRotationComplete = true;
                     if (isRevealRound()) {
+                        DEBUG_LOG("ROTATION COMPLETE AND SAVING ROUND");
                         Optional<ScotlandYardPlayer> oX = ScotlandYardPlayer.getMrX(this.mPlayers);
-                        oX.ifPresent(scotlandYardPlayer -> saveMrXLocation(scotlandYardPlayer.location()));
+                        oX.ifPresent(scotlandYardPlayer -> saveMrXLocation(getMrXLocation()));
                     }
                     spectatorNotifyRotation();
                 }
