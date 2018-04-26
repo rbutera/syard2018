@@ -128,6 +128,8 @@ public class ScotlandYardModel implements ScotlandYardGame {
                 mSavedMrXLocations.add(location);
                 System.out.println();
                 DEBUG_LOG(String.format("NEW MRX LOCATION REVEALED: %s", location));
+            } else {
+                DEBUG_LOG(String.format("MRX ALREADY REVEALED @ %s"));
             }
             oMrX.get().location(location);
             DEBUG_LOG(String.format("MrX Last Known Locations = %s", mSavedMrXLocations));
@@ -211,15 +213,17 @@ public class ScotlandYardModel implements ScotlandYardGame {
     private Integer getMrXLocation() {
         if (getCurrentRound() == 0) {
             return 0;
-        } else if (isRevealRound() && mGameStarted && mRevealedThisRound) {
-            Optional<ScotlandYardPlayer> oMrX = ScotlandYardPlayer.getMrX(mPlayers);
-            if (oMrX.isPresent()) {
-                return oMrX.get().location();
-            } else {
-                throw new IllegalStateException("getMrXLocation could not get the ScotlandYardPlayer for MrX");
-            }
         } else {
-            return getLastKnownMrXLocation();
+            if (isRevealRound() && ((mGameStarted && mRevealedThisRound && mRotationComplete) || (isGameOver() && mRotationComplete))) {
+                Optional<ScotlandYardPlayer> oMrX = ScotlandYardPlayer.getMrX(mPlayers);
+                if (oMrX.isPresent()) {
+                    return oMrX.get().location();
+                } else {
+                    throw new IllegalStateException("getMrXLocation could not get the ScotlandYardPlayer for MrX");
+                }
+            } else {
+                return getLastKnownMrXLocation();
+            }
         }
     }
 
@@ -517,24 +521,16 @@ public class ScotlandYardModel implements ScotlandYardGame {
                     spectatorNotifyMove(firstMove);
                     DEBUG_LOG(String.format("DoubleMove ticket processing: removed 1st ticket (%s). New count = %s", dbl.firstMove().ticket(), getPlayerTickets(colour, dbl.firstMove().ticket())));
                     player.removeTicket(dbl.secondMove().ticket());
-
                     // TODO: save mrX's location here?
-                    if (isRevealRound()) {
-                        saveMrXLocation(dbl.firstMove().destination());
-                    } else {
-                        player.location(dbl.firstMove().destination());
-                    }
+                    player.location(dbl.firstMove().destination());
+
 
                     // ROUND X+2
                     nextRound();
                     spectatorNotifyMove(secondMove);
                     DEBUG_LOG(String.format("DoubleMove ticket processing: removed 2nd ticket (%s). New count = %s", dbl.secondMove().ticket(), getPlayerTickets(colour, dbl.secondMove().ticket())));
                     // TODO: save mrX's location here?
-                    if (isRevealRound()) {
-                        saveMrXLocation(dbl.secondMove().destination());
-                    } else {
-                        player.location(dbl.secondMove().destination());
-                    }
+                    player.location(dbl.secondMove().destination());
                     DEBUG_LOG(String.format("Removed 2 tickets [%s,%s]. Location will be set to %s", dbl.firstMove().ticket(), dbl.secondMove().ticket(), dbl.finalDestination()));
                 } else if (move instanceof TicketMove) {
                     TicketMove tkt = (TicketMove) move;
@@ -545,11 +541,12 @@ public class ScotlandYardModel implements ScotlandYardGame {
                         if (isRevealRound()) {
                             DEBUG_LOG(">> TicketMove: ticket's destination not masked because it is a reveal round");
                             toNotify = new TicketMove(colour, tkt.ticket(), tkt.destination());
-                            saveMrXLocation(tkt.destination());
+                            player.location(tkt.destination());
                             nextRound();
                         } else {
                             DEBUG_LOG(String.format("TicketMove: ticket destination masked to %s because it is not a reveal round", getLastKnownMrXLocation()));
                             toNotify = new TicketMove(colour, tkt.ticket(), getLastKnownMrXLocation());
+                            player.location(tkt.destination());
                             nextRound();
                         }
                         player.location(tkt.destination());
@@ -590,6 +587,10 @@ public class ScotlandYardModel implements ScotlandYardGame {
                     spectatorNotifyGameOver();
                 } else {
                     mRotationComplete = true;
+                    if (isRevealRound()) {
+                        Optional<ScotlandYardPlayer> oX = ScotlandYardPlayer.getMrX(this.mPlayers);
+                        oX.ifPresent(scotlandYardPlayer -> saveMrXLocation(scotlandYardPlayer.location()));
+                    }
                     spectatorNotifyRotation();
                 }
             } else {
@@ -793,12 +794,11 @@ public class ScotlandYardModel implements ScotlandYardGame {
         } else {
             DEBUG_LOG(String.format("NOTIFICATION: GAME OVER (Winners: %s) - %s rounds and %s moves played", getWinningPlayers(), mCurrentRound, mMovesPlayed));
             Collection<Spectator> specs = getSpectators();
-
-            if (!getSpectators().isEmpty() && !mGameOverNotified) {
+            mGameOverNotified = true;
+            if (!getSpectators().isEmpty()) {
                 for (Spectator spec : specs) {
                     spec.onGameOver(this, getWinningPlayers());
                 }
-                mGameOverNotified = true;
             }
         }
     }
