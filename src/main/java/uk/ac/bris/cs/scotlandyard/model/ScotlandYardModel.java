@@ -471,66 +471,43 @@ public class ScotlandYardModel implements ScotlandYardGame {
 				ScotlandYardPlayer player = oPlayer.get();
 				DEBUG_LOG("processMove@start: " + player.toString());
 				if (move instanceof DoubleMove) {
+				    // Store reveal round info
 					DoubleMove dbl = (DoubleMove) move;
-					TicketMove firstMove, secondMove;
-					boolean revealFirst = false;
-					if(isRevealRound()) {
-						firstMove = new TicketMove(colour, dbl.firstMove().ticket(), dbl.firstMove().destination());
-						DEBUG_LOG("process DoubleMove: reveal round so firstMove will be " + firstMove.toString());
-						saveMrXLocation(dbl.firstMove().destination());
-						DEBUG_LOG("updating MrX's public location to " + dbl.firstMove().destination());
-					} else {
-						DEBUG_LOG(">> DOUBLEMOVE - not reveal round");
-						firstMove = new TicketMove(colour, dbl.firstMove().ticket(), getMrXLocation());
-					}
 
-					if(isRevealRound(1)){ // next turn is reveal
-						revealFirst = true;
-						DEBUG_LOG(">> DOUBLEMOVE - reveal round next round!");
-						firstMove = new TicketMove(colour, dbl.firstMove().ticket(), dbl.firstMove().destination());
+					// construct a doublemove comprised of TicketMoves masked as appropriate wrt. reveal rounds
+                    Integer startingLocation = player.location();
+                    Ticket firstTicket = dbl.firstMove().ticket();
+                    Ticket secondTicket = dbl.secondMove().ticket();
+					Integer firstDestination = isRevealRound() ? dbl.firstMove().destination() : getLastKnownMrXLocation();
+					Integer secondDestination = isRevealRound(1) ? dbl.secondMove().destination() : firstDestination;
 
-						Integer secondLocation;
-						if (isRevealRound(2)) {
-							secondLocation = dbl.secondMove().destination();
-						} else {
-							secondLocation = dbl.firstMove().destination();
-						}
-						secondMove = new TicketMove(colour, dbl.secondMove().ticket(), secondLocation);
-					} else {
-						DEBUG_LOG(">> DOUBLEMOVE - not reveal round next round");
-						secondMove = new TicketMove(colour, dbl.secondMove().ticket(), getLastKnownMrXLocation());
-					}
 
-//					if (isRevealRound(2)) {
-//					    DEBUG_LOG(">> DOUBLE MOVE - move will end on a reveal round");
-//					    secondMove = dbl.secondMove();
-//                    }
-
+                    // all values have been calculated, now compose and notify
+                    TicketMove firstMove = new TicketMove(colour, firstTicket, firstDestination);
+                    TicketMove secondMove = new TicketMove(colour, secondTicket, secondDestination);
 					DoubleMove toNotify = new DoubleMove(colour, requireNonNull(firstMove), requireNonNull(secondMove));
+                    DEBUG_LOG(String.format("DoubleMove:\n\t\t\t\tstarting @ %s\n\t\t\t\t(reveal: [%s,%s,%s])\n\t\t\t\ti: %s \n\t\t\t\to: %s", startingLocation, isRevealRound(), isRevealRound(1), isRevealRound(2), dbl, toNotify));
+
+                    // ROUND X
 					player.removeTicket(DOUBLE);
 					spectatorNotifyMove(toNotify);
 					DEBUG_LOG("processMove: first move notified.");
-					if(isRevealRound(1)){
-						DEBUG_LOG("processMove doubleMove - firstMove is reveal round, saving mrX's location");
-						saveMrXLocation(dbl.firstMove().destination());
-					}
+					// TODO: save mrX's location here?
 					player.removeTicket(dbl.firstMove().ticket());
 					nextRound();
+                    // ROUND X+1
 					spectatorNotifyMove(firstMove);
 					DEBUG_LOG(String.format("DoubleMove ticket processing: removed 1st ticket (%s). New count = %s", dbl.firstMove().ticket(), getPlayerTickets(colour, dbl.firstMove().ticket())));
 					player.removeTicket(dbl.secondMove().ticket());
 					player.location(dbl.firstMove().destination());
-					if (isRevealRound(1)){
-						saveMrXLocation(dbl.secondMove().destination());
-					}
+					// TODO: save mrX's location here?
+                    // ROUND X+2
 					nextRound();
 					spectatorNotifyMove(secondMove);
 					DEBUG_LOG(String.format("DoubleMove ticket processing: removed 2nd ticket (%s). New count = %s", dbl.secondMove().ticket(), getPlayerTickets(colour, dbl.secondMove().ticket())));
 					player.location(dbl.finalDestination());
-                    if (isRevealRound()){
-                        saveMrXLocation(dbl.finalDestination());
-                    }
-					DEBUG_LOG(String.format("DoubleMove detected.. removing 2 tickets (%s + %s) and setting location to %s", dbl.firstMove().ticket(), dbl.secondMove().ticket(), dbl.finalDestination()));
+                    // TODO: save mrX's location here?
+					DEBUG_LOG(String.format("Removed 2 tickets [%s,%s]. Location will be set to %s", dbl.firstMove().ticket(), dbl.secondMove().ticket(), dbl.finalDestination()));
 				} else if (move instanceof TicketMove) {
 					TicketMove tkt = (TicketMove) move;
 					TicketMove toNotify = tkt;

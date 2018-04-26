@@ -1,10 +1,8 @@
 package uk.ac.bris.cs.scotlandyard.model;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+
 import static uk.ac.bris.cs.scotlandyard.model.Colour.*;
-import java.util.ArrayList;
 import static java.util.Objects.requireNonNull;
 import static uk.ac.bris.cs.scotlandyard.model.Ticket.*;
 
@@ -17,6 +15,7 @@ public class ScotlandYardPlayer {
 	private final Colour colour;
 	private int location;
 	private final Map<Ticket, Integer> tickets;
+	private ArrayList<Integer> locationHistory;
 
 	/**
 	 * Constructs a new ScotlandYardPlayer object.
@@ -30,6 +29,7 @@ public class ScotlandYardPlayer {
 		this.player = player;
 		this.colour = colour;
 		this.location = location;
+		this.locationHistory = new ArrayList<>();
 		this.tickets = new HashMap<>(tickets);
 	}
 
@@ -111,8 +111,13 @@ public class ScotlandYardPlayer {
 	 * @param location the location to set
 	 */
 	public void location(int location) {
-	    System.out.printf("ScotlandYardPlayer.location: %s @ (%s -> %s)\n", this.colour, this.location, location);
-		this.location = location;
+	    if(location != this.location){
+		    this.location = location;
+	        System.out.printf("%s @ (%s -> %s)\n", this.colour, locationHistory(), location);
+	        this.locationHistory.add(location);
+        } else {
+	        System.out.printf("%s is already at %s!\n", this.colour, location);
+        }
 	}
 
 	/**
@@ -121,6 +126,10 @@ public class ScotlandYardPlayer {
 	public int location() {
 		return location;
 	}
+
+	public List<Integer> locationHistory() {
+        return Collections.unmodifiableList(locationHistory);
+    }
 
 	/**
 	 * @return the player's current tickets.
@@ -166,11 +175,9 @@ public class ScotlandYardPlayer {
 	}
 
 	public boolean hasNoTickets() {
-//		System.out.println(String.format("hasNoTickets(%s)?", this.colour().toString()));
 		Ticket[] transports = {TAXI, BUS, UNDERGROUND, SECRET, DOUBLE};
 		boolean result = true;
 		for (Ticket transport: transports) {
-//			System.out.println(String.format("%s has %s %s tickets",this.colour().toString(), tickets.get(transport), transport.toString()));
 			if(tickets.get(transport) != 0){
 				result = false;
 			}
