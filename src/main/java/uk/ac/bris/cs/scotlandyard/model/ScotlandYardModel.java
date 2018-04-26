@@ -499,14 +499,24 @@ public class ScotlandYardModel implements ScotlandYardGame {
 					spectatorNotifyMove(firstMove);
 					DEBUG_LOG(String.format("DoubleMove ticket processing: removed 1st ticket (%s). New count = %s", dbl.firstMove().ticket(), getPlayerTickets(colour, dbl.firstMove().ticket())));
 					player.removeTicket(dbl.secondMove().ticket());
-					player.location(dbl.firstMove().destination());
+
 					// TODO: save mrX's location here?
+					if (isRevealRound()) {
+                        saveMrXLocation(dbl.firstMove().destination());
+                    } else {
+                        player.location(dbl.firstMove().destination());
+                    }
+
                     // ROUND X+2
 					nextRound();
 					spectatorNotifyMove(secondMove);
 					DEBUG_LOG(String.format("DoubleMove ticket processing: removed 2nd ticket (%s). New count = %s", dbl.secondMove().ticket(), getPlayerTickets(colour, dbl.secondMove().ticket())));
-					player.location(dbl.finalDestination());
                     // TODO: save mrX's location here?
+                    if (isRevealRound()) {
+                        saveMrXLocation(dbl.secondMove().destination());
+                    } else {
+                        player.location(dbl.secondMove().destination());
+                    }
 					DEBUG_LOG(String.format("Removed 2 tickets [%s,%s]. Location will be set to %s", dbl.firstMove().ticket(), dbl.secondMove().ticket(), dbl.finalDestination()));
 				} else if (move instanceof TicketMove) {
 					TicketMove tkt = (TicketMove) move;
