@@ -125,10 +125,11 @@ public class ScotlandYardModel implements ScotlandYardGame {
         if (oMrX.isPresent()) {
             if (!mSavedMrXLocations.get(mSavedMrXLocations.size() - 1).equals(location)) {
                 mSavedMrXLocations.add(location);
+                System.out.println();
+                DEBUG_LOG(String.format("NEW MRX LOCATION REVEALED: %s", location));
             }
-            mRevealedThisRound = true;
             oMrX.get().location(location);
-            DEBUG_LOG(String.format("MrX Known Locations = %s", mSavedMrXLocations));
+            DEBUG_LOG(String.format("MrX Last Known Locations = %s", mSavedMrXLocations));
         } else {
             throw new IllegalStateException("cannot save mrX's location - cannot get MrX's ScotlandYardPlayer instance");
         }
@@ -528,11 +529,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
                     spectatorNotifyMove(secondMove);
                     DEBUG_LOG(String.format("DoubleMove ticket processing: removed 2nd ticket (%s). New count = %s", dbl.secondMove().ticket(), getPlayerTickets(colour, dbl.secondMove().ticket())));
                     // TODO: save mrX's location here?
-                    if (isRevealRound()) {
-                        saveMrXLocation(dbl.secondMove().destination());
-                    } else {
-                        player.location(dbl.secondMove().destination());
-                    }
+                    player.location(dbl.secondMove().destination());
                     DEBUG_LOG(String.format("Removed 2 tickets [%s,%s]. Location will be set to %s", dbl.firstMove().ticket(), dbl.secondMove().ticket(), dbl.finalDestination()));
                 } else if (move instanceof TicketMove) {
                     TicketMove tkt = (TicketMove) move;
