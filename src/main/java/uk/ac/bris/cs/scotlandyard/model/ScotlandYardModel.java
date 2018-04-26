@@ -26,6 +26,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
     private Boolean mGameStarted = false;
     private ArrayList<Integer> mSavedMrXLocations = new ArrayList<>();
     private Boolean mRevealedThisRound = false;
+    private Boolean mRotationComplete = false;
     private Integer mNumNotifications = 0;
 
     //Constructor
@@ -529,7 +530,11 @@ public class ScotlandYardModel implements ScotlandYardGame {
                     spectatorNotifyMove(secondMove);
                     DEBUG_LOG(String.format("DoubleMove ticket processing: removed 2nd ticket (%s). New count = %s", dbl.secondMove().ticket(), getPlayerTickets(colour, dbl.secondMove().ticket())));
                     // TODO: save mrX's location here?
-                    player.location(dbl.secondMove().destination());
+                    if (isRevealRound()) {
+                        saveMrXLocation(dbl.secondMove().destination());
+                    } else {
+                        player.location(dbl.secondMove().destination());
+                    }
                     DEBUG_LOG(String.format("Removed 2 tickets [%s,%s]. Location will be set to %s", dbl.firstMove().ticket(), dbl.secondMove().ticket(), dbl.finalDestination()));
                 } else if (move instanceof TicketMove) {
                     TicketMove tkt = (TicketMove) move;
@@ -584,6 +589,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
                 if (isGameOver()) {
                     spectatorNotifyGameOver();
                 } else {
+                    mRotationComplete = true;
                     spectatorNotifyRotation();
                 }
             } else {
