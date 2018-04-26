@@ -209,7 +209,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
     private Integer getMrXLocation() {
         if (getCurrentRound() == 0) {
             return 0;
-        } else if ((isGameOver() && !getLastKnownMrXLocation().equals(0)) || (isRevealRound() && mGameStarted && mRevealedThisRound)) {
+        } else if (isRevealRound() && mGameStarted && mRevealedThisRound) {
             Optional<ScotlandYardPlayer> oMrX = ScotlandYardPlayer.getMrX(mPlayers);
             if (oMrX.isPresent()) {
                 return oMrX.get().location();
@@ -550,6 +550,8 @@ public class ScotlandYardModel implements ScotlandYardGame {
                             toNotify = new TicketMove(colour, tkt.ticket(), getLastKnownMrXLocation());
                             nextRound();
                         }
+                        player.location(tkt.destination());
+                        spectatorNotifyMove(toNotify);
                     } else {
                         DEBUG_LOG(String.format("giving the %s ticket to Mr X", tkt.ticket()));
                         Optional<ScotlandYardPlayer> oMrX = ScotlandYardPlayer.getByColour(mPlayers, BLACK);
@@ -560,9 +562,9 @@ public class ScotlandYardModel implements ScotlandYardGame {
                         } else {
                             throw new IllegalStateException("processMove failed to add ticket to mr X - unable to get Mr X's ScotlandYardPlayer instance");
                         }
+                        player.location(tkt.destination());
+                        spectatorNotifyMove(toNotify);
                     }
-                    player.location(tkt.destination());
-                    spectatorNotifyMove(toNotify);
                 } else if (move instanceof PassMove) {
                     DEBUG_LOG(String.format("%s PASSES", colour.toString()));
                     spectatorNotifyMove(move);
