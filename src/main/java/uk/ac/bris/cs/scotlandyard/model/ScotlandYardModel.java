@@ -544,6 +544,9 @@ public class ScotlandYardModel implements ScotlandYardGame {
         if (isRevealRound(-1)) {
             saveMrXLocation(firstMove.destination());
         }
+        if (isRevealRound()) {
+            saveMrXLocation(secondMove.destination());
+        }
         player.location(move.firstMove().destination());
         // ROUND X+2
         nextRound();
