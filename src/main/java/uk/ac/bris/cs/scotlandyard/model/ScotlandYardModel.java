@@ -320,7 +320,12 @@ public class ScotlandYardModel implements ScotlandYardGame {
                                 TicketMove firstMove, secondMove;
                                 firstMove = new TicketMove(player.colour(), transport, destination);
                                 secondMove = new TicketMove(player.colour(), transport2, destination2);
-                                output.add(new DoubleMove(player.colour(), firstMove, secondMove));
+                                DoubleMove dbl = new DoubleMove(player.colour(), firstMove, secondMove);
+                                if ((transport == transport2) && !player.hasTickets(transport, 2)) {
+                                    DEBUG_LOG("INSUFFICIENT TICKETS - NOT ADDING DOUBLEMOVE " + dbl.toString());
+                                } else {
+                                    output.add(dbl);
+                                }
                                 numDoubleMoves++;
 
                                 // enables support for double moves starting with a secret ticket
