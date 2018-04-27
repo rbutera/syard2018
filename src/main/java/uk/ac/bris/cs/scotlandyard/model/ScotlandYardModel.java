@@ -1,6 +1,5 @@
 package uk.ac.bris.cs.scotlandyard.model;
 
-import io.github.lukehutch.fastclasspathscanner.utils.WorkQueue;
 import uk.ac.bris.cs.gamekit.graph.Edge;
 import uk.ac.bris.cs.gamekit.graph.Graph;
 import uk.ac.bris.cs.gamekit.graph.ImmutableGraph;
@@ -617,22 +616,9 @@ public class ScotlandYardModel implements ScotlandYardGame {
     private void endTurn() {
         if (getCurrentPlayer() == BLACK) {
             mRotationComplete = true;
-            Optional<Integer> oMrXLocation = getPlayerLocation(BLACK, true);
             if (isGameOver()) {
-                if (isRevealRound()) {
-                    DEBUG_LOG("GAME OVER AND SAVING LOCATION");
-                    oMrXLocation.ifPresent(this::saveMrXLocation);
-                } else {
-                    DEBUG_LOG("Game Over - not a reveal round");
-                }
                 spectatorNotifyGameOver();
             } else {
-                if (isRevealRound()) {
-                    DEBUG_LOG("ROTATION COMPLETE AND SAVING ROUND");
-                    oMrXLocation.ifPresent(this::saveMrXLocation);
-                } else {
-                    DEBUG_LOG("ROTATION COMPLETE - not a reveal round");
-                }
                 spectatorNotifyRotation();
             }
         } else {
