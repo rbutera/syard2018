@@ -416,18 +416,11 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
             if (location.isPresent()) {
                 // prompt player for move
-                DEBUG_LOG(String.format("startRotate: %s @ %s ::makeMove will have %s choices", currentPlayerColour, location.get(), moves.size()));
-
                 if (!isGameOver()) {
+                    DEBUG_LOG(String.format("startRotate: %s @ %s ::makeMove will have %s choices", currentPlayerColour, location.get(), moves.size()));
                     current.player().makeMove(this, location.get(), moves, (choice) -> processMove(currentPlayerColour, choice));
                 } else {
-                    DEBUG_LOG("NOT GOING TO MAKE A MOVE BECAUSE GAME IS OVER");
-                    if (isRevealRound()) {
-                        Optional<ScotlandYardPlayer> oMrX = ScotlandYardPlayer.getMrX(this.mPlayers);
-                        if (oMrX.isPresent()) {
-                            saveMrXLocation(oMrX.get().location());
-                        }
-                    }
+                    DEBUG_LOG("Cancelling makeMove - game is over");
                     spectatorNotifyGameOver();
                 }
 
