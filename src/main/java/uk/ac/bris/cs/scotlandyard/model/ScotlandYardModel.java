@@ -20,7 +20,8 @@ public class ScotlandYardModel implements ScotlandYardGame {
     private Colour mRotating = BLACK;
     private Optional<Colour> mLastPlayer = Optional.empty();
     private ArrayList<Colour> mWinners = new ArrayList<>();
-    private boolean mGameOverNotified = false;
+    private boolean mGameOverWillNotify = false;
+    private boolean mGameOverHasNotified = false;
     private boolean mWinnersAnnounced = false;
     private ArrayList<Spectator> mSpectators = new ArrayList<>();
     private Boolean mGameStarted = false;
@@ -157,7 +158,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
                     requestedLocation = Optional.of(player.location());
                 } else {
                     // System.out.println(String.format("gPL: %s @ %s (MASKED)", colour.toString(), player.location()));
-                    requestedLocation = Optional.of(getMrXLocation());
+                    requestedLocation = Optional.of(getLastKnownMrXLocation());
                 }
             }
         }
@@ -211,20 +212,23 @@ public class ScotlandYardModel implements ScotlandYardGame {
     }
 
     private Integer getMrXLocation() {
-        if (getCurrentRound() == 0) {
-            return 0;
-        } else {
-            if (isRevealRound() && ((mGameStarted && mRevealedThisRound && mRotationComplete) || (isGameOver() && mRotationComplete))) {
-                Optional<ScotlandYardPlayer> oMrX = ScotlandYardPlayer.getMrX(mPlayers);
-                if (oMrX.isPresent()) {
-                    return oMrX.get().location();
-                } else {
-                    throw new IllegalStateException("getMrXLocation could not get the ScotlandYardPlayer for MrX");
-                }
+        Integer result = 0;
+        boolean revealing = isRevealRound();
+        boolean rotationComplete = mGameStarted && mRevealedThisRound && mRotationComplete;
+        boolean gameOver = isGameOver() && mRotationComplete && mGameOverHasNotified;
+        if (revealing) {
+            Optional<ScotlandYardPlayer> oMrX = ScotlandYardPlayer.getMrX(mPlayers);
+            if (oMrX.isPresent()) {
+                DEBUG_LOG("getting MrX's real location");
+                result = oMrX.get().location();
             } else {
-                return getLastKnownMrXLocation();
+                throw new IllegalStateException("getMrXLocation could not get the ScotlandYardPlayer for MrX");
             }
+        } else {
+            result = getLastKnownMrXLocation();
         }
+        DEBUG_LOG(String.format("getMrXLocation RESULT = %s\n\t\t\t\t(isRevealRound(%s), rotationComplete = %s, gameOver = %s)", result, revealing, rotationComplete, gameOver));
+        return result;
     }
 
     /**
@@ -583,16 +587,22 @@ public class ScotlandYardModel implements ScotlandYardGame {
             }
 
             if (getCurrentPlayer() == BLACK) {
+                mRotationComplete = true;
                 Optional<Integer> oMrXLocation = getPlayerLocation(BLACK, true);
                 if (isGameOver()) {
-                    DEBUG_LOG("GAME OVER AND SAVING LOCATION");
-                    oMrXLocation.ifPresent(this::saveMrXLocation);
+                    if (isRevealRound()) {
+                        DEBUG_LOG("GAME OVER AND SAVING LOCATION");
+                        oMrXLocation.ifPresent(this::saveMrXLocation);
+                    } else {
+                        DEBUG_LOG("Game Over - not a reveal round");
+                    }
                     spectatorNotifyGameOver();
                 } else {
-                    mRotationComplete = true;
                     if (isRevealRound()) {
                         DEBUG_LOG("ROTATION COMPLETE AND SAVING ROUND");
                         oMrXLocation.ifPresent(this::saveMrXLocation);
+                    } else {
+                        DEBUG_LOG("ROTATION COMPLETE - not a reveal round");
                     }
                     spectatorNotifyRotation();
                 }
@@ -620,9 +630,9 @@ public class ScotlandYardModel implements ScotlandYardGame {
      * (bool) isMrX - if mrX is the winner true, else false
      */
     private void setWinningPlayers(boolean isMrX) {
-        if (isMrX && !mGameOverNotified && !mWinnersAnnounced) {
+        if (isMrX && !mGameOverWillNotify && !mWinnersAnnounced) {
             DEBUG_LOG("MR X HAS WON");
-        } else if (!mGameOverNotified && !mWinnersAnnounced) {
+        } else if (!mGameOverWillNotify && !mWinnersAnnounced) {
             DEBUG_LOG("DETECTIVES HAVE WON");
         }
         mWinners.clear();
@@ -638,7 +648,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
             }
         }
 
-        if (!mGameOverNotified && !mWinnersAnnounced) {
+        if (!mGameOverWillNotify && !mWinnersAnnounced) {
             DEBUG_LOG(String.format("winners: %s", mWinners));
             this.mWinnersAnnounced = true;
         }
@@ -675,7 +685,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
         boolean roundless = getCurrentRound() >= getRounds().size() && getCurrentPlayer() == BLACK;
 
         result = ticketless || moveless || roundless;
-        if (result && !mGameOverNotified) {
+        if (result && !mGameOverWillNotify) {
             DEBUG_LOG(String.format("Mr X Win: Tickets? (%s) Moves? (%s) Rounds? (%s)", ticketless, moveless, roundless));
         }
         return result;
@@ -706,7 +716,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
         }
 
         result = stuck || captured;
-        if (result && !mGameOverNotified && !mWinnersAnnounced) {
+        if (result && !mGameOverWillNotify && !mWinnersAnnounced) {
             DEBUG_LOG(String.format("Detective Win: Stuck? (%s) Captured? (%s)", stuck, captured));
         }
         return result;
@@ -797,12 +807,13 @@ public class ScotlandYardModel implements ScotlandYardGame {
         } else {
             DEBUG_LOG(String.format("NOTIFICATION: GAME OVER (Winners: %s) - %s rounds and %s moves played", getWinningPlayers(), mCurrentRound, mMovesPlayed));
             Collection<Spectator> specs = getSpectators();
-            mGameOverNotified = true;
+            mGameOverWillNotify = true;
             if (!getSpectators().isEmpty()) {
                 for (Spectator spec : specs) {
                     spec.onGameOver(this, getWinningPlayers());
                 }
             }
+            mGameOverHasNotified = true;
         }
     }
 
