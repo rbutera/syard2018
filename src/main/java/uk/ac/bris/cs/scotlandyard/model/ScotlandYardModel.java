@@ -274,8 +274,6 @@ public class ScotlandYardModel implements ScotlandYardGame {
         return Collections.unmodifiableCollection(output);
     }
 
-    // TODO: finish getMoves
-
     /**
      * getMoves
      * returns an unmodifiable set of valid moves for a specific player (uses `colour`)
@@ -284,6 +282,10 @@ public class ScotlandYardModel implements ScotlandYardGame {
     private Set<Move> getMoves(Colour colour) {
 //        DEBUG_LOG(String.format("getMoves(%s)", colour.toString()));
         Set<Move> output = new HashSet<>();
+        Integer numTicketMoves = 0;
+        Integer numDoubleMoves = 0;
+        Integer numSecretMoves = 0;
+        Integer numDoubleSecretMoves = 0;
         // get moves for a given Colour
         Optional<ScotlandYardPlayer> p = ScotlandYardPlayer.getByColour(mPlayers, colour);
         ScotlandYardPlayer player;
@@ -298,17 +300,17 @@ public class ScotlandYardModel implements ScotlandYardGame {
                 if (!occupied.contains(destination)) {
                     if (player.hasTickets(transport)) {
                         output.add(new TicketMove(player.colour(), transport, destination));
+                        numTicketMoves++;
                     }
                     if (player.hasTickets(SECRET)) {
                         output.add(new TicketMove(player.colour(), SECRET, destination));
+                        numSecretMoves++;
                     }
                     if (player.hasTickets(DOUBLE) && getRoundsRemaining() >= 2) {// TODO: check if sufficient rounds remaining for a double move
                         Collection<Edge<Integer, Transport>> doubleMoveDestinations = getOptions(destination);
                         for (Edge<Integer, Transport> doubleMoveOption : doubleMoveDestinations) {
                             Integer destination2 = getDestination(doubleMoveOption);
                             Ticket transport2 = getTicket(doubleMoveOption);
-                            // TODO: finish double moves
-                            // TODO: add tickets for available valid double moves
 
                             boolean clashWithOtherPlayer = occupied.contains(destination) || occupied.contains(destination2);
                             boolean sufficientTickets = (transport != transport2 && player.hasTickets(transport2))
@@ -319,6 +321,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
                                 firstMove = new TicketMove(player.colour(), transport, destination);
                                 secondMove = new TicketMove(player.colour(), transport2, destination2);
                                 output.add(new DoubleMove(player.colour(), firstMove, secondMove));
+                                numDoubleMoves++;
 
                                 // enables support for double moves starting with a secret ticket
                                 if (player.hasTickets(SECRET) && !clashWithOtherPlayer
@@ -328,14 +331,17 @@ public class ScotlandYardModel implements ScotlandYardGame {
 
                                     if (player.hasTickets(transport2)) {
                                         output.add(new DoubleMove(player.colour(), secretFirstMove, secondMove));
+                                        numDoubleSecretMoves++;
                                     }
 
                                     if (player.hasTickets(transport)) {
                                         output.add(new DoubleMove(player.colour(), firstMove, secretSecondMove));
+                                        numDoubleSecretMoves++;
                                     }
 
                                     if (player.hasTickets(SECRET, 2)) {
                                         output.add(new DoubleMove(player.colour(), secretFirstMove, secretSecondMove));
+                                        numDoubleSecretMoves++;
                                     } // foo
                                 }
                             }
@@ -348,8 +354,12 @@ public class ScotlandYardModel implements ScotlandYardGame {
         }
 
         if (output.isEmpty() && player.isDetective()) {
+            DEBUG_LOG(String.format("getMoves (%s): PassMove created (no moves available)", colour));
             output.add(new PassMove(colour));
+        } else {
+            DEBUG_LOG(String.format("getMoves (%s): %s moves created (%s TicketMoves, %s SecretMoves, %s DoubleMoves, %s DoubleMoves with 1+ secret moves)", colour, output.size(), numTicketMoves, numSecretMoves, numDoubleMoves, numDoubleSecretMoves));
         }
+
 
         return Collections.unmodifiableSet(output);
     }
@@ -364,7 +374,6 @@ public class ScotlandYardModel implements ScotlandYardGame {
                 output.add(player.location());
             }
         }
-//		DEBUG_LOG("getOccupiedLocations() = " + output);
         return Collections.unmodifiableList(output);
     }
 
