@@ -1,5 +1,6 @@
 package uk.ac.bris.cs.scotlandyard.model;
 
+import io.github.lukehutch.fastclasspathscanner.utils.WorkQueue;
 import uk.ac.bris.cs.gamekit.graph.Edge;
 import uk.ac.bris.cs.gamekit.graph.Graph;
 import uk.ac.bris.cs.gamekit.graph.ImmutableGraph;
@@ -421,6 +422,13 @@ public class ScotlandYardModel implements ScotlandYardGame {
                 if (!isGameOver()) {
                     current.player().makeMove(this, location.get(), moves, (choice) -> processMove(currentPlayerColour, choice));
                 } else {
+                    DEBUG_LOG("NOT GOING TO MAKE A MOVE BECAUSE GAME IS OVER");
+                    if (isRevealRound()) {
+                        Optional<ScotlandYardPlayer> oMrX = ScotlandYardPlayer.getMrX(this.mPlayers);
+                        if (oMrX.isPresent()) {
+                            saveMrXLocation(oMrX.get().location());
+                        }
+                    }
                     spectatorNotifyGameOver();
                 }
 
@@ -489,6 +497,7 @@ public class ScotlandYardModel implements ScotlandYardGame {
                 toNotify = new TicketMove(colour, move.ticket(), move.destination());
                 player.location(move.destination());
                 nextRound();
+                saveMrXLocation(move.destination());
             } else {
                 DEBUG_LOG(String.format("TicketMove: ticket destination masked to %s because it is not a reveal round", getLastKnownMrXLocation()));
                 toNotify = new TicketMove(colour, move.ticket(), getLastKnownMrXLocation());
@@ -540,7 +549,9 @@ public class ScotlandYardModel implements ScotlandYardGame {
         spectatorNotifyMove(firstMove);
         DEBUG_LOG(String.format("DoubleMove ticket processing: removed 1st ticket (%s). New count = %s", move.firstMove().ticket(), getPlayerTickets(colour, move.firstMove().ticket())));
         player.removeTicket(move.secondMove().ticket());
-        // TODO: save mrX's location here?
+        if (isRevealRound(-1)) {
+            saveMrXLocation(firstMove.destination());
+        }
         player.location(move.firstMove().destination());
         // ROUND X+2
         nextRound();
@@ -548,6 +559,9 @@ public class ScotlandYardModel implements ScotlandYardGame {
         DEBUG_LOG(String.format("DoubleMove ticket processing: removed 2nd ticket (%s). New count = %s", move.secondMove().ticket(), getPlayerTickets(colour, move.secondMove().ticket())));
         // TODO: save mrX's location here?
         player.location(move.secondMove().destination());
+        if (isRevealRound(-1)) {
+            saveMrXLocation(secondMove.destination());
+        }
         DEBUG_LOG(String.format("Removed 2 tickets [%s,%s]. Location will be set to %s", move.firstMove().ticket(), move.secondMove().ticket(), move.finalDestination()));
     }
 
