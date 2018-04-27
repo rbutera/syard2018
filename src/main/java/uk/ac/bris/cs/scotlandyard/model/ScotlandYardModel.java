@@ -495,8 +495,8 @@ public class ScotlandYardModel implements ScotlandYardGame {
                 DEBUG_LOG(">> TicketMove: ticket's destination not masked because it is a reveal round");
                 toNotify = new TicketMove(colour, move.ticket(), move.destination());
                 player.location(move.destination());
-                nextRound();
                 saveMrXLocation(move.destination());
+                nextRound();
             } else {
                 DEBUG_LOG(String.format("TicketMove: ticket destination masked to %s because it is not a reveal round", getLastKnownMrXLocation()));
                 toNotify = new TicketMove(colour, move.ticket(), getLastKnownMrXLocation());
