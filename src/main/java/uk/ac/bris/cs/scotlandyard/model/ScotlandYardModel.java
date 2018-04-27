@@ -583,17 +583,16 @@ public class ScotlandYardModel implements ScotlandYardGame {
             }
 
             if (getCurrentPlayer() == BLACK) {
+                Optional<Integer> oMrXLocation = getPlayerLocation(BLACK, true);
                 if (isGameOver()) {
                     DEBUG_LOG("GAME OVER AND SAVING LOCATION");
-                    Optional<ScotlandYardPlayer> oX = ScotlandYardPlayer.getMrX(this.mPlayers);
-                    oX.ifPresent(scotlandYardPlayer -> saveMrXLocation(getMrXLocation()));
+                    oMrXLocation.ifPresent(this::saveMrXLocation);
                     spectatorNotifyGameOver();
                 } else {
                     mRotationComplete = true;
                     if (isRevealRound()) {
                         DEBUG_LOG("ROTATION COMPLETE AND SAVING ROUND");
-                        Optional<ScotlandYardPlayer> oX = ScotlandYardPlayer.getMrX(this.mPlayers);
-                        oX.ifPresent(scotlandYardPlayer -> saveMrXLocation(getMrXLocation()));
+                        oMrXLocation.ifPresent(this::saveMrXLocation);
                     }
                     spectatorNotifyRotation();
                 }
