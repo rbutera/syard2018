@@ -536,6 +536,10 @@ public class ScotlandYardModel implements ScotlandYardGame {
         spectatorNotifyMove(toNotify);
         DEBUG_LOG("processMove: first move notified.");
         player.removeTicket(move.firstMove().ticket());
+        if (isRevealRound()) {
+            DEBUG_LOG(String.format("reveal round - saving mrx's location to firstMove.destination (=%s)", firstMove.destination()));
+            saveMrXLocation(firstMove.destination());
+        }
         nextRound();
         // ROUND X+1
         spectatorNotifyMove(firstMove);
